@@ -86,38 +86,6 @@ export function Hero() {
                             fill="#0A1628" 
                         />
 
-                        {/* Floating Orbit Elements - Evenly Distributed */}
-                        
-                        {/* Orbit 1: Radius ~160px (Far), Start ~0deg (Top) */}
-                        <g>
-                             <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="60s" repeatCount="indefinite" />
-                             <circle cx="200" cy="40" r="12" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.3" />
-                        </g>
-
-                         {/* Orbit 2: Radius ~120px (Medium), Start ~72deg (Top-Right) */}
-                         <g>
-                             <animateTransform attributeName="transform" type="rotate" from="72 200 200" to="432 200 200" dur="45s" repeatCount="indefinite" />
-                             <circle cx="200" cy="80" r="10" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.4" />
-                        </g>
-
-                        {/* Orbit 3: Radius ~165px (Far), Start ~144deg (Bottom-Right), Counter-rotate */}
-                        <g>
-                             <animateTransform attributeName="transform" type="rotate" from="144 200 200" to="-216 200 200" dur="55s" repeatCount="indefinite" />
-                             <circle cx="200" cy="35" r="14" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.25" />
-                        </g>
-
-                        {/* Orbit 4: Radius ~140px (Medium), Start ~216deg (Bottom-Left) */}
-                        <g>
-                             <animateTransform attributeName="transform" type="rotate" from="216 200 200" to="576 200 200" dur="70s" repeatCount="indefinite" />
-                             <circle cx="200" cy="60" r="11" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.35" />
-                        </g>
-                        
-                         {/* Orbit 5: Radius ~125px (Medium), Start ~288deg (Top-Left) */}
-                         <g>
-                             <animateTransform attributeName="transform" type="rotate" from="288 200 200" to="648 200 200" dur="40s" repeatCount="indefinite" />
-                             <circle cx="200" cy="75" r="9" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.45" />
-                        </g>
-
                     </svg>
                 </div>
             </div>

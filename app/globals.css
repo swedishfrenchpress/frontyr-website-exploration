@@ -12,6 +12,7 @@
 
   --animate-dash: dash 30s linear infinite;
   --animate-signal: signal-flow 6s linear infinite;
+  --animate-scroll-x: scroll-x 30s linear infinite;
   --text-xs: 0.85rem;
   --text-sm: 0.98rem;
   --text-base: 1.125rem;
@@ -72,6 +73,11 @@
   }
 
   --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+}
+
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 :root {
