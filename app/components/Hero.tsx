@@ -57,38 +57,16 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-            <div className="relative w-full max-w-lg aspect-square bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg p-8 overflow-hidden">
-                {/* Background Grid Pattern */}
-                <div className="absolute inset-0 opacity-30" style={{ 
+            <div className="relative w-full max-w-lg aspect-square rounded-lg p-8 overflow-visible">
+                {/* Background Grid Pattern - subtle */}
+                <div className="absolute inset-0 opacity-20" style={{ 
                     backgroundImage: 'radial-gradient(#0A1628 0.5px, transparent 0.5px)', 
-                    backgroundSize: '16px 16px' 
+                    backgroundSize: '24px 24px' 
                 }}></div>
-
-                {/* Corner Markers */}
-                <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-obsidian/20"></div>
-                <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-obsidian/20"></div>
-                <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-obsidian/20"></div>
-                <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-obsidian/20"></div>
-
-                {/* Technical Labels */}
-                <div className="absolute top-8 left-0 w-full text-center font-mono text-[10px] tracking-widest text-obsidian/40">
-                    SYSTEM_OPTIMAL
-                </div>
-                <div className="absolute bottom-8 left-0 w-full text-center flex justify-center items-center gap-2">
-                     <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                     <span className="font-mono text-[10px] tracking-widest text-obsidian/60 bg-white px-2 py-0.5 border border-obsidian/10 rounded-sm">LIVE_FEED</span>
-                </div>
-
-                <div className="absolute left-8 top-1/2 -translate-y-1/2 font-mono text-[9px] text-obsidian/30 -rotate-90 origin-center">
-                    SYS_READY
-                </div>
-                 <div className="absolute right-8 top-1/2 -translate-y-1/2 font-mono text-[9px] text-obsidian/30 rotate-90 origin-center">
-                    NODE_01
-                </div>
 
                 {/* Center SVG Composition */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <svg viewBox="0 0 400 400" className="w-3/4 h-3/4">
+                    <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
                         {/* Outer Ring - Lightest */}
                         <circle cx="200" cy="200" r="140" fill="none" stroke="#0A1628" strokeWidth="1" strokeDasharray="4 4" opacity="0.1" />
                         
@@ -107,6 +85,39 @@ export function Hero() {
                             d="M200 160 L210 190 L240 200 L210 210 L200 240 L190 210 L160 200 L190 190 Z" 
                             fill="#0A1628" 
                         />
+
+                        {/* Floating Orbit Elements - Evenly Distributed */}
+                        
+                        {/* Orbit 1: Radius ~160px (Far), Start ~0deg (Top) */}
+                        <g>
+                             <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="60s" repeatCount="indefinite" />
+                             <circle cx="200" cy="40" r="12" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.3" />
+                        </g>
+
+                         {/* Orbit 2: Radius ~120px (Medium), Start ~72deg (Top-Right) */}
+                         <g>
+                             <animateTransform attributeName="transform" type="rotate" from="72 200 200" to="432 200 200" dur="45s" repeatCount="indefinite" />
+                             <circle cx="200" cy="80" r="10" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.4" />
+                        </g>
+
+                        {/* Orbit 3: Radius ~165px (Far), Start ~144deg (Bottom-Right), Counter-rotate */}
+                        <g>
+                             <animateTransform attributeName="transform" type="rotate" from="144 200 200" to="-216 200 200" dur="55s" repeatCount="indefinite" />
+                             <circle cx="200" cy="35" r="14" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.25" />
+                        </g>
+
+                        {/* Orbit 4: Radius ~140px (Medium), Start ~216deg (Bottom-Left) */}
+                        <g>
+                             <animateTransform attributeName="transform" type="rotate" from="216 200 200" to="576 200 200" dur="70s" repeatCount="indefinite" />
+                             <circle cx="200" cy="60" r="11" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.35" />
+                        </g>
+                        
+                         {/* Orbit 5: Radius ~125px (Medium), Start ~288deg (Top-Left) */}
+                         <g>
+                             <animateTransform attributeName="transform" type="rotate" from="288 200 200" to="648 200 200" dur="40s" repeatCount="indefinite" />
+                             <circle cx="200" cy="75" r="9" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.45" />
+                        </g>
+
                     </svg>
                 </div>
             </div>
