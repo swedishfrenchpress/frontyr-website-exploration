@@ -1,3 +1,5 @@
+'use client';
+
 import { GitBranch, History, FileText, RotateCw } from 'lucide-react';
 
 export function Features() {
@@ -5,19 +7,14 @@ export function Features() {
     <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-          <div className="max-w-xl">
-            <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
-              Everything you need
-              <span className="text-subtle block">to bank on stablecoins</span>
-            </h2>
-            <p className="text-subtle text-lg leading-relaxed">
-              Frontyr offers modern core built for stable coins, real-time 24/7
-              settlement, and enterprise-grade compliance.
-            </p>
-          </div>
-          <a href="#" className="pb-1 border-b border-obsidian text-sm font-medium hover:opacity-70 transition-opacity mb-2">
-            Explore Platform Capabilities
-          </a>
+              <div className="max-w-xl">
+                <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
+                  Accelerate payments with stablecoin settlement
+                </h2>
+                <p className="text-subtle text-lg leading-relaxed">
+                  Replace slow, expensive legacy payment rails with stablecoin-powered settlement. Frontyr orchestrates the fastest, lowest-cost path for every transaction - globally and in real time.
+                </p>
+              </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -124,7 +121,7 @@ export function Features() {
             </div>
           </div>
 
-          {/* Card 3: Tokenized Accounts */}
+          {/* Card 3: Dynamic Settlement Routing */}
           <div className="md:col-span-12 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
             <div className="p-10 flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1 max-w-lg">
@@ -132,43 +129,64 @@ export function Features() {
                   <FileText className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl font-semibold text-obsidian mb-2">
-                  Tokenized Accounts
+                  Dynamic Settlement Routing
                 </h3>
                 <p className="text-subtle leading-relaxed">
-                  Launch stablecoin-based checking, treasury, and liquidity
-                  products on a single programmable core.
+                  Frontyr dynamically routes each transaction across the optimal combination of rails, partners and networks to deliver the fastest, lowest-cost settlement for every payment.
                 </p>
               </div>
 
-              <div className="flex-1 w-full flex items-center justify-center gap-6 h-32 relative">
-                <div className="flex flex-col gap-2 relative">
-                  <div className="w-10 h-12 bg-white border border-border shadow-sm rounded-sm flex items-center justify-center transition-all duration-700 ease-in-out group-hover:translate-x-12 group-hover:opacity-0 group-hover:scale-50">
-                    <div className="w-4 h-0.5 bg-subtle/20"></div>
-                  </div>
-                  <div className="w-10 h-12 bg-white border border-border shadow-sm rounded-sm flex items-center justify-center absolute top-2 left-2 transition-all duration-700 ease-in-out delay-100 group-hover:translate-x-10 group-hover:opacity-0 group-hover:scale-50">
-                    <div className="w-4 h-0.5 bg-subtle/20"></div>
-                  </div>
-                </div>
+              {/* Dynamic Routing Animation */}
+              <div className="flex-1 w-full h-32 relative flex items-center overflow-hidden">
+                  <svg className="w-full h-full" viewBox="0 0 600 120" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                      <marker id="arrow-head-routing" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+                        <path d="M0,0 L4,2 L0,4" fill="#111"></path>
+                      </marker>
+                    </defs>
 
-                <div className="w-16 h-16 rounded-full border border-dashed border-border flex items-center justify-center relative">
-                  <div className="absolute inset-0 rounded-full border-t border-obsidian transparent animate-spin [animation-duration:3s] opacity-0 group-hover:opacity-100"></div>
-                  <RotateCw className="w-5 h-5 text-subtle group-hover:text-obsidian transition-colors" />
-                </div>
+                    {/* Dotted Line Path */}
+                    <path 
+                      d="M50,60 C150,60 180,30 300,30 C420,30 450,60 550,60" 
+                      fill="none" 
+                      stroke="#E5E5E5" 
+                      strokeWidth="1.5" 
+                      strokeDasharray="4 4"
+                    ></path>
 
-                <div className="w-24 h-32 bg-white border border-border shadow-lg rounded-sm p-4 space-y-3 transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
-                  <div className="w-6 h-6 rounded bg-obsidian/5"></div>
-                  <div className="space-y-1.5">
-                    <div className="h-1.5 w-full bg-obsidian/10 rounded overflow-hidden">
-                      <div className="h-full w-0 bg-obsidian group-hover:w-full transition-all duration-700 delay-300 ease-out"></div>
-                    </div>
-                    <div className="h-1.5 w-3/4 bg-obsidian/10 rounded overflow-hidden">
-                      <div className="h-full w-0 bg-obsidian group-hover:w-full transition-all duration-700 delay-500 ease-out"></div>
-                    </div>
-                    <div className="h-1.5 w-5/6 bg-obsidian/10 rounded overflow-hidden">
-                      <div className="h-full w-0 bg-obsidian group-hover:w-full transition-all duration-700 delay-700 ease-out"></div>
-                    </div>
-                  </div>
-                </div>
+                    {/* Animated Solid Line Trail */}
+                    <path 
+                      d="M50,60 C150,60 180,30 300,30 C420,30 450,60 550,60" 
+                      fill="none" 
+                      stroke="#111" 
+                      strokeWidth="1.5" 
+                      strokeDasharray="600" 
+                      strokeDashoffset="600" 
+                      className="transition-all duration-[2000ms] ease-in-out group-hover:stroke-dashoffset-0"
+                      markerEnd="url(#arrow-head-routing)"
+                    ></path>
+
+                    {/* USD Origin Node */}
+                    <g className="transition-all duration-500 delay-0 opacity-100 group-hover:scale-110 origin-center">
+                        <circle cx="50" cy="60" r="16" fill="white" stroke="#E5E5E5" strokeWidth="1"></circle>
+                        <text x="50" y="64" textAnchor="middle" className="text-[10px] font-bold font-sans fill-obsidian">$</text>
+                        <text x="50" y="90" textAnchor="middle" className="text-[9px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">USD</text>
+                    </g>
+
+                    {/* Frontyr Core Node (Center) */}
+                    <g className="transition-all duration-500 delay-[800ms] opacity-50 scale-90 group-hover:opacity-100 group-hover:scale-100 origin-center">
+                        <rect x="260" y="10" width="80" height="40" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
+                        <text x="300" y="34" textAnchor="middle" className="text-[10px] font-bold font-sans fill-obsidian tracking-wide">FRONTYR</text>
+                        <text x="300" y="65" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">OPTIMIZING</text>
+                    </g>
+
+                    {/* USD Destination Node */}
+                    <g className="transition-all duration-500 delay-[1600ms] opacity-50 scale-90 group-hover:opacity-100 group-hover:scale-100 origin-center">
+                        <circle cx="550" cy="60" r="16" fill="#0A1628"></circle>
+                        <text x="550" y="64" textAnchor="middle" className="text-[10px] font-bold font-sans fill-white">$</text>
+                        <text x="550" y="90" textAnchor="middle" className="text-[9px] font-mono fill-obsidian font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">USD</text>
+                    </g>
+                  </svg>
               </div>
             </div>
           </div>

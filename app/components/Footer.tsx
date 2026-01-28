@@ -2,7 +2,7 @@ import { Twitter, Linkedin } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-obsidian text-white py-20 px-6 md:px-12 lg:px-20 relative z-10 border-t border-white/5">
+    <footer className="bg-obsidian bg-noise text-white py-20 px-6 md:px-12 lg:px-20 relative z-10 border-t border-white/5">
       <div className="max-w-7xl mx-auto">
         
         {/* Top Section */}

@@ -6,7 +6,7 @@ export function Contact() {
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Left: Value Props (Navy Square) */}
-            <div className="bg-obsidian text-white p-12 lg:aspect-square flex flex-col justify-center rounded-3xl shadow-2xl relative overflow-hidden">
+            <div className="bg-obsidian bg-noise text-white p-12 lg:aspect-square flex flex-col justify-center rounded-3xl shadow-2xl relative overflow-hidden">
                 {/* Subtle background detail */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
                 
@@ -45,7 +45,7 @@ export function Contact() {
                         <label className="block text-sm font-medium text-obsidian mb-2">Name</label>
                         <input 
                             type="text" 
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-1 focus:ring-obsidian outline-none transition-all bg-white placeholder:text-subtle/50" 
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-2 focus:ring-obsidian/10 outline-none transition-all bg-white placeholder:text-subtle/50 hover:border-obsidian/30" 
                             placeholder="Jane Doe" 
                         />
                     </div>
@@ -53,7 +53,7 @@ export function Contact() {
                         <label className="block text-sm font-medium text-obsidian mb-2">Work Email</label>
                         <input 
                             type="email" 
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-1 focus:ring-obsidian outline-none transition-all bg-white placeholder:text-subtle/50" 
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-2 focus:ring-obsidian/10 outline-none transition-all bg-white placeholder:text-subtle/50 hover:border-obsidian/30" 
                             placeholder="jane@company.com" 
                         />
                     </div>
@@ -61,7 +61,7 @@ export function Contact() {
                         <label className="block text-sm font-medium text-obsidian mb-2">Company</label>
                         <input 
                             type="text" 
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-1 focus:ring-obsidian outline-none transition-all bg-white placeholder:text-subtle/50" 
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-2 focus:ring-obsidian/10 outline-none transition-all bg-white placeholder:text-subtle/50 hover:border-obsidian/30" 
                             placeholder="Acme Inc." 
                         />
                     </div>
