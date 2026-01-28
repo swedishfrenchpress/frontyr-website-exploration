@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight } from 'lucide-react';
 
 const solutions = [
@@ -5,11 +7,13 @@ const solutions = [
     title: 'Stablecoin Issuance & Redemption',
     desc: 'Frontyr provides the core ledger and compliance rails for minting, burning, and managing stablecoin supply with full reserve transparency.',
     image: '/bank-dither1.png',
+    placeholder: '/solution-1-placeholder.svg',
   },
   {
     title: 'Treasury & Liquidity Management',
     desc: 'Track reserves, manage liquidity positions, and maintain balance-sheet clarity across all stablecoin operations in real time.',
     image: '/bank-dither2.png',
+    placeholder: '/solution-2-placeholder.svg',
   },
 ];
 
@@ -48,14 +52,28 @@ export function Defensibility() {
 
               {/* Visual Side - 1:1 Aspect Ratio */}
               <div 
-                className={`w-full aspect-square bg-obsidian rounded-lg overflow-hidden ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
+                className={`w-full aspect-square bg-obsidian rounded-lg overflow-hidden relative ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
               >
+                {/* Background Image - Absolute */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src={solution.image} 
-                  alt={solution.title} 
-                  className="w-full h-full object-cover"
+                  alt="" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay"
                 />
+                
+                {/* Navy Overlay for tinting */}
+                <div className="absolute inset-0 bg-obsidian/40 mix-blend-multiply pointer-events-none"></div>
+
+                {/* SVG Placeholder Overlay */}
+                <div className="absolute inset-0 z-10 flex items-center justify-center p-8">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                        src={solution.placeholder} 
+                        alt="UI Mockup" 
+                        className="w-full h-full object-contain"
+                    />
+                </div>
               </div>
             </div>
           ))}

@@ -187,10 +187,26 @@ export function Features() {
 
                     {/* Frontyr Core Node (Center) - Stablecoin Indicator */}
                     <g className="transition-all duration-500 delay-[800ms] opacity-50 scale-90 group-hover:opacity-100 group-hover:scale-100 origin-center">
-                        <rect x="260" y="10" width="80" height="40" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
+                        {/* Box - Larger to fit elements */}
+                        <rect x="250" y="0" width="100" height="60" rx="6" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
+                        
+                        {/* Star Logo - Above Text */}
+                        <g transform="translate(300, 16) scale(0.14) translate(-50, -50)">
+                             <path d="M50 20 L60 40 L80 50 L60 60 L50 80 L40 60 L20 50 L40 40 Z" fill="#0A1628" />
+                        </g>
+
+                        {/* Text - Centered */}
                         <text x="300" y="34" textAnchor="middle" className="text-[10px] font-bold font-sans fill-obsidian tracking-wide">FRONTYR</text>
-                        <rect x="270" y="38" width="60" height="2" rx="1" fill="#E5E5E5" />
-                        <text x="300" y="65" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">STABLECOIN RAIL</text>
+                        
+                        {/* 3 Circles - Below Text */}
+                        <g transform="translate(300, 48)">
+                            <circle cx="-14" cy="0" r="4" fill="white" stroke="#E5E7EB" strokeWidth="1" />
+                            <circle cx="0" cy="0" r="4" fill="white" stroke="#E5E7EB" strokeWidth="1" />
+                            <circle cx="14" cy="0" r="4" fill="white" stroke="#E5E7EB" strokeWidth="1" />
+                        </g>
+
+                        {/* Label */}
+                        <text x="300" y="75" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">STABLECOIN RAIL</text>
                     </g>
 
                     {/* USD Destination Node */}

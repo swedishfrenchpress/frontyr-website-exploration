@@ -23,14 +23,10 @@ export function Hero() {
                 </span>
               </div>
               <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-tighter text-obsidian leading-[0.95]">
-                Stablecoin
-                <br />
-                <span className="text-subtle">Banking Core.</span>
+                Stablecoin <span className="text-subtle">Infrastructure for Banks</span>
               </h1>
               <p className="max-w-xl font-sans text-lg text-subtle leading-relaxed">
-                Frontyr builds a modern, programmable banking core designed from
-                the ground up for stablecoins, tokenized dollars, and real-time
-                settlement.
+                A modern bank core built for stablecoins, tokenized dollars, and real-time settlement. Frontyr is your northstar in digital dollar infrastructure.
               </p>
             </motion.div>
 
@@ -41,11 +37,11 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-300 hover:bg-obsidian/90 hover:scale-[1.02] hover:shadow-lg flex items-center gap-2 cursor-pointer">
-                <span className="relative z-10">Request Platform Brief</span>
+                <span className="relative z-10">Book a Demo</span>
                 <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
               <button className="px-8 py-3.5 bg-white text-obsidian border border-border text-sm font-medium rounded-lg shadow-sm transition-all duration-300 hover:bg-gray-50 hover:border-obsidian/40 hover:text-black hover:shadow-md cursor-pointer">
-                Platform Overview
+                View Documentation
               </button>
             </motion.div>
         </div>
