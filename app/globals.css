@@ -10,7 +10,6 @@
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
   --font-jakarta: var(--font-jakarta);
 
-  --animate-shimmer: shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   --animate-dash: dash 30s linear infinite;
   --animate-signal: signal-flow 6s linear infinite;
   --text-xs: 0.85rem;
@@ -26,9 +25,6 @@
   --text-7xl: 4.6rem;
   --text-8xl: 5.4rem;
 
-  @keyframes shimmer {
-    100% { transform: translateX(100%); }
-  }
   @keyframes dash {
     to { stroke-dashoffset: -100; }
   }
@@ -84,7 +80,7 @@
 }
 
 html {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 body {
@@ -101,9 +97,6 @@ body {
   mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
 }
 
-.shimmer-layer {
-  transform: translateX(-100%);
-}
 
 .pricing-transition {
     transition:

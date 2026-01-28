@@ -4,7 +4,7 @@ import { Logos } from './components/Logos';
 import { Features } from './components/Features';
 import { Defensibility } from './components/Defensibility';
 import { Testimonials } from './components/Testimonials';
-import { Pricing } from './components/Pricing';
+import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
         <Features />
         <Defensibility />
         <Testimonials />
-        <Pricing />
+        <Contact />
         <Footer />
       </div>
     </main>

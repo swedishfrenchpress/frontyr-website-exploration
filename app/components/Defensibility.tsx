@@ -41,14 +41,9 @@ export function Defensibility() {
                 <h3 className="font-sans text-2xl font-semibold text-obsidian mb-4">
                   {solution.title}
                 </h3>
-                <p className="text-subtle leading-relaxed mb-8">
+                <p className="text-subtle leading-relaxed">
                   {solution.desc}
                 </p>
-                <div>
-                  <button className="inline-flex items-center gap-2 bg-white text-obsidian border border-border text-sm font-medium px-6 py-3 rounded transition-all duration-300 hover:border-obsidian/40 hover:shadow-md">
-                    Learn More
-                  </button>
-                </div>
               </div>
 
               {/* Visual Side - 1:1 Aspect Ratio */}

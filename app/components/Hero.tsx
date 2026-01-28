@@ -26,7 +26,6 @@ export function Hero() {
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.03] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.3)] hover:ring-white/20 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-obsidian/20 focus:ring-offset-2 flex items-center gap-2">
-            <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none animate-shimmer"></div>
             <span className="relative z-10">Request Platform Brief</span>
             <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
@@ -56,45 +55,86 @@ export function Hero() {
             </div>
             <div className="flex-1 relative">
               {/* SVG Graph */}
-              <svg className="w-full h-full" viewBox="0 0 400 200">
-                {/* Active Signal Path */}
-                <path d="M50,100 C100,100 100,50 150,50" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-                <path d="M50,100 C100,100 100,150 150,150" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-                <path d="M150,50 C200,50 200,80 250,80" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-                <path d="M150,150 C200,150 200,120 250,120" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-                <path d="M250,80 L320,100" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-                <path d="M250,120 L320,100" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
+              <svg className="w-full h-full" viewBox="0 0 400 220">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#E5E5E5" />
+                  </marker>
+                </defs>
 
-                <path d="M50,100 C100,100 100,50 150,50 C200,50 200,80 250,80 L320,100" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round" className="animate-signal" style={{ strokeDasharray: '60 400' }}></path>
+                {/* --- Static Paths --- */}
+                
+                {/* Main Flow Path (Bank A -> Frontyr -> Bank B) */}
+                <path d="M80,80 C110,80 130,80 140,80" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
+                <path d="M260,80 C270,80 290,80 320,80" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
 
-                {/* Nodes & Text */}
-                <circle cx="50" cy="100" r="6" fill="#111" className="origin-[50px_100px] animate-[pulse-context_6s_infinite_ease-out]"></circle>
-                <text x="50" y="125" textAnchor="middle" className="font-jakarta text-[10px] font-semibold fill-[#111]">
-                  Issuance
+                {/* Abstracted Complexity Paths (Dropping down) */}
+                <path d="M200,110 C200,130 150,130 150,150" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4"></path>
+                <path d="M200,110 C200,130 250,130 250,150" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4"></path>
+
+                {/* --- Active Signal Animation --- */}
+                {/* Travels from left (Bank A) through Center to Right (Bank B) */}
+                <path 
+                  d="M50,80 L350,80" 
+                  fill="none" 
+                  stroke="#0A1628" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  className="animate-signal" 
+                  style={{ strokeDasharray: '60 400' }}
+                ></path>
+
+                {/* --- Nodes --- */}
+
+                {/* Left: Sending Bank */}
+                <g className="origin-[50px_80px] animate-[pulse-context_6s_infinite_ease-out]">
+                  <rect x="20" y="65" width="60" height="30" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
+                  <text x="50" y="84" textAnchor="middle" className="font-jakarta text-[9px] font-semibold fill-[#0A1628]">
+                    Bank A
+                  </text>
+                </g>
+
+                {/* Right: Receiving Bank */}
+                <g className="origin-[350px_80px] animate-[pulse-outcome_6s_infinite_ease-out]">
+                  <rect x="320" y="65" width="60" height="30" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
+                  <text x="350" y="84" textAnchor="middle" className="font-jakarta text-[9px] font-semibold fill-[#0A1628]">
+                    Bank B
+                  </text>
+                </g>
+
+                {/* Center: Frontyr Core (The Bridge) */}
+                <rect x="140" y="50" width="120" height="60" rx="6" fill="white" stroke="#0A1628" strokeWidth="2" className="drop-shadow-sm"></rect>
+                <text x="200" y="75" textAnchor="middle" className="font-jakarta text-[11px] font-bold fill-[#0A1628]">
+                  Frontyr Core
+                </text>
+                <text x="200" y="92" textAnchor="middle" className="font-jakarta text-[8px] fill-[#6B7280]">
+                  Instant Settlement Rail
                 </text>
 
-                <rect x="130" y="40" width="60" height="20" rx="4" fill="white" stroke="#111" strokeWidth="1.5" className="origin-[160px_50px] animate-[pulse-assumptions_6s_infinite_ease-out]"></rect>
-                <text x="160" y="53" textAnchor="middle" className="font-jakarta text-[9px] font-semibold fill-[#111]" dy="1">
+                {/* --- Abstracted Complexity (De-emphasized) --- */}
+                
+                {/* Connection Dots on Frontyr */}
+                <circle cx="200" cy="110" r="3" fill="#E5E5E5"></circle>
+
+                {/* Compliance Node */}
+                <rect x="110" y="150" width="80" height="24" rx="4" fill="#F5F5F7" stroke="#E5E5E5" strokeWidth="1"></rect>
+                <text x="150" y="165" textAnchor="middle" className="font-jakarta text-[8px] font-medium fill-[#9CA3AF]">
                   Compliance
                 </text>
 
-                <rect x="130" y="140" width="60" height="20" rx="4" fill="white" stroke="#E5E5E5"></rect>
-                <rect x="230" y="110" width="50" height="20" rx="4" fill="#F5F5F7"></rect>
-
-                <rect x="230" y="70" width="50" height="20" rx="4" fill="white" stroke="#111" strokeWidth="1.5" className="origin-[255px_80px] animate-[pulse-evidence_6s_infinite_ease-out]"></rect>
-                <text x="255" y="83" textAnchor="middle" className="font-jakarta text-[9px] font-semibold fill-[#111]" dy="1">
+                {/* Treasury Node */}
+                <rect x="210" y="150" width="80" height="24" rx="4" fill="#F5F5F7" stroke="#E5E5E5" strokeWidth="1"></rect>
+                <text x="250" y="165" textAnchor="middle" className="font-jakarta text-[8px] font-medium fill-[#9CA3AF]">
                   Treasury
                 </text>
 
-                <circle cx="320" cy="100" r="12" fill="#111" className="origin-[320px_100px] animate-[pulse-outcome_6s_infinite_ease-out]"></circle>
-                <path d="M316 100l3 3 5-5" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-[check-draw_6s_linear_infinite]" style={{ strokeDasharray: 12 }}></path>
-                <text x="320" y="128" textAnchor="middle" className="font-jakarta text-[10px] font-semibold fill-[#111]">
-                  Settlement
-                </text>
+                {/* Checkmark Animation at End */}
+                <path d="M346 80l3 3 5-5" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-[check-draw_6s_linear_infinite]" style={{ strokeDasharray: 12 }}></path>
+
               </svg>
 
-              {/* Floating Label */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-obsidian text-white text-[10px] font-medium px-3 py-1.5 rounded shadow-xl">
+              {/* Floating Label - Kept as requested */}
+              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-obsidian text-white text-[10px] font-medium px-3 py-1.5 rounded shadow-xl z-10">
                 Real-Time: 24/7
               </div>
             </div>

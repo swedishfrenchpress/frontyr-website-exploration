@@ -2,17 +2,17 @@ import { GitBranch, History, FileText, RotateCw } from 'lucide-react';
 
 export function Features() {
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-canvas">
+    <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
           <div className="max-w-xl">
             <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
-              Stablecoin-native banking.
-              <span className="text-subtle block">Not retrofitted rails.</span>
+              Everything you need
+              <span className="text-subtle block">to bank on stablecoins</span>
             </h2>
             <p className="text-subtle text-lg leading-relaxed">
-              Frontyr delivers a programmable core built for tokenized dollars,
-              real-time settlement, and enterprise-grade compliance.
+              Frontyr offers modern core built for stable coins, real-time 24/7
+              settlement, and enterprise-grade compliance.
             </p>
           </div>
           <a href="#" className="pb-1 border-b border-obsidian text-sm font-medium hover:opacity-70 transition-opacity mb-2">
@@ -23,7 +23,7 @@ export function Features() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Card 1: Programmable Ledger */}
           <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
-             <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:24px_24px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+             {/* Grid background removed by deleting the div that was here */}
 
             <div className="relative z-10 p-10 h-full flex flex-col justify-between">
               <div className="flex justify-between items-start">
@@ -32,11 +32,10 @@ export function Features() {
                   <GitBranch className="w-5 h-5" />
                 </div>
                 <h3 className="text-2xl font-semibold text-obsidian mb-3">
-                  Programmable Ledger
+                  Legacy Core Integration
                 </h3>
                 <p className="text-subtle leading-relaxed">
-                  Model stablecoin flows and balance-sheet state with full
-                  lineage across issuance, settlement, and redemption.
+                  Connect stablecoin settlement rails directly to your existing core banking system. Frontyr bridges the gap between legacy ledgers and real-time blockchain settlement.
                 </p>
               </div>
               <div className="hidden lg:block">
