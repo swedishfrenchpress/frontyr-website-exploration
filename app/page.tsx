@@ -1,5 +1,6 @@
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
+import { ProductShowcase } from './components/ProductShowcase';
 import { Logos } from './components/Logos';
 import { Features } from './components/Features';
 import { Defensibility } from './components/Defensibility';
@@ -13,6 +14,7 @@ export default function Home() {
       <div className="relative z-10 flex flex-col w-full">
         <Navigation />
         <Hero />
+        <ProductShowcase />
         <Logos />
         <Features />
         <Defensibility />
