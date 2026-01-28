@@ -29,10 +29,10 @@ export function Features() {
                   <GitBranch className="w-5 h-5" />
                 </div>
                 <h3 className="text-2xl font-semibold text-obsidian mb-3">
-                  Legacy Core Integration
+                  Your Core Wasn't Built for This
                 </h3>
                 <p className="text-subtle leading-relaxed">
-                  Connect stablecoin settlement rails directly to your existing core banking system. Frontyr bridges the gap between legacy ledgers and real-time blockchain settlement.
+                  Legacy cores treat stablecoins as an afterthought. Frontyr is a programmable banking core where stablecoins are the native unit of account—with real-time settlement, programmable compliance, and balance-sheet clarity built in.
                 </p>
               </div>
               <div className="hidden lg:block">
