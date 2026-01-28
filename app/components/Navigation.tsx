@@ -1,6 +1,5 @@
 'use client';
 
-import { CircleDashed } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -20,9 +19,9 @@ export function Navigation() {
       isScrolled ? 'bg-white/90 shadow-sm' : 'bg-canvas/90'
     } backdrop-blur-md`}>
       <div className="flex items-center gap-2">
-        <div className="w-5 h-5 bg-obsidian text-white flex items-center justify-center rounded-sm">
-          <CircleDashed className="w-3 h-3" />
-        </div>
+        <svg viewBox="0 0 100 100" className="w-6 h-6 fill-obsidian">
+          <path d="M50 20 L60 40 L80 50 L60 60 L50 80 L40 60 L20 50 L40 40 Z" />
+        </svg>
         <span className="font-sans text-sm font-bold tracking-tight text-obsidian">
           FRONTYR
         </span>

@@ -147,6 +147,7 @@ export function Features() {
 
                     {/* Dotted Line Path */}
                     <path 
+                      id="routing-path"
                       d="M50,60 C150,60 180,30 300,30 C420,30 450,60 550,60" 
                       fill="none" 
                       stroke="#E5E5E5" 
@@ -154,17 +155,17 @@ export function Features() {
                       strokeDasharray="4 4"
                     ></path>
 
-                    {/* Animated Solid Line Trail */}
-                    <path 
-                      d="M50,60 C150,60 180,30 300,30 C420,30 450,60 550,60" 
-                      fill="none" 
-                      stroke="#111" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="600" 
-                      strokeDashoffset="600" 
-                      className="transition-all duration-[2000ms] ease-in-out group-hover:stroke-dashoffset-0"
-                      markerEnd="url(#arrow-head-routing)"
-                    ></path>
+                    {/* Moving Dot Animation */}
+                    <circle r="4" fill="#0A1628">
+                        <animateMotion 
+                            dur="5s" 
+                            repeatCount="indefinite"
+                            keyPoints="0;1"
+                            keyTimes="0;1"
+                        >
+                            <mpath href="#routing-path" />
+                        </animateMotion>
+                    </circle>
 
                     {/* USD Origin Node */}
                     <g className="transition-all duration-500 delay-0 opacity-100 group-hover:scale-110 origin-center">
@@ -173,11 +174,12 @@ export function Features() {
                         <text x="50" y="90" textAnchor="middle" className="text-[9px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">USD</text>
                     </g>
 
-                    {/* Frontyr Core Node (Center) */}
+                    {/* Frontyr Core Node (Center) - Stablecoin Indicator */}
                     <g className="transition-all duration-500 delay-[800ms] opacity-50 scale-90 group-hover:opacity-100 group-hover:scale-100 origin-center">
                         <rect x="260" y="10" width="80" height="40" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
                         <text x="300" y="34" textAnchor="middle" className="text-[10px] font-bold font-sans fill-obsidian tracking-wide">FRONTYR</text>
-                        <text x="300" y="65" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">OPTIMIZING</text>
+                        <rect x="270" y="38" width="60" height="2" rx="1" fill="#E5E5E5" />
+                        <text x="300" y="65" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">STABLECOIN RAIL</text>
                     </g>
 
                     {/* USD Destination Node */}
