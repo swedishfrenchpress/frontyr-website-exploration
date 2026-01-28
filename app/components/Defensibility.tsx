@@ -19,7 +19,7 @@ const solutions = [
 
 export function Defensibility() {
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-canvas">
+    <section id="solutions" className="py-24 px-6 md:px-12 lg:px-20 bg-canvas">
       <div className="max-w-7xl mx-auto bg-white border border-border rounded-xl p-8 md:p-12 lg:p-16">
         {/* Section Header */}
         <div className="mb-20">

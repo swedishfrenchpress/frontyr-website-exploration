@@ -2,7 +2,7 @@
 
 export function Contact() {
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 border-b border-border">
+    <section id="contact" className="py-32 px-6 md:px-12 lg:px-20 border-y border-border">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Left: Value Props (Navy Square) */}

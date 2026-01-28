@@ -36,7 +36,7 @@ export function Testimonials() {
   };
 
   return (
-    <section className="py-32 bg-obsidian bg-noise text-white relative overflow-hidden">
+    <section id="testimonials" className="py-32 bg-obsidian bg-noise text-white relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10 text-center">
         <div className="relative w-full">
           <div className="relative w-full" style={{ display: 'grid', gridTemplateAreas: '"stack"' }}>

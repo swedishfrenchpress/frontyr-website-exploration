@@ -4,7 +4,7 @@
 
 export function ProductShowcase() {
   return (
-    <section className="relative w-full z-0 -mt-20">
+    <section id="product" className="relative w-full z-0 -mt-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="relative w-full rounded-t-xl overflow-hidden border border-border/50 shadow-2xl bg-white">
             {/* 
