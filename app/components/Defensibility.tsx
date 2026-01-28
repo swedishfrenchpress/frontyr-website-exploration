@@ -52,21 +52,18 @@ export function Defensibility() {
 
               {/* Visual Side - 1:1 Aspect Ratio */}
               <div 
-                className={`w-full aspect-square bg-obsidian rounded-lg overflow-hidden relative ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
+                className={`w-full aspect-square rounded-lg overflow-hidden relative ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
               >
-                {/* Background Image - Absolute */}
+                {/* Background Image - Full fill */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src={solution.image} 
                   alt="" 
-                  className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-                
-                {/* Navy Overlay for tinting */}
-                <div className="absolute inset-0 bg-obsidian/40 mix-blend-multiply pointer-events-none"></div>
 
                 {/* SVG Placeholder Overlay */}
-                <div className="absolute inset-0 z-10 flex items-center justify-center p-8">
+                <div className="absolute inset-0 z-10 flex items-center justify-center p-2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                         src={solution.placeholder} 

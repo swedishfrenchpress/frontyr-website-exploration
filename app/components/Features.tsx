@@ -36,8 +36,11 @@ export function Features() {
                 </p>
               </div>
               <div className="hidden lg:block">
-                <div className="px-3 py-1 bg-canvas border border-border rounded text-[10px] font-mono text-subtle uppercase tracking-wider group-hover:text-obsidian group-hover:border-obsidian/30 transition-colors">
-                  Real-Time Settlement
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border/60 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span className="font-sans text-[13px] font-semibold text-subtle tracking-tight">
+                    Real-Time Settlement
+                  </span>
                 </div>
               </div>
             </div>

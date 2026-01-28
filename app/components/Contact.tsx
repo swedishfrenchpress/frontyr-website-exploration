@@ -25,7 +25,7 @@ export function Contact() {
                             'Real-time settlement'
                         ].map((item, i) => (
                             <li key={i} className="flex items-center gap-4 text-white/90 font-medium">
-                                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-white text-xs">✓</span>
+                                <span className="text-white text-lg leading-none">✓</span>
                                 {item}
                             </li>
                         ))}
