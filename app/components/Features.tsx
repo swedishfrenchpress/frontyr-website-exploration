@@ -97,26 +97,37 @@ export function Features() {
                 programmable compliance controls.
               </p>
 
-              <div className="mt-auto relative w-full h-32 flex flex-col justify-end items-center">
-                <div className="absolute w-[80%] h-12 bg-border/30 border border-border rounded-t-md top-4 scale-90 opacity-0 group-hover:opacity-100 group-hover:top-0 transition-all duration-500 ease-out"></div>
-                <div className="absolute w-[90%] h-12 bg-canvas border border-border rounded-t-md top-8 scale-95 opacity-50 group-hover:opacity-80 group-hover:top-6 transition-all duration-500 ease-out delay-75"></div>
+              <div className="mt-auto relative w-full h-40 flex flex-col justify-end items-center pb-4">
+                {/* Back Card (KYC) - Smallest, furthest back */}
+                <div className="absolute w-[80%] h-12 bg-white border border-border rounded-t-md top-8 scale-90 opacity-0 group-hover:opacity-100 group-hover:top-0 transition-all duration-500 ease-out flex items-center px-3 gap-2 shadow-sm">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
+                    <span className="text-[9px] font-bold text-obsidian uppercase tracking-wide w-8">KYC</span>
+                    <div className="h-0.5 flex-1 bg-green-500/20 rounded relative">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-green-500 rounded-full"></div>
+                    </div>
+                </div>
 
-                <div className="relative w-full h-16 bg-white border border-border rounded shadow-sm flex items-center px-4 gap-4 z-10 transition-transform duration-300 group-hover:translate-y-[-5px] group-hover:shadow-md">
+                {/* Middle Card (AML) - Medium size */}
+                <div className="absolute w-[90%] h-12 bg-white border border-border rounded-t-md top-8 scale-95 opacity-50 group-hover:opacity-100 group-hover:top-6 transition-all duration-500 ease-out delay-75 flex items-center px-3 gap-2 shadow-sm z-10">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
+                    <span className="text-[9px] font-bold text-obsidian uppercase tracking-wide w-8">AML</span>
+                    <div className="h-0.5 flex-1 bg-green-500/20 rounded relative">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-green-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                {/* Front Card (OFAC) - Largest, frontmost */}
+                <div className="relative w-full h-12 bg-white border border-border rounded-t-md flex items-center px-4 gap-3 z-20 shadow-sm transition-transform duration-300 group-hover:translate-y-[-5px] group-hover:shadow-md mt-auto">
                   <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-bold text-obsidian uppercase tracking-wide">
-                        Compliance State
-                      </span>
-                      <span className="text-[10px] font-mono text-subtle">
-                        v1.0.0
-                      </span>
-                    </div>
-                    <div className="h-1 w-full bg-canvas rounded overflow-hidden">
-                      <div className="h-full w-2/3 bg-obsidian/20"></div>
-                    </div>
+                  <span className="text-[10px] font-bold text-obsidian uppercase tracking-wide w-8">OFAC</span>
+                  <div className="h-0.5 flex-1 bg-green-500/20 rounded relative flex items-center">
+                        <div className="w-full h-full bg-green-500/10"></div>
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-green-600 font-bold text-[10px]">✓</div>
                   </div>
                 </div>
+                
+                {/* Base line to hide bottom borders/rounded corners if needed, or just part of container */}
+                <div className="w-full h-4 bg-white border-x border-b border-border rounded-b-md z-30 relative -mt-1"></div>
               </div>
             </div>
           </div>
