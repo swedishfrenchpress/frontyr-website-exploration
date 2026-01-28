@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #FAFAFA;
+  --color-obsidian: #0A1628;
+  --color-subtle: #6B7280;
+  --color-border: #E5E7EB;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-jakarta: var(--font-jakarta);
+
+  --animate-shimmer: shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-dash: dash 30s linear infinite;
+  --animate-signal: signal-flow 6s linear infinite;
+  --text-xs: 0.85rem;
+  --text-sm: 0.98rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.3rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.8rem;
+  --text-3xl: 2.2rem;
+  --text-4xl: 2.6rem;
+  --text-5xl: 3.2rem;
+  --text-6xl: 3.8rem;
+  --text-7xl: 4.6rem;
+  --text-8xl: 5.4rem;
+
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -100; }
+  }
+  @keyframes signal-flow {
+     0% { stroke-dashoffset: 60; opacity: 0; }
+     5% { opacity: 1; }
+     90% { stroke-dashoffset: -360; opacity: 1; }
+     95% { opacity: 0; }
+     100% { stroke-dashoffset: -360; opacity: 0; }
+  }
+
+  @keyframes pulse-context {
+    0% { transform: scale(1); fill: #111; }
+    5% { transform: scale(1.4); fill: #000; }
+    15% { transform: scale(1); fill: #111; }
+  }
+
+  @keyframes pulse-assumptions {
+    25% { stroke-width: 1.5px; transform: scale(1); }
+    30% { stroke-width: 2.5px; transform: scale(1.05); stroke: #000; }
+    40% { stroke-width: 1.5px; transform: scale(1); stroke: #111; }
+  }
+
+  @keyframes pulse-evidence {
+    55% { stroke-width: 1.5px; transform: scale(1); }
+    60% { stroke-width: 2.5px; transform: scale(1.05); stroke: #000; }
+    70% { stroke-width: 1.5px; transform: scale(1); stroke: #111; }
+  }
+
+  @keyframes pulse-outcome {
+    85% { transform: scale(1); fill: #111; }
+    90% { transform: scale(1.25); fill: #000; }
+    100% { transform: scale(1); fill: #111; }
+  }
+
+  @keyframes check-draw {
+    0%, 88% { stroke-dashoffset: 12; opacity: 0; }
+    92% { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+}
+
+:root {
+  --background: #FAFAFA;
+  --foreground: #0A1628;
+}
+
+html {
+  font-size: 20px;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-size: var(--text-base);
+}
+
+.technical-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+
+.shimmer-layer {
+  transform: translateX(-100%);
+}
+
+.pricing-transition {
+    transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity, box-shadow;
+}
+
+/* ThreeJS Canvas Container */
+#canvas-container canvas {
+    display: block;
+}
+
+/* Custom scrollbar to match the "technical" feel if needed, sticking to default for now */
