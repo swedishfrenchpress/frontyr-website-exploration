@@ -2,11 +2,11 @@
 
 export function Contact() {
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 border-b border-border">
+    <section id="contact" className="py-32 px-6 md:px-12 lg:px-20 border-y border-border">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Left: Value Props (Navy Square) */}
-            <div className="bg-obsidian text-white p-12 lg:aspect-square flex flex-col justify-center rounded-3xl shadow-2xl relative overflow-hidden">
+            <div className="bg-obsidian bg-noise text-white p-12 lg:aspect-square flex flex-col justify-center rounded-3xl shadow-2xl relative overflow-hidden">
                 {/* Subtle background detail */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
                 
@@ -25,7 +25,7 @@ export function Contact() {
                             'Real-time settlement'
                         ].map((item, i) => (
                             <li key={i} className="flex items-center gap-4 text-white/90 font-medium">
-                                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-white text-xs">✓</span>
+                                <span className="text-white text-lg leading-none">✓</span>
                                 {item}
                             </li>
                         ))}
@@ -45,7 +45,7 @@ export function Contact() {
                         <label className="block text-sm font-medium text-obsidian mb-2">Name</label>
                         <input 
                             type="text" 
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-1 focus:ring-obsidian outline-none transition-all bg-white placeholder:text-subtle/50" 
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-2 focus:ring-obsidian/10 outline-none transition-all bg-white placeholder:text-subtle/50 hover:border-obsidian/30" 
                             placeholder="Jane Doe" 
                         />
                     </div>
@@ -53,7 +53,7 @@ export function Contact() {
                         <label className="block text-sm font-medium text-obsidian mb-2">Work Email</label>
                         <input 
                             type="email" 
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-1 focus:ring-obsidian outline-none transition-all bg-white placeholder:text-subtle/50" 
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-2 focus:ring-obsidian/10 outline-none transition-all bg-white placeholder:text-subtle/50 hover:border-obsidian/30" 
                             placeholder="jane@company.com" 
                         />
                     </div>
@@ -61,7 +61,7 @@ export function Contact() {
                         <label className="block text-sm font-medium text-obsidian mb-2">Company</label>
                         <input 
                             type="text" 
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-1 focus:ring-obsidian outline-none transition-all bg-white placeholder:text-subtle/50" 
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-obsidian focus:ring-2 focus:ring-obsidian/10 outline-none transition-all bg-white placeholder:text-subtle/50 hover:border-obsidian/30" 
                             placeholder="Acme Inc." 
                         />
                     </div>

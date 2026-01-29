@@ -1,8 +1,8 @@
-import { Twitter, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-obsidian text-white py-20 px-6 md:px-12 lg:px-20 relative z-10 border-t border-white/5">
+    <footer className="bg-obsidian bg-noise text-white py-20 px-6 md:px-12 lg:px-20 relative z-10 border-t border-white/5">
       <div className="max-w-7xl mx-auto">
         
         {/* Top Section */}
@@ -11,7 +11,9 @@ export function Footer() {
           {/* Left Column: Brand & Newsletter */}
           <div className="lg:col-span-5 space-y-8">
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 bg-white rounded-sm"></div>
+              <svg viewBox="0 0 100 100" className="w-6 h-6 fill-white">
+                <path d="M50 20 L60 40 L80 50 L60 60 L50 80 L40 60 L20 50 L40 40 Z" />
+              </svg>
               <span className="font-bold text-lg tracking-tight text-white">
                 FRONTYR
               </span>

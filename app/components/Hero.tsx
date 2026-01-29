@@ -1,145 +1,115 @@
-import { ArrowRight } from 'lucide-react';
+'use client';
+
+import { motion } from 'framer-motion';
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-6 md:px-12 lg:px-20 pt-32 pb-20 gap-12">
-      {/* Hero Text - Centered */}
-      <div className="max-w-3xl text-center space-y-8 relative z-10">
-        <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-white border border-border/60 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span className="font-sans text-[13px] font-semibold text-subtle tracking-tight">
-              SOC 2 Compliant
-            </span>
-          </div>
-          <h1 className="font-sans text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-obsidian leading-[0.95]">
-            Stablecoin
-            <br />
-            <span className="text-subtle">Banking Core.</span>
-          </h1>
-          <p className="max-w-xl mx-auto font-sans text-base text-subtle leading-relaxed">
-            Frontyr builds a modern, programmable banking core designed from
-            the ground up for stablecoins, tokenized dollars, and real-time
-            settlement.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.03] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.3)] hover:ring-white/20 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-obsidian/20 focus:ring-offset-2 flex items-center gap-2">
-            <span className="relative z-10">Request Platform Brief</span>
-            <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
-          <button className="px-8 py-3.5 bg-white text-obsidian border border-border text-sm font-medium rounded shadow-sm transition-all duration-300 ease-out hover:bg-gray-50 hover:border-obsidian/40 hover:text-black hover:shadow-md active:scale-[0.97] active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-obsidian/10 focus:ring-offset-2">
-            Platform Overview
-          </button>
-        </div>
+    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 lg:px-20 pt-32 pb-20 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 technical-grid opacity-35"></div>
+        <div className="absolute -top-48 -left-48 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.14),transparent_65%)]"></div>
+        <div className="absolute -bottom-44 right-[-120px] w-[420px] h-[420px] rounded-full bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.08),transparent_70%)]"></div>
       </div>
-
-      {/* Illustration - Below Hero */}
-      <div className="relative w-full max-w-2xl aspect-[16/9] flex items-center justify-center mt-8">
-        <div className="absolute inset-0 bg-gradient-to-tr from-canvas via-white to-canvas opacity-50 blur-3xl"></div>
-        <div className="premium-card w-full h-full p-6 relative overflow-hidden rounded-xl bg-white border border-[#EAEAEA] shadow-[0_2px_4px_rgba(0,0,0,0.02),0_8px_16px_-4px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(0,0,0,0.03),0_12px_24px_-6px_rgba(0,0,0,0.06)] hover:border-[#D4D4D4]">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-obsidian to-transparent"></div>
-          {/* Mock UI: Node Graph */}
-          <div className="h-full w-full flex flex-col">
-            <div className="flex justify-between items-center mb-6 border-b border-border/50 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-border"></div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-subtle">
-                  Stablecoin Core Graph
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
+        
+        {/* Left Column: Text Content */}
+        <div className="flex flex-col items-start space-y-8 relative z-10 text-left">
+            <motion.div 
+              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border/60 shadow-sm mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="font-sans text-[13px] font-semibold text-subtle tracking-tight">
+                  SOC 2 Compliant
                 </span>
               </div>
-              <div className="flex gap-2">
-                <span className="w-12 h-1.5 rounded-full bg-border/50"></span>
+              <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] text-obsidian leading-[0.95]">
+                Stablecoin <span className="text-subtle">Infrastructure for Banks</span>
+              </h1>
+              <p className="max-w-xl font-sans text-lg text-subtle leading-relaxed">
+                A modern bank core built for stablecoins, tokenized dollars, and real-time settlement. Frontyr is your northstar in digital dollar infrastructure.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-wrap items-center gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-300 hover:bg-obsidian/90 hover:scale-[1.02] hover:shadow-lg flex items-center gap-2 cursor-pointer">
+                <span className="relative z-10">Book a Demo</span>
+              </button>
+              <button className="px-8 py-3.5 bg-white text-obsidian border border-border text-sm font-medium rounded-xl shadow-sm transition-all duration-300 hover:bg-gray-50 hover:border-obsidian/40 hover:text-black hover:shadow-md cursor-pointer">
+                View Documentation
+              </button>
+            </motion.div>
+
+            <motion.div
+              className="flex flex-wrap items-center gap-6 text-xs text-subtle"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
+                Real-time settlement
               </div>
-            </div>
-            <div className="flex-1 relative">
-              {/* SVG Graph */}
-              <svg className="w-full h-full" viewBox="0 0 400 220">
-                <defs>
-                  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#E5E5E5" />
-                  </marker>
-                </defs>
-
-                {/* --- Static Paths --- */}
-                
-                {/* Main Flow Path (Bank A -> Frontyr -> Bank B) */}
-                <path d="M80,80 C110,80 130,80 140,80" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-                <path d="M260,80 C270,80 290,80 320,80" fill="none" stroke="#E5E5E5" strokeWidth="2"></path>
-
-                {/* Abstracted Complexity Paths (Dropping down) */}
-                <path d="M200,110 C200,130 150,130 150,150" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4"></path>
-                <path d="M200,110 C200,130 250,130 250,150" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4"></path>
-
-                {/* --- Active Signal Animation --- */}
-                {/* Travels from left (Bank A) through Center to Right (Bank B) */}
-                <path 
-                  d="M50,80 L350,80" 
-                  fill="none" 
-                  stroke="#0A1628" 
-                  strokeWidth="2.5" 
-                  strokeLinecap="round" 
-                  className="animate-signal" 
-                  style={{ strokeDasharray: '60 400' }}
-                ></path>
-
-                {/* --- Nodes --- */}
-
-                {/* Left: Sending Bank */}
-                <g className="origin-[50px_80px] animate-[pulse-context_6s_infinite_ease-out]">
-                  <rect x="20" y="65" width="60" height="30" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
-                  <text x="50" y="84" textAnchor="middle" className="font-jakarta text-[9px] font-semibold fill-[#0A1628]">
-                    Bank A
-                  </text>
-                </g>
-
-                {/* Right: Receiving Bank */}
-                <g className="origin-[350px_80px] animate-[pulse-outcome_6s_infinite_ease-out]">
-                  <rect x="320" y="65" width="60" height="30" rx="4" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
-                  <text x="350" y="84" textAnchor="middle" className="font-jakarta text-[9px] font-semibold fill-[#0A1628]">
-                    Bank B
-                  </text>
-                </g>
-
-                {/* Center: Frontyr Core (The Bridge) */}
-                <rect x="140" y="50" width="120" height="60" rx="6" fill="white" stroke="#0A1628" strokeWidth="2" className="drop-shadow-sm"></rect>
-                <text x="200" y="75" textAnchor="middle" className="font-jakarta text-[11px] font-bold fill-[#0A1628]">
-                  Frontyr Core
-                </text>
-                <text x="200" y="92" textAnchor="middle" className="font-jakarta text-[8px] fill-[#6B7280]">
-                  Instant Settlement Rail
-                </text>
-
-                {/* --- Abstracted Complexity (De-emphasized) --- */}
-                
-                {/* Connection Dots on Frontyr */}
-                <circle cx="200" cy="110" r="3" fill="#E5E5E5"></circle>
-
-                {/* Compliance Node */}
-                <rect x="110" y="150" width="80" height="24" rx="4" fill="#F5F5F7" stroke="#E5E5E5" strokeWidth="1"></rect>
-                <text x="150" y="165" textAnchor="middle" className="font-jakarta text-[8px] font-medium fill-[#9CA3AF]">
-                  Compliance
-                </text>
-
-                {/* Treasury Node */}
-                <rect x="210" y="150" width="80" height="24" rx="4" fill="#F5F5F7" stroke="#E5E5E5" strokeWidth="1"></rect>
-                <text x="250" y="165" textAnchor="middle" className="font-jakarta text-[8px] font-medium fill-[#9CA3AF]">
-                  Treasury
-                </text>
-
-                {/* Checkmark Animation at End */}
-                <path d="M346 80l3 3 5-5" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-[check-draw_6s_linear_infinite]" style={{ strokeDasharray: 12 }}></path>
-
-              </svg>
-
-              {/* Floating Label - Kept as requested */}
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-obsidian text-white text-[10px] font-medium px-3 py-1.5 rounded shadow-xl z-10">
-                Real-Time: 24/7
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
+                Programmable compliance
               </div>
-            </div>
-          </div>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
+                API-first core ledger
+              </div>
+            </motion.div>
         </div>
+
+        {/* Right Column: Technical Illustration */}
+        <motion.div 
+            className="relative w-full aspect-square flex items-center justify-center lg:justify-end"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
+            <div className="relative w-full max-w-lg aspect-square rounded-lg p-8 overflow-visible">
+                {/* Background Grid Pattern - subtle */}
+                <div className="absolute inset-0 opacity-20" style={{ 
+                    backgroundImage: 'radial-gradient(#0A1628 0.5px, transparent 0.5px)', 
+                    backgroundSize: '24px 24px' 
+                }}></div>
+
+                {/* Center SVG Composition */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible">
+                        {/* Outer Ring - Lightest */}
+                        <circle cx="200" cy="200" r="140" fill="none" stroke="#0A1628" strokeWidth="1" strokeDasharray="4 4" opacity="0.1" />
+                        
+                        {/* Middle Ring - Medium */}
+                        <circle cx="200" cy="200" r="100" fill="none" stroke="#0A1628" strokeWidth="1" opacity="0.25" />
+
+                        {/* Innermost Ring - Darkest & Rotating */}
+                        <g className="animate-[spin_15s_linear_infinite] origin-center">
+                            <circle cx="200" cy="200" r="60" fill="none" stroke="#0A1628" strokeWidth="1.5" opacity="0.8" strokeDasharray="280 100" />
+                            {/* Tick mark on ring */}
+                             <line x1="200" y1="135" x2="200" y2="145" stroke="#0A1628" strokeWidth="2" />
+                        </g>
+
+                        {/* Center Star - Geometric & Sharp */}
+                        <path 
+                            d="M200 160 L210 190 L240 200 L210 210 L200 240 L190 210 L160 200 L190 190 Z" 
+                            fill="#0A1628" 
+                        />
+
+                    </svg>
+                </div>
+            </div>
+        </motion.div>
+
       </div>
     </section>
   );

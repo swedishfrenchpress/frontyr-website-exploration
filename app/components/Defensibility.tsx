@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight } from 'lucide-react';
 
 const solutions = [
@@ -5,17 +7,19 @@ const solutions = [
     title: 'Stablecoin Issuance & Redemption',
     desc: 'Frontyr provides the core ledger and compliance rails for minting, burning, and managing stablecoin supply with full reserve transparency.',
     image: '/bank-dither1.png',
+    placeholder: '/solution-1-placeholder.svg',
   },
   {
     title: 'Treasury & Liquidity Management',
     desc: 'Track reserves, manage liquidity positions, and maintain balance-sheet clarity across all stablecoin operations in real time.',
     image: '/bank-dither2.png',
+    placeholder: '/solution-2-placeholder.svg',
   },
 ];
 
 export function Defensibility() {
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-canvas">
+    <section id="solutions" className="py-24 px-6 md:px-12 lg:px-20 bg-canvas">
       <div className="max-w-7xl mx-auto bg-white border border-border rounded-xl p-8 md:p-12 lg:p-16">
         {/* Section Header */}
         <div className="mb-20">
@@ -48,14 +52,25 @@ export function Defensibility() {
 
               {/* Visual Side - 1:1 Aspect Ratio */}
               <div 
-                className={`w-full aspect-square bg-obsidian rounded-lg overflow-hidden ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
+                className={`w-full aspect-square rounded-lg overflow-hidden relative ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
               >
+                {/* Background Image - Full fill */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src={solution.image} 
-                  alt={solution.title} 
-                  className="w-full h-full object-cover"
+                  alt="" 
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
+
+                {/* SVG Placeholder Overlay */}
+                <div className="absolute inset-0 z-10 flex items-center justify-center p-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                        src={solution.placeholder} 
+                        alt="UI Mockup" 
+                        className="w-full h-full object-contain"
+                    />
+                </div>
               </div>
             </div>
           ))}
