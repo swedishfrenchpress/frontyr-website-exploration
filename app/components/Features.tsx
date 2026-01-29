@@ -12,9 +12,8 @@ interface Transaction {
 
 // Unified Ledger Card Component with animations
 function UnifiedLedgerCard() {
+  const [phase, setPhase] = useState<'running' | 'complete' | 'resetting'>('running');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-  const [isResetting, setIsResetting] = useState(false);
   const [transactions, setTransactions] = useState<Transaction[]>([
     { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
     { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
@@ -23,64 +22,66 @@ function UnifiedLedgerCard() {
 
   // Sequential animation: process and settle each transaction one by one
   useEffect(() => {
-    if (isResetting) return;
+    if (phase !== 'running') return;
     
     const settleDelay = 2500; // Time before current transaction settles
     const nextDelay = 800; // Time before next transaction starts processing
 
     const timer = setTimeout(() => {
+      // Settle the current processing transaction
       setTransactions(prev => {
         const updated = [...prev];
-        
-        // Settle the current processing transaction
         if (updated[activeIndex]?.status === 'processing') {
           updated[activeIndex] = { ...updated[activeIndex], status: 'settled' };
         }
-        
         return updated;
       });
 
-      // After settling, start processing the next one
+      // After settling, start processing the next one or complete
       setTimeout(() => {
         if (activeIndex < 2) {
-          setActiveIndex(prev => prev + 1);
+          const nextIndex = activeIndex + 1;
+          setActiveIndex(nextIndex);
           setTransactions(prev => {
             const updated = [...prev];
-            if (updated[activeIndex + 1]) {
-              updated[activeIndex + 1] = { ...updated[activeIndex + 1], status: 'processing' };
-            }
+            updated[nextIndex] = { ...updated[nextIndex], status: 'processing' };
             return updated;
           });
         } else {
-          // All complete - show completion state
-          setIsComplete(true);
-          
-          // Start smooth reset after showing completion
-          setTimeout(() => {
-            setIsResetting(true);
-            
-            // Fade out, then reset
-            setTimeout(() => {
-              setActiveIndex(0);
-              setIsComplete(false);
-              setTransactions([
-                { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
-                { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
-                { id: 'TX_8894_USD', type: 'USD', status: 'pending' },
-              ]);
-              
-              // Fade back in
-              setTimeout(() => {
-                setIsResetting(false);
-              }, 50);
-            }, 400);
-          }, 1800);
+          // All complete
+          setPhase('complete');
         }
       }, nextDelay);
     }, settleDelay);
 
     return () => clearTimeout(timer);
-  }, [activeIndex, transactions, isResetting]);
+  }, [activeIndex, phase]);
+
+  // Handle reset after completion
+  useEffect(() => {
+    if (phase !== 'complete') return;
+    
+    const resetTimer = setTimeout(() => {
+      setPhase('resetting');
+      
+      // After fade out, reset state
+      setTimeout(() => {
+        setActiveIndex(0);
+        setTransactions([
+          { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
+          { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
+          { id: 'TX_8894_USD', type: 'USD', status: 'pending' },
+        ]);
+        
+        // Fade back in
+        setTimeout(() => {
+          setPhase('running');
+        }, 50);
+      }, 400);
+    }, 1800);
+
+    return () => clearTimeout(resetTimer);
+  }, [phase]);
 
   const getTypeColor = (type: Transaction['type'], status: Transaction['status']) => {
     const opacity = status === 'pending' ? '/40' : '';
@@ -128,7 +129,7 @@ function UnifiedLedgerCard() {
           <div className="bg-canvas border border-border rounded-lg p-5 shadow-sm">
             <div className={`
               transition-opacity duration-400 ease-out
-              ${isResetting ? 'opacity-0' : 'opacity-100'}
+              ${phase === 'resetting' ? 'opacity-0' : 'opacity-100'}
             `}>
               {/* Transaction List - styled like Regulatory Audit cards */}
               <div className="space-y-2">
@@ -136,7 +137,7 @@ function UnifiedLedgerCard() {
                   <div
                     key={tx.id}
                     className={`
-                      flex items-center justify-between px-4 py-3 rounded-md
+                      flex items-center justify-between px-4 h-12 rounded-md
                       bg-white border border-border shadow-sm
                       transition-all duration-500 ease-out
                       ${tx.status === 'processing' 
@@ -183,9 +184,6 @@ function UnifiedLedgerCard() {
                   </div>
                 ))}
               </div>
-
-              {/* Bottom bar - styled like Regulatory Audit base */}
-              <div className="w-full h-4 bg-white border-x border-b border-border rounded-b-md shadow-sm relative -mt-1"></div>
 
               {/* Progress indicator */}
               <div className="mt-4 pt-4">
