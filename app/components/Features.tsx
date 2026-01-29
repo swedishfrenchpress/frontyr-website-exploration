@@ -13,6 +13,8 @@ interface Transaction {
 // Unified Ledger Card Component with animations
 function UnifiedLedgerCard() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
   const [transactions, setTransactions] = useState<Transaction[]>([
     { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
     { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
@@ -21,6 +23,8 @@ function UnifiedLedgerCard() {
 
   // Sequential animation: process and settle each transaction one by one
   useEffect(() => {
+    if (isResetting) return;
+    
     const settleDelay = 2500; // Time before current transaction settles
     const nextDelay = 800; // Time before next transaction starts processing
 
@@ -48,26 +52,41 @@ function UnifiedLedgerCard() {
             return updated;
           });
         } else {
-          // Reset the cycle after all are settled
+          // All complete - show completion state
+          setIsComplete(true);
+          
+          // Start smooth reset after showing completion
           setTimeout(() => {
-            setActiveIndex(0);
-            setTransactions([
-              { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
-              { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
-              { id: 'TX_8894_USD', type: 'USD', status: 'pending' },
-            ]);
-          }, 1500);
+            setIsResetting(true);
+            
+            // Fade out, then reset
+            setTimeout(() => {
+              setActiveIndex(0);
+              setIsComplete(false);
+              setTransactions([
+                { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
+                { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
+                { id: 'TX_8894_USD', type: 'USD', status: 'pending' },
+              ]);
+              
+              // Fade back in
+              setTimeout(() => {
+                setIsResetting(false);
+              }, 50);
+            }, 400);
+          }, 1800);
         }
       }, nextDelay);
     }, settleDelay);
 
     return () => clearTimeout(timer);
-  }, [activeIndex, transactions]);
+  }, [activeIndex, transactions, isResetting]);
 
-  const getTypeColor = (type: Transaction['type']) => {
+  const getTypeColor = (type: Transaction['type'], status: Transaction['status']) => {
+    const opacity = status === 'pending' ? '/40' : '';
     switch (type) {
-      case 'USD': return 'bg-emerald-500';
-      case 'USDC': return 'bg-blue-500';
+      case 'USD': return `bg-green-500${opacity}`;
+      case 'USDC': return `bg-blue-500${opacity}`;
     }
   };
 
@@ -105,78 +124,83 @@ function UnifiedLedgerCard() {
 
         {/* Right side - Ledger Animation */}
         <div className="flex-1 w-full">
+          {/* Outer container box */}
           <div className="bg-canvas border border-border rounded-lg p-5 shadow-sm">
-            {/* Transaction List */}
-            <div className="space-y-2">
-              {transactions.map((tx, index) => (
-                <div
-                  key={tx.id}
-                  className={`
-                    flex items-center justify-between px-4 py-3 rounded-lg
-                    transition-all duration-500 ease-out
-                    ${tx.status === 'processing' 
-                      ? 'bg-white shadow-sm border border-border/80' 
-                      : tx.status === 'settled'
-                        ? 'bg-white/60'
-                        : 'bg-transparent'
-                    }
-                  `}
-                >
-                  <div className="flex items-center gap-3">
-                    <span 
-                      className={`
-                        w-2 h-2 rounded-full transition-all duration-500
-                        ${getTypeColor(tx.type)}
-                        ${tx.status === 'processing' ? 'scale-110' : 'scale-100'}
-                        ${tx.status === 'pending' ? 'opacity-40' : 'opacity-100'}
-                      `}
-                    ></span>
-                    <span 
-                      className={`
-                        text-xs font-mono tracking-tight transition-all duration-500
-                        ${tx.status === 'pending' ? 'text-subtle/50' : 'text-obsidian'}
-                      `}
-                    >
-                      {tx.id}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center">
-                    {tx.status === 'settled' && (
-                      <span className="text-[10px] font-semibold text-subtle uppercase tracking-wider px-2.5 py-1 border border-border rounded-full transition-all duration-300">
-                        Settled
+            <div className={`
+              transition-opacity duration-400 ease-out
+              ${isResetting ? 'opacity-0' : 'opacity-100'}
+            `}>
+              {/* Transaction List - styled like Regulatory Audit cards */}
+              <div className="space-y-2">
+                {transactions.map((tx, index) => (
+                  <div
+                    key={tx.id}
+                    className={`
+                      flex items-center justify-between px-4 py-3 rounded-md
+                      bg-white border border-border shadow-sm
+                      transition-all duration-500 ease-out
+                      ${tx.status === 'processing' 
+                        ? 'shadow-md border-border' 
+                        : tx.status === 'pending'
+                          ? 'opacity-50'
+                          : ''
+                      }
+                    `}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className={`
+                          w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-500
+                          ${getTypeColor(tx.type, tx.status)}
+                        `}
+                      ></div>
+                      <span 
+                        className={`
+                          text-[10px] font-bold text-obsidian uppercase tracking-wide
+                          transition-all duration-500
+                        `}
+                      >
+                        {tx.id}
                       </span>
-                    )}
-                    {tx.status === 'processing' && (
-                      <div className="flex items-center gap-1.5 px-2.5 py-1">
-                        <span className="w-1 h-1 rounded-full bg-obsidian/60 animate-[pulse_1.5s_ease-in-out_infinite]"></span>
-                        <span className="w-1 h-1 rounded-full bg-obsidian/60 animate-[pulse_1.5s_ease-in-out_infinite_0.2s]"></span>
-                        <span className="w-1 h-1 rounded-full bg-obsidian/60 animate-[pulse_1.5s_ease-in-out_infinite_0.4s]"></span>
-                      </div>
-                    )}
-                    {tx.status === 'pending' && (
-                      <span className="text-[10px] text-subtle/40 uppercase tracking-wider px-2.5 py-1">
-                        Pending
-                      </span>
-                    )}
+                    </div>
+                    
+                    <div className="flex items-center justify-end w-20">
+                      {tx.status === 'settled' && (
+                        <div className="text-green-600 font-bold text-[10px] animate-[fade-in_0.3s_ease-out]">✓</div>
+                      )}
+                      {tx.status === 'processing' && (
+                        <div className="h-0.5 w-16 bg-green-500/20 rounded relative overflow-hidden">
+                          <div 
+                            className="absolute inset-y-0 left-0 bg-green-500/40 rounded animate-[progress_2s_ease-in-out_infinite]"
+                            style={{ width: '60%' }}
+                          ></div>
+                        </div>
+                      )}
+                      {tx.status === 'pending' && (
+                        <div className="h-0.5 w-16 bg-border rounded"></div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Progress indicator */}
-            <div className="mt-4 pt-4 border-t border-border/40">
-              <div className="flex items-center justify-between text-[10px] text-subtle uppercase tracking-wider mb-2">
-                <span>Settlement Progress</span>
-                <span>{transactions.filter(t => t.status === 'settled').length} of 3</span>
+                ))}
               </div>
-              <div className="h-1 bg-border/40 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-obsidian rounded-full transition-all duration-700 ease-out"
-                  style={{ 
-                    width: `${(transactions.filter(t => t.status === 'settled').length / 3) * 100}%` 
-                  }}
-                ></div>
+
+              {/* Bottom bar - styled like Regulatory Audit base */}
+              <div className="w-full h-4 bg-white border-x border-b border-border rounded-b-md shadow-sm relative -mt-1"></div>
+
+              {/* Progress indicator */}
+              <div className="mt-4 pt-4">
+                <div className="flex items-center justify-between text-[10px] text-subtle uppercase tracking-wider mb-2">
+                  <span>Settlement Progress</span>
+                  <span>{transactions.filter(t => t.status === 'settled').length} of 3</span>
+                </div>
+                <div className="h-1 bg-border/40 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-obsidian rounded-full transition-all duration-700 ease-out"
+                    style={{ 
+                      width: `${(transactions.filter(t => t.status === 'settled').length / 3) * 100}%` 
+                    }}
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
