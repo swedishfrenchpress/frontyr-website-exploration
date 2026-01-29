@@ -1,6 +1,190 @@
 'use client';
 
-import { GitBranch, History, FileText, RotateCw } from 'lucide-react';
+import { GitBranch, History, Layers } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
+
+// Transaction type for the ledger animation
+interface Transaction {
+  id: string;
+  type: 'USD' | 'USDC';
+  status: 'pending' | 'processing' | 'settled';
+}
+
+// Unified Ledger Card Component with animations
+function UnifiedLedgerCard() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [transactions, setTransactions] = useState<Transaction[]>([
+    { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
+    { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
+    { id: 'TX_8894_USD', type: 'USD', status: 'pending' },
+  ]);
+
+  // Sequential animation: process and settle each transaction one by one
+  useEffect(() => {
+    const settleDelay = 2500; // Time before current transaction settles
+    const nextDelay = 800; // Time before next transaction starts processing
+
+    const timer = setTimeout(() => {
+      setTransactions(prev => {
+        const updated = [...prev];
+        
+        // Settle the current processing transaction
+        if (updated[activeIndex]?.status === 'processing') {
+          updated[activeIndex] = { ...updated[activeIndex], status: 'settled' };
+        }
+        
+        return updated;
+      });
+
+      // After settling, start processing the next one
+      setTimeout(() => {
+        if (activeIndex < 2) {
+          setActiveIndex(prev => prev + 1);
+          setTransactions(prev => {
+            const updated = [...prev];
+            if (updated[activeIndex + 1]) {
+              updated[activeIndex + 1] = { ...updated[activeIndex + 1], status: 'processing' };
+            }
+            return updated;
+          });
+        } else {
+          // Reset the cycle after all are settled
+          setTimeout(() => {
+            setActiveIndex(0);
+            setTransactions([
+              { id: 'TX_8892_USD', type: 'USD', status: 'processing' },
+              { id: 'TX_8893_USDC', type: 'USDC', status: 'pending' },
+              { id: 'TX_8894_USD', type: 'USD', status: 'pending' },
+            ]);
+          }, 1500);
+        }
+      }, nextDelay);
+    }, settleDelay);
+
+    return () => clearTimeout(timer);
+  }, [activeIndex, transactions]);
+
+  const getTypeColor = (type: Transaction['type']) => {
+    switch (type) {
+      case 'USD': return 'bg-emerald-500';
+      case 'USDC': return 'bg-blue-500';
+    }
+  };
+
+  return (
+    <div className="md:col-span-12 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
+      <div className="p-10 flex flex-col md:flex-row items-start gap-12">
+        {/* Left side - Copy */}
+        <div className="flex-1 max-w-lg">
+          <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
+            <Layers className="w-5 h-5" />
+          </div>
+          <h3 className="text-xl font-semibold text-obsidian mb-2">
+            A Single, Pristine Ledger
+          </h3>
+          <p className="text-subtle leading-relaxed mb-6">
+            Frontyr unifies on-chain settlement with off-chain compliance, giving you a single source of truth across all asset types.
+          </p>
+          
+          {/* Feature bullets */}
+          <ul className="space-y-3">
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+              <span className="text-sm text-subtle">Stablecoin-native checking infrastructure</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+              <span className="text-sm text-subtle">Real-time programmable treasury</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+              <span className="text-sm text-subtle">Automated liquidity management</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Right side - Ledger Animation */}
+        <div className="flex-1 w-full">
+          <div className="bg-canvas border border-border rounded-lg p-5 shadow-sm">
+            {/* Transaction List */}
+            <div className="space-y-2">
+              {transactions.map((tx, index) => (
+                <div
+                  key={tx.id}
+                  className={`
+                    flex items-center justify-between px-4 py-3 rounded-lg
+                    transition-all duration-500 ease-out
+                    ${tx.status === 'processing' 
+                      ? 'bg-white shadow-sm border border-border/80' 
+                      : tx.status === 'settled'
+                        ? 'bg-white/60'
+                        : 'bg-transparent'
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-3">
+                    <span 
+                      className={`
+                        w-2 h-2 rounded-full transition-all duration-500
+                        ${getTypeColor(tx.type)}
+                        ${tx.status === 'processing' ? 'scale-110' : 'scale-100'}
+                        ${tx.status === 'pending' ? 'opacity-40' : 'opacity-100'}
+                      `}
+                    ></span>
+                    <span 
+                      className={`
+                        text-xs font-mono tracking-tight transition-all duration-500
+                        ${tx.status === 'pending' ? 'text-subtle/50' : 'text-obsidian'}
+                      `}
+                    >
+                      {tx.id}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    {tx.status === 'settled' && (
+                      <span className="text-[10px] font-semibold text-subtle uppercase tracking-wider px-2.5 py-1 border border-border rounded-full transition-all duration-300">
+                        Settled
+                      </span>
+                    )}
+                    {tx.status === 'processing' && (
+                      <div className="flex items-center gap-1.5 px-2.5 py-1">
+                        <span className="w-1 h-1 rounded-full bg-obsidian/60 animate-[pulse_1.5s_ease-in-out_infinite]"></span>
+                        <span className="w-1 h-1 rounded-full bg-obsidian/60 animate-[pulse_1.5s_ease-in-out_infinite_0.2s]"></span>
+                        <span className="w-1 h-1 rounded-full bg-obsidian/60 animate-[pulse_1.5s_ease-in-out_infinite_0.4s]"></span>
+                      </div>
+                    )}
+                    {tx.status === 'pending' && (
+                      <span className="text-[10px] text-subtle/40 uppercase tracking-wider px-2.5 py-1">
+                        Pending
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Progress indicator */}
+            <div className="mt-4 pt-4 border-t border-border/40">
+              <div className="flex items-center justify-between text-[10px] text-subtle uppercase tracking-wider mb-2">
+                <span>Settlement Progress</span>
+                <span>{transactions.filter(t => t.status === 'settled').length} of 3</span>
+              </div>
+              <div className="h-1 bg-border/40 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-obsidian rounded-full transition-all duration-700 ease-out"
+                  style={{ 
+                    width: `${(transactions.filter(t => t.status === 'settled').length / 3) * 100}%` 
+                  }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Features() {
   return (
@@ -170,61 +354,8 @@ export function Features() {
             </div>
           </div>
 
-          {/* Card 3: Dynamic Settlement Routing */}
-          <div className="md:col-span-12 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
-            <div className="p-10 flex flex-col md:flex-row items-center gap-12">
-              <div className="flex-1 max-w-lg">
-                <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-                  <FileText className="w-5 h-5" />
-                </div>
-                <h3 className="text-xl font-semibold text-obsidian mb-2">
-                  Your Core Wasn't Built for This
-                </h3>
-                <p className="text-subtle leading-relaxed">
-                  Legacy cores treat stablecoins as an afterthought. Frontyr is a programmable banking core where stablecoins are the native unit of account—with real-time settlement, programmable compliance, and balance-sheet clarity built in.
-                </p>
-              </div>
-
-              {/* Visual - Flow Animation */}
-              <div className="flex-1 w-full h-32 relative flex items-center overflow-hidden">
-                <svg className="w-full h-full" viewBox="0 0 600 100" preserveAspectRatio="xMidYMid meet">
-                  <defs>
-                    <marker id="arrow-head-flow" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
-                      <path d="M0,0 L4,2 L0,4" fill="#111"></path>
-                    </marker>
-                  </defs>
-                  <path d="M20,50 C100,50 120,20 200,20 C280,20 300,80 380,80 C460,80 480,50 560,50" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4"></path>
-
-                  <path d="M20,50 C100,50 120,20 200,20 C280,20 300,80 380,80 C460,80 480,50 560,50" fill="none" stroke="#111" strokeWidth="1.5" strokeDasharray="600" strokeDashoffset="600" className="transition-all duration-[1500ms] ease-in-out group-hover:stroke-dashoffset-0" markerEnd="url(#arrow-head-flow)"></path>
-
-                  <g className="transition-all duration-500 delay-0 opacity-100 group-hover:scale-110 origin-center">
-                    <circle cx="20" cy="50" r="4" fill="#111"></circle>
-                    <text x="20" y="70" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      INPUT
-                    </text>
-                  </g>
-                  <g className="transition-all duration-500 delay-[400ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center">
-                    <circle cx="200" cy="20" r="4" fill="#fff" stroke="#111" strokeWidth="1.5"></circle>
-                    <text x="200" y="40" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      LOGIC A
-                    </text>
-                  </g>
-                  <g className="transition-all duration-500 delay-[800ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center">
-                    <circle cx="380" cy="80" r="4" fill="#fff" stroke="#111" strokeWidth="1.5"></circle>
-                    <text x="380" y="100" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      LOGIC B
-                    </text>
-                  </g>
-                  <g className="transition-all duration-500 delay-[1200ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center">
-                    <circle cx="560" cy="50" r="4" fill="#111"></circle>
-                    <text x="560" y="70" textAnchor="middle" className="text-[8px] font-mono fill-obsidian font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      RESULT
-                    </text>
-                  </g>
-                </svg>
-              </div>
-            </div>
-          </div>
+          {/* Card 3: Unified Ledger */}
+          <UnifiedLedgerCard />
         </div>
       </div>
     </section>
