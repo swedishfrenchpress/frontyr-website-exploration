@@ -27,10 +27,10 @@ export function Hero() {
                 </span>
               </div>
               <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] text-obsidian leading-[0.95]">
-                Stablecoin <span className="text-subtle">Infrastructure for Banks</span>
+                The core banking platform <span className="text-subtle">for the future of finance.</span>
               </h1>
               <p className="max-w-xl font-sans text-lg text-subtle leading-relaxed">
-                A modern bank core built for stablecoins, tokenized dollars, and real-time settlement. Frontyr is your northstar in digital dollar infrastructure.
+                Frontyr provides the programmable, compliant, and real-time rails needed to build next-generation financial products on stablecoin settlement layers.
               </p>
             </motion.div>
 
