@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowRight } from '@carbon/icons-react';
+import { LedgerAnimation } from './LedgerAnimation';
 
 const solutions = [
   {
@@ -54,23 +55,31 @@ export function Defensibility() {
               <div 
                 className={`w-full aspect-square rounded-lg overflow-hidden relative ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}`}
               >
-                {/* Background Image - Full fill */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={solution.image} 
-                  alt="" 
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-
-                {/* SVG Placeholder Overlay */}
-                <div className="absolute inset-0 z-10 flex items-center justify-center p-2">
+                {index === 1 ? (
+                   <div className="w-full h-full flex items-center justify-center bg-gray-50 p-4">
+                      <LedgerAnimation />
+                   </div>
+                ) : (
+                  <>
+                    {/* Background Image - Full fill */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
-                        src={solution.placeholder} 
-                        alt="UI Mockup" 
-                        className="w-full h-full object-contain"
+                      src={solution.image} 
+                      alt="" 
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
-                </div>
+
+                    {/* SVG Placeholder Overlay */}
+                    <div className="absolute inset-0 z-10 flex items-center justify-center p-2">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                            src={solution.placeholder} 
+                            alt="UI Mockup" 
+                            className="w-full h-full object-contain"
+                        />
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           ))}
