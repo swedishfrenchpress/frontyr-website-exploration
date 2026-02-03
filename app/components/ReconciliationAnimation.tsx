@@ -57,7 +57,7 @@ export function ReconciliationAnimation() {
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-transparent">
-      <svg className="w-full h-full max-w-[900px] overflow-visible" viewBox="0 0 660 120">
+      <svg className="w-full h-full max-w-[900px] overflow-visible" viewBox="-50 -10 720 150">
         <defs>
           <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="1" result="blur" />
@@ -95,7 +95,7 @@ export function ReconciliationAnimation() {
         <g className="transition-all duration-500 opacity-100 translate-y-0">
           <circle cx="20" cy="60" r="4" fill="#0A1628" />
           {/* Label Box */}
-          <foreignObject x="-20" y="75" width="100" height="60" style={{ overflow: 'visible' }}>
+          <foreignObject x="-30" y="75" width="100" height="60" style={{ overflow: 'visible' }}>
              <div className={`
                bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-center gap-1 w-max
                transition-all duration-500
