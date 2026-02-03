@@ -432,7 +432,7 @@ export function Features() {
           {/* Card 1: Modern Treasury Management (Large) */}
           <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
             <div className="p-10">
-              <div className="flex-1 max-w-lg">
+              <div className="flex-1 max-w-none">
                 <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
                   <Layers className="w-5 h-5" />
                 </div>
@@ -600,8 +600,8 @@ export function Features() {
 
           {/* Card 4: Reconciliation (Large) */}
           <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
-             <div className="relative z-10 p-10 h-full">
-                <div className="max-w-lg">
+             <div className="relative z-10 p-10 h-full flex flex-col justify-between">
+                <div className="max-w-none">
                     <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
                         <Renew className="w-5 h-5" />
                     </div>
@@ -613,7 +613,7 @@ export function Features() {
                     </p>
                 </div>
 
-                <div className="mt-32 h-64 w-full relative flex items-center justify-center">
+                <div className="mt-12 h-64 w-full relative flex items-center justify-center">
                   <ReconciliationAnimation />
                 </div>
              </div>
