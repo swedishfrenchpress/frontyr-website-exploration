@@ -4,6 +4,185 @@ import { Branch, Time, Layers, WarningAlt, CheckmarkOutline, Send, Renew, Calend
 import { useEffect, useState, useRef } from 'react';
 import { TreasuryAnimation } from './TreasuryAnimation';
 
+// Routing Animation Component
+function RoutingAnimation() {
+  const [phase, setPhase] = useState<'idle' | 'input' | 'processing' | 'swift' | 'ach' | 'usdc'>('idle');
+  
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    const loop = () => {
+      setPhase('input'); // Start: Origin -> Frontyr
+      
+      timer = setTimeout(() => {
+        setPhase('processing'); // Frontyr Node Active
+        
+        timer = setTimeout(() => {
+          setPhase('swift'); // Check Swift
+          
+          timer = setTimeout(() => {
+            setPhase('ach'); // Check ACH
+            
+            timer = setTimeout(() => {
+              setPhase('usdc'); // Check/Select USDC
+              
+              timer = setTimeout(() => {
+                setPhase('idle'); // Reset
+                timer = setTimeout(loop, 500);
+              }, 3000);
+            }, 1000);
+          }, 1000);
+        }, 800);
+      }, 1000);
+    };
+    
+    loop();
+    return () => clearTimeout(timer);
+  }, []);
+
+  const getRailColor = (rail: 'swift' | 'ach' | 'usdc') => {
+    if (phase === rail) return '#10B981'; // Active Green
+    if (rail === 'usdc' && phase === 'usdc') return '#10B981'; // Keep USDC active if needed (logic handled by phases)
+    return '#E5E7EB'; // Inactive Gray
+  };
+
+  const getRailOpacity = (rail: 'swift' | 'ach' | 'usdc') => {
+    if (phase === rail) return 1;
+    return 0.3;
+  };
+
+  return (
+    <div className="w-full h-56 relative flex items-center justify-center overflow-visible">
+       <svg className="w-full h-full max-w-5xl overflow-visible" viewBox="0 0 900 160">
+          <defs>
+            <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          {/* --- PATHS --- */}
+          
+          {/* Input Path (Left -> Center) */}
+          <path 
+            d="M 90 80 L 410 80" 
+            fill="none" 
+            stroke={phase !== 'idle' ? '#10B981' : '#E5E7EB'} 
+            strokeWidth="2" 
+            strokeDasharray="6 6"
+            className="transition-colors duration-700"
+          />
+
+          {/* Option 1: Wire (Top) */}
+          <g className="transition-all duration-500" style={{ opacity: phase === 'swift' ? 1 : 0.4 }}>
+             <path 
+                d="M 490 80 C 550 80, 600 30, 810 30" 
+                fill="none" 
+                stroke={phase === 'swift' ? '#10B981' : '#E5E7EB'} 
+                strokeWidth="2" 
+                strokeDasharray="4 4" 
+             />
+             <text x="650" y="45" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-medium">SWIFT • 2 DAYS</text>
+          </g>
+
+          {/* Option 2: ACH (Middle) */}
+          <g className="transition-all duration-500" style={{ opacity: phase === 'ach' ? 1 : 0.4 }}>
+             <path 
+                d="M 490 80 C 550 80, 600 80, 810 80" 
+                fill="none" 
+                stroke={phase === 'ach' ? '#10B981' : '#E5E7EB'} 
+                strokeWidth="2" 
+                strokeDasharray="4 4" 
+             />
+             <text x="650" y="70" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-medium">ACH • 1 DAY</text>
+          </g>
+
+          {/* Option 3: Stablecoin (Bottom) */}
+          <g className="transition-all duration-500" style={{ opacity: phase === 'usdc' ? 1 : 0.4 }}>
+             {/* Base Path */}
+             <path 
+                d="M 490 80 C 550 80, 600 130, 810 130" 
+                fill="none" 
+                stroke={phase === 'usdc' ? '#10B981' : '#E5E7EB'} 
+                strokeWidth={phase === 'usdc' ? '3' : '2'} 
+                className="transition-colors duration-500"
+             />
+             {/* Glow Effect */}
+             {phase === 'usdc' && (
+                <path 
+                    d="M 490 80 C 550 80, 600 130, 810 130" 
+                    fill="none" 
+                    stroke="#10B981" 
+                    strokeWidth="6" 
+                    strokeOpacity="0.3"
+                    filter="url(#glow-green)"
+                />
+             )}
+             <rect x="610" y="115" width="80" height="20" rx="4" fill={phase === 'usdc' ? '#ECFDF5' : 'transparent'} className="transition-colors duration-500" />
+             <text 
+                x="650" y="129" 
+                textAnchor="middle" 
+                className={`text-[10px] font-mono font-bold transition-colors duration-500 ${phase === 'usdc' ? 'fill-emerald-600' : 'fill-subtle'}`}
+             >
+                USDC • INSTANT
+             </text>
+          </g>
+
+
+          {/* --- NODES --- */}
+          
+          {/* Node 1: Sender (Left) */}
+          <g transform="translate(10, 40)">
+             {/* Card Bg */}
+             <rect x="0" y="0" width="80" height="80" rx="8" fill="white" stroke={phase !== 'idle' ? '#10B981' : '#E5E7EB'} strokeWidth={phase !== 'idle' ? '2' : '1'} className="transition-colors duration-700" />
+             {/* Icon Circle */}
+             <circle cx="40" cy="30" r="16" fill="#F9FAFB" stroke="#E5E7EB" />
+             <text x="40" y="34" textAnchor="middle" className="text-[12px] font-serif font-bold fill-obsidian">$</text>
+             {/* Text */}
+             <text x="40" y="60" textAnchor="middle" className="text-[10px] font-semibold fill-obsidian">Origin</text>
+             <text x="40" y="72" textAnchor="middle" className="text-[9px] font-mono fill-subtle">USD</text>
+          </g>
+
+          {/* Node 2: Frontyr (Center) */}
+          <g transform="translate(410, 40)">
+             {/* Card Bg */}
+             <rect 
+                x="0" y="0" width="80" height="80" rx="8" 
+                fill="#0A1628" 
+                stroke={phase === 'processing' || phase === 'swift' || phase === 'ach' || phase === 'usdc' ? '#10B981' : '#0A1628'} 
+                strokeWidth={phase !== 'idle' && phase !== 'input' ? '2' : '0'}
+                className="transition-colors duration-300"
+             />
+             
+             {/* Icon */}
+             <g transform="translate(40, 30) scale(0.14) translate(-50, -50)">
+                 <path d="M50 20 L60 40 L80 50 L60 60 L50 80 L40 60 L20 50 L40 40 Z" fill="white" />
+             </g>
+             
+             {/* Text */}
+             <text x="40" y="60" textAnchor="middle" className="text-[10px] font-bold fill-white tracking-widest">FRONTYR</text>
+             <text x="40" y="72" textAnchor="middle" className={`text-[8px] font-mono transition-colors duration-300 ${phase === 'processing' ? 'fill-emerald-400' : 'fill-gray-400'}`}>
+                {phase === 'processing' ? 'OPTIMIZING' : 'OPTIMIZER'}
+             </text>
+          </g>
+
+          {/* Node 3: Receiver (Right) */}
+          <g transform="translate(810, 40)"> 
+             {/* Card Bg */}
+             <rect x="0" y="0" width="80" height="80" rx="8" fill="white" stroke={phase === 'usdc' ? '#10B981' : '#E5E7EB'} strokeWidth={phase === 'usdc' ? '2' : '1'} className="transition-colors duration-500" />
+             {/* Icon Circle */}
+             <circle cx="40" cy="30" r="16" fill="#0A1628" />
+             <text x="40" y="34" textAnchor="middle" className="text-[12px] font-serif font-bold fill-white">$</text>
+             {/* Text */}
+             <text x="40" y="60" textAnchor="middle" className="text-[10px] font-semibold fill-obsidian">Receiver</text>
+             <text x="40" y="72" textAnchor="middle" className="text-[9px] font-mono fill-subtle">USD</text>
+          </g>
+
+       </svg>
+    </div>
+  );
+}
+
 function DashboardDelayCard() {
   const [step, setStep] = useState<'idle' | 'processing' | 'success' | 'delayed'>('idle');
 
@@ -321,74 +500,8 @@ export function Features() {
             </div>
 
               {/* Dynamic Routing Animation */}
-              <div className="mt-12 h-32 w-full relative flex items-center border-t border-border/40 pt-6 overflow-hidden">
-                  <svg className="w-full h-full" viewBox="0 0 600 100" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                      <marker id="arrow-head-routing" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
-                        <path d="M0,0 L4,2 L0,4" fill="#111"></path>
-                      </marker>
-                    </defs>
-
-                    {/* Dotted Line Path */}
-                    <path 
-                      id="routing-path"
-                      d="M20,50 C120,50 150,20 300,20 C450,20 480,50 580,50" 
-                      fill="none" 
-                      stroke="#E5E5E5" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="4 4"
-                    ></path>
-
-                    {/* Moving Dot Animation */}
-                    <circle r="4" fill="#0A1628">
-                        <animateMotion 
-                            dur="5s" 
-                            repeatCount="indefinite"
-                            keyPoints="0;1"
-                            keyTimes="0;1"
-                        >
-                            <mpath href="#routing-path" />
-                        </animateMotion>
-                    </circle>
-
-                    {/* USD Origin Node */}
-                    <g className="transition-all duration-500 delay-0 opacity-100 group-hover:scale-110 origin-center">
-                        <circle cx="20" cy="50" r="16" fill="white" stroke="#E5E5E5" strokeWidth="1"></circle>
-                        <text x="20" y="54" textAnchor="middle" className="text-[10px] font-bold font-sans fill-obsidian">$</text>
-                        <text x="20" y="80" textAnchor="middle" className="text-[9px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">USD</text>
-                    </g>
-
-                    {/* Frontyr Core Node (Center) - Stablecoin Indicator */}
-                    <g className="transition-all duration-500 delay-[800ms] opacity-50 scale-90 group-hover:opacity-100 group-hover:scale-100 origin-center">
-                        {/* Box - Larger to fit elements */}
-                        <rect x="250" y="-10" width="100" height="60" rx="6" fill="white" stroke="#0A1628" strokeWidth="1.5"></rect>
-                        
-                        {/* Star Logo - Above Text */}
-                        <g transform="translate(300, 6) scale(0.14) translate(-50, -50)">
-                             <path d="M50 20 L60 40 L80 50 L60 60 L50 80 L40 60 L20 50 L40 40 Z" fill="#0A1628" />
-                        </g>
-
-                        {/* Text - Centered */}
-                        <text x="300" y="24" textAnchor="middle" className="text-[10px] font-bold font-sans fill-obsidian tracking-wide">FRONTYR</text>
-                        
-                        {/* 3 Circles - Below Text */}
-                        <g transform="translate(300, 38)">
-                            <circle cx="-14" cy="0" r="4" fill="white" stroke="#E5E7EB" strokeWidth="1" />
-                            <circle cx="0" cy="0" r="4" fill="white" stroke="#E5E7EB" strokeWidth="1" />
-                            <circle cx="14" cy="0" r="4" fill="white" stroke="#E5E7EB" strokeWidth="1" />
-                        </g>
-
-                        {/* Label */}
-                        <text x="300" y="65" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300">STABLECOIN RAIL</text>
-                    </g>
-
-                    {/* USD Destination Node */}
-                    <g className="transition-all duration-500 delay-[1600ms] opacity-50 scale-90 group-hover:opacity-100 group-hover:scale-100 origin-center">
-                        <circle cx="580" cy="50" r="16" fill="#0A1628"></circle>
-                        <text x="580" y="54" textAnchor="middle" className="text-[10px] font-bold font-sans fill-white">$</text>
-                        <text x="580" y="80" textAnchor="middle" className="text-[9px] font-mono fill-obsidian font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">USD</text>
-                    </g>
-                  </svg>
+              <div className="mt-12 w-full">
+                  <RoutingAnimation />
               </div>
             </div>
           </div>
