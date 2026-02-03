@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@base-ui/react": "^1.1.0",
     "@carbon/icons-react": "^11.74.0",
     "@types/three": "^0.182.0",
     "clsx": "^2.1.1",
