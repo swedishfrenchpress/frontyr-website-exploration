@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@carbon/icons-react": "^11.74.0",
     "@types/three": "^0.182.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.29.2",

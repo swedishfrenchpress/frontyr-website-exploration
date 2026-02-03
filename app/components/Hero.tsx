@@ -26,11 +26,11 @@ export function Hero() {
                   SOC 2 Compliant
                 </span>
               </div>
-              <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] text-obsidian leading-[0.95]">
-                The core banking platform <span className="text-subtle">that never closes.</span>
+              <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] leading-[0.95]">
+                <span className="text-subtle">Legacy cores weren't built for the </span>next frontier of banking.
               </h1>
               <p className="max-w-xl font-sans text-lg text-subtle leading-relaxed">
-                Legacy cores close at 5pm. Your customers don't. Stablecoins marry traditional banking with always-on settlement. Frontyr is how you get there.
+                Your customers expect instant. Your infrastructure should too. Frontyr bridges traditional banking with stablecoin rails—so you never close.
               </p>
             </motion.div>
 
@@ -49,21 +49,21 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              className="flex flex-wrap items-center gap-6 text-xs text-subtle"
+              className="flex flex-nowrap items-center gap-6 text-xs text-subtle"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 Settle in seconds, not days
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 Compliance built in, not bolted on
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 One ledger for fiat and stablecoins
               </div>
             </motion.div>

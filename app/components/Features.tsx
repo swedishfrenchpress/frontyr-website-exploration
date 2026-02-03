@@ -1,6 +1,6 @@
 'use client';
 
-import { GitBranch, History, Layers } from 'lucide-react';
+import { Branch, Time, Layers, WarningAlt, CheckmarkOutline, Send, Renew, Calendar, User, Wallet } from '@carbon/icons-react';
 import { useEffect, useState, useRef } from 'react';
 
 // Transaction type for the ledger animation
@@ -8,6 +8,149 @@ interface Transaction {
   id: string;
   type: 'USD' | 'USDC';
   status: 'pending' | 'processing' | 'settled';
+}
+
+function DashboardDelayCard() {
+  const [step, setStep] = useState<'idle' | 'processing' | 'success' | 'delayed'>('idle');
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    const runAnimation = () => {
+      // Start loop
+      setStep('idle');
+      
+      // Click Send
+      timer = setTimeout(() => {
+        setStep('processing');
+        
+        // Processing done
+        timer = setTimeout(() => {
+          setStep('success');
+          
+          // Show the "Catch"
+          timer = setTimeout(() => {
+            setStep('delayed');
+            
+            // Reset
+            timer = setTimeout(() => {
+              runAnimation();
+            }, 6500);
+          }, 800);
+        }, 1500);
+      }, 1500);
+    };
+
+    runAnimation();
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm h-full flex flex-col relative group">
+      {/* Dashboard Chrome */}
+      <div className="border-b border-border bg-gray-50/50 flex items-center px-4 py-3 gap-3">
+         <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-border"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-border"></div>
+         </div>
+         <div className="flex-1 bg-white border border-border h-6 rounded flex items-center px-2 text-[10px] text-subtle font-mono">
+            bank.com/dashboard/transfer
+         </div>
+      </div>
+
+      <div className="flex-1 flex bg-canvas/30">
+        {/* Sidebar Mock */}
+        <div className="w-12 border-r border-border bg-white flex flex-col items-center py-4 gap-4">
+           <div className="w-6 h-6 rounded bg-obsidian flex items-center justify-center text-white">
+              <span className="font-bold text-[10px]">F</span>
+           </div>
+           <div className="h-px w-6 bg-border"></div>
+           <Wallet className="w-4 h-4 text-obsidian" />
+           <Time className="w-4 h-4 text-subtle" />
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 p-6 flex flex-col relative">
+           <div className="flex justify-between items-end mb-6">
+              <div>
+                 <h4 className="text-sm font-semibold text-obsidian">Transfer Funds</h4>
+                 <p className="text-[10px] text-subtle">Initiate a domestic wire</p>
+              </div>
+              <div className="text-right">
+                 <div className="text-[10px] text-subtle">Available Balance</div>
+                 <div className="text-sm font-mono font-medium text-obsidian">$12,450.00</div>
+              </div>
+           </div>
+
+           {/* Transfer Form */}
+           <div className="bg-white border border-border rounded-lg p-4 shadow-sm mb-4">
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border border-dashed">
+                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center border border-border">
+                    <User className="w-4 h-4 text-subtle" />
+                 </div>
+                 <div>
+                    <div className="text-xs font-medium text-obsidian">Sarah Chen</div>
+                    <div className="text-[10px] text-subtle">Chase Bank •••• 8832</div>
+                 </div>
+              </div>
+              
+              <div className="mb-4">
+                 <label className="text-[10px] text-subtle font-medium mb-1 block">Amount</label>
+                 <div className="flex items-baseline gap-1 text-2xl font-semibold text-obsidian">
+                    <span>$</span>
+                    <span>3,000.00</span>
+                 </div>
+              </div>
+
+              <button 
+                className={`
+                  w-full h-9 rounded text-xs font-medium text-white transition-all duration-300 flex items-center justify-center gap-2
+                  ${step === 'processing' ? 'bg-subtle cursor-wait' : 
+                    step === 'success' || step === 'delayed' ? 'bg-green-600' : 'bg-obsidian hover:bg-obsidian/90'}
+                `}
+              >
+                {step === 'processing' ? (
+                  <>
+                    <Renew className="w-3 h-3 animate-spin" />
+                    <span>Processing...</span>
+                  </>
+                ) : step === 'success' || step === 'delayed' ? (
+                  <>
+                    <CheckmarkOutline className="w-3 h-3" />
+                    <span>Sent</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Execute Transfer</span>
+                    <Send className="w-3 h-3" />
+                  </>
+                )}
+              </button>
+           </div>
+
+           {/* Notification / Alert Area */}
+           <div className="relative h-20">
+              <div className={`
+                absolute inset-x-0 top-0 bg-amber-50 border border-amber-200 rounded-md p-3 shadow-sm flex gap-3
+                transition-all duration-500 ease-out origin-top
+                ${step === 'delayed' ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}
+              `}>
+                  <div className="mt-0.5 text-amber-600 shrink-0">
+                     <WarningAlt className="w-4 h-4" />
+                  </div>
+                  <div>
+                     <h5 className="text-xs font-semibold text-amber-900 mb-0.5">Settlement Delayed</h5>
+                     <p className="text-[10px] text-amber-800 leading-relaxed">
+                        Funds will settle Monday (48h) due to weekend banking hours.
+                     </p>
+                  </div>
+              </div>
+           </div>
+
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // Unified Ledger Card Component with animations
@@ -224,33 +367,14 @@ export function Features() {
                   <span className="font-sans text-[12px] font-semibold text-subtle tracking-tight uppercase">The Problem</span>
                 </div>
                 <h3 className="font-sans text-3xl md:text-4xl font-semibold text-obsidian tracking-tight mb-4 leading-[1.15]">
-                  Your core closes at 5pm. Your customers don't.
+                  24/7 banking isn't optional anymore.
                 </h3>
                 <p className="text-subtle text-lg leading-relaxed">
-                  Legacy banking infrastructure wasn't built for a generation that expects instant everything. Bolt-ons won't fix it. You need rails designed for 24/7 from day one.
+                  Your customers move money at midnight. Your competitors are starting to let them. Legacy infrastructure wasn't designed for always-on finance and bolt-ons won't get you there.
                 </p>
               </div>
 
-              <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
-                <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
-                  <div className="p-6">
-                    <div className="text-lg font-semibold text-obsidian mb-1">T+2</div>
-                    <div className="text-sm text-subtle">Settlement Time</div>
-                  </div>
-                  <div className="p-6">
-                    <div className="text-lg font-semibold text-obsidian mb-1">0%</div>
-                    <div className="text-sm text-subtle">Programmability</div>
-                  </div>
-                  <div className="p-6 border-t border-border sm:border-t-0">
-                    <div className="text-lg font-semibold text-obsidian mb-1">High</div>
-                    <div className="text-sm text-subtle">Reconciliation Friction</div>
-                  </div>
-                  <div className="p-6 border-t border-border sm:border-t-0 sm:border-l border-border">
-                    <div className="text-lg font-semibold text-obsidian mb-1">Batch</div>
-                    <div className="text-sm text-subtle">Processing</div>
-                  </div>
-                </div>
-              </div>
+              <DashboardDelayCard />
             </div>
           </div>
         </div>
@@ -275,7 +399,7 @@ export function Features() {
               <div className="flex justify-between items-start">
                 <div className="max-w-md">
                 <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-                  <GitBranch className="w-5 h-5" />
+                  <Branch className="w-5 h-5" />
                 </div>
                 <h3 className="text-2xl font-semibold text-obsidian mb-3">
                   Every transaction. Fastest route. 24/7.
@@ -371,7 +495,7 @@ export function Features() {
           <div className="md:col-span-4 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500 flex flex-col">
             <div className="p-10 relative z-10 flex flex-col h-full">
               <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-                <History className="w-5 h-5" />
+                <Time className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-semibold text-obsidian mb-3">
                 Auditors love us

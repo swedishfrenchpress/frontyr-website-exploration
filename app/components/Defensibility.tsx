@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@carbon/icons-react';
 
 const solutions = [
   {
