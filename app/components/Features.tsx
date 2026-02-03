@@ -112,9 +112,9 @@ function DashboardDelayCard() {
                           ${step === 'delayed' ? 'max-h-8 opacity-100 mb-2' : 'max-h-0 opacity-0'}
                        `}>
                           <div className="flex items-center gap-1.5">
-                             <Time className="w-3 h-3 text-amber-500" />
-                             <span className="text-obsidian font-medium truncate max-w-[80px]">Sinclar Trans...</span>
-                             <span className="bg-amber-100 text-amber-700 px-1.5 py-[1px] rounded text-[8px] font-bold uppercase tracking-wide">Pending</span>
+                             <Time className="w-3 h-3 text-amber-500 shrink-0" />
+                             <span className="text-obsidian font-medium">Sinclar Transportation LLC</span>
+                             <span className="bg-amber-100 text-amber-700 px-1.5 py-[1px] rounded text-[8px] font-bold uppercase tracking-wide shrink-0">Pending</span>
                           </div>
                           <span className="text-obsidian font-mono">-$3,000.00</span>
                        </div>
@@ -155,21 +155,23 @@ function DashboardDelayCard() {
                     </div>
                  </div>
 
-                 <button 
-                   className={`
-                     w-fit px-6 h-8 rounded text-[10px] font-medium text-white transition-all duration-300 flex items-center justify-center gap-1.5
-                     ${step === 'processing' ? 'bg-subtle cursor-wait' : 
-                       step === 'success' || step === 'delayed' ? 'bg-emerald-600' : 'bg-obsidian hover:bg-obsidian/90'}
-                   `}
-                 >
-                   {step === 'processing' ? (
-                     <span>Processing</span>
-                   ) : step === 'success' || step === 'delayed' ? (
-                     <span>Sent</span>
-                   ) : (
-                     <span>Send Funds</span>
-                   )}
-                 </button>
+                 <div className="flex justify-end">
+                   <button 
+                     className={`
+                       w-fit px-6 h-8 rounded text-[10px] font-medium text-white transition-all duration-300 flex items-center justify-center gap-1.5
+                       ${step === 'processing' ? 'bg-subtle cursor-wait' : 
+                         step === 'success' || step === 'delayed' ? 'bg-emerald-600' : 'bg-obsidian hover:bg-obsidian/90'}
+                     `}
+                   >
+                     {step === 'processing' ? (
+                       <span>Processing</span>
+                     ) : step === 'success' || step === 'delayed' ? (
+                       <span>Sent</span>
+                     ) : (
+                       <span>Send Funds</span>
+                     )}
+                   </button>
+                 </div>
               </div>
            </div>
 
