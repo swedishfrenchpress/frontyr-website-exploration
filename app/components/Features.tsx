@@ -2,8 +2,7 @@
 
 import { Branch, Time, Layers, WarningAlt, CheckmarkOutline, Send, Renew, Calendar, User, Wallet } from '@carbon/icons-react';
 import { useEffect, useState, useRef } from 'react';
-
-
+import { TreasuryAnimation } from './TreasuryAnimation';
 
 function DashboardDelayCard() {
   const [step, setStep] = useState<'idle' | 'processing' | 'success' | 'delayed'>('idle');
@@ -179,7 +178,7 @@ function DashboardDelayCard() {
 // Unified Ledger Card Component - Animation moved to Defensibility
 function UnifiedLedgerCard() {
   return (
-    <div className="md:col-span-12 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
+    <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
       <div className="p-10 flex flex-col md:flex-row items-start gap-12">
         {/* Left side - Copy */}
         <div className="flex-1 max-w-lg">
@@ -194,8 +193,9 @@ function UnifiedLedgerCard() {
           </p>
         </div>
 
-        {/* Right side - Empty for now as animation was moved */}
-        <div className="flex-1 w-full">
+        {/* Right side - Animation */}
+        <div className="flex-1 w-full h-full min-h-[300px] flex items-center justify-center">
+             <TreasuryAnimation />
         </div>
       </div>
     </div>
@@ -243,8 +243,59 @@ export function Features() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {/* Card 1: Programmable Ledger */}
-          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
+          {/* Card 1: Unified Ledger */}
+          <UnifiedLedgerCard />
+
+          {/* Card 2: Regulatory Audit */}
+          <div className="md:col-span-4 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500 flex flex-col">
+            <div className="p-10 relative z-10 flex flex-col h-full">
+              <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
+                <Time className="w-5 h-5" />
+              </div>
+              <h3 className="text-xl font-semibold text-obsidian mb-3">
+                Auditors love us
+              </h3>
+              <p className="text-sm text-subtle leading-relaxed mb-8">
+                Every state change logged. Every transaction traceable. Pull compliance reports in minutes, not weeks.
+              </p>
+
+              <div className="mt-auto relative w-full h-40 flex flex-col justify-end items-center pb-4">
+                {/* Back Card (KYC) - Smallest, furthest back */}
+                <div className="absolute w-[80%] h-12 bg-white border border-border rounded-t-md top-8 scale-90 opacity-0 group-hover:opacity-100 group-hover:top-0 transition-all duration-500 ease-out flex items-center px-3 gap-2 shadow-sm">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
+                    <span className="text-[9px] font-bold text-obsidian uppercase tracking-wide w-8">KYC</span>
+                    <div className="h-0.5 flex-1 bg-green-500/20 rounded relative">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-green-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                {/* Middle Card (AML) - Medium size */}
+                <div className="absolute w-[90%] h-12 bg-white border border-border rounded-t-md top-8 scale-95 opacity-50 group-hover:opacity-100 group-hover:top-6 transition-all duration-500 ease-out delay-75 flex items-center px-3 gap-2 shadow-sm z-10">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
+                    <span className="text-[9px] font-bold text-obsidian uppercase tracking-wide w-8">AML</span>
+                    <div className="h-0.5 flex-1 bg-green-500/20 rounded relative">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-green-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                {/* Front Card (OFAC) - Largest, frontmost */}
+                <div className="relative w-full h-12 bg-white border border-border rounded-t-md flex items-center px-4 gap-3 z-20 shadow-sm transition-transform duration-300 group-hover:translate-y-[-5px] group-hover:shadow-md mt-auto">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
+                  <span className="text-[10px] font-bold text-obsidian uppercase tracking-wide w-8">OFAC</span>
+                  <div className="h-0.5 flex-1 bg-green-500/20 rounded relative flex items-center">
+                        <div className="w-full h-full bg-green-500/10"></div>
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-green-600 font-bold text-[10px]">✓</div>
+                  </div>
+                </div>
+                
+                {/* Base line to hide bottom borders/rounded corners if needed, or just part of container */}
+                <div className="w-full h-4 bg-white border-x border-b border-border rounded-b-md z-30 relative -mt-1"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Programmable Ledger */}
+          <div className="md:col-span-12 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
              {/* Grid background removed by deleting the div that was here */}
 
             <div className="relative z-10 p-10 h-full flex flex-col justify-between">
@@ -342,57 +393,6 @@ export function Features() {
               </div>
             </div>
           </div>
-
-          {/* Card 2: Regulatory Audit */}
-          <div className="md:col-span-4 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500 flex flex-col">
-            <div className="p-10 relative z-10 flex flex-col h-full">
-              <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-                <Time className="w-5 h-5" />
-              </div>
-              <h3 className="text-xl font-semibold text-obsidian mb-3">
-                Auditors love us
-              </h3>
-              <p className="text-sm text-subtle leading-relaxed mb-8">
-                Every state change logged. Every transaction traceable. Pull compliance reports in minutes, not weeks.
-              </p>
-
-              <div className="mt-auto relative w-full h-40 flex flex-col justify-end items-center pb-4">
-                {/* Back Card (KYC) - Smallest, furthest back */}
-                <div className="absolute w-[80%] h-12 bg-white border border-border rounded-t-md top-8 scale-90 opacity-0 group-hover:opacity-100 group-hover:top-0 transition-all duration-500 ease-out flex items-center px-3 gap-2 shadow-sm">
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
-                    <span className="text-[9px] font-bold text-obsidian uppercase tracking-wide w-8">KYC</span>
-                    <div className="h-0.5 flex-1 bg-green-500/20 rounded relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-green-500 rounded-full"></div>
-                    </div>
-                </div>
-
-                {/* Middle Card (AML) - Medium size */}
-                <div className="absolute w-[90%] h-12 bg-white border border-border rounded-t-md top-8 scale-95 opacity-50 group-hover:opacity-100 group-hover:top-6 transition-all duration-500 ease-out delay-75 flex items-center px-3 gap-2 shadow-sm z-10">
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
-                    <span className="text-[9px] font-bold text-obsidian uppercase tracking-wide w-8">AML</span>
-                    <div className="h-0.5 flex-1 bg-green-500/20 rounded relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-green-500 rounded-full"></div>
-                    </div>
-                </div>
-
-                {/* Front Card (OFAC) - Largest, frontmost */}
-                <div className="relative w-full h-12 bg-white border border-border rounded-t-md flex items-center px-4 gap-3 z-20 shadow-sm transition-transform duration-300 group-hover:translate-y-[-5px] group-hover:shadow-md mt-auto">
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></div>
-                  <span className="text-[10px] font-bold text-obsidian uppercase tracking-wide w-8">OFAC</span>
-                  <div className="h-0.5 flex-1 bg-green-500/20 rounded relative flex items-center">
-                        <div className="w-full h-full bg-green-500/10"></div>
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-green-600 font-bold text-[10px]">✓</div>
-                  </div>
-                </div>
-                
-                {/* Base line to hide bottom borders/rounded corners if needed, or just part of container */}
-                <div className="w-full h-4 bg-white border-x border-b border-border rounded-b-md z-30 relative -mt-1"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Unified Ledger */}
-          <UnifiedLedgerCard />
         </div>
       </div>
     </section>
