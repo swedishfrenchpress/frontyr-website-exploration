@@ -429,8 +429,8 @@ export function Features() {
           {/* Row 1: Treasury (Large) + Invoicing (Small) */}
           
           {/* Card 1: Modern Treasury Management (Large) */}
-          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
-            <div className="p-10 flex flex-col md:flex-row items-start gap-12">
+          <div className="md:col-span-8 relative bg-white border border-border rounded-xl overflow-hidden">
+            <div className="p-10">
               <div className="flex-1 max-w-lg">
                 <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
                   <Layers className="w-5 h-5" />
@@ -441,9 +441,6 @@ export function Features() {
                 <p className="text-sm text-subtle leading-relaxed mb-6">
                   Know your reserves in real time. See exactly where your liquidity sits across all positions. Balance sheets that update as transactions settle.
                 </p>
-              </div>
-              <div className="flex-1 w-full h-full min-h-[300px] flex items-center justify-center">
-                   <TreasuryAnimation />
               </div>
             </div>
           </div>
@@ -534,8 +531,8 @@ export function Features() {
           </div>
 
           {/* Card 4: Reconciliation (Large) */}
-          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
-             <div className="relative z-10 p-10 h-full flex flex-col justify-between">
+          <div className="md:col-span-8 relative bg-white border border-border rounded-xl overflow-hidden">
+             <div className="relative z-10 p-10 h-full">
                 <div className="max-w-lg">
                     <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
                         <Renew className="w-5 h-5" />
@@ -546,42 +543,6 @@ export function Features() {
                     <p className="text-sm text-subtle leading-relaxed">
                         Close the books in minutes, not days. Frontyr automatically matches on-chain settlement data with your internal ledger and ERP, eliminating manual errors.
                     </p>
-                </div>
-                
-                {/* Reconciliation Visual - Split View Sync */}
-                <div className="mt-12 h-32 w-full relative flex items-center justify-center border-t border-border/40 pt-6 gap-8">
-                     {/* ERP Side */}
-                     <div className="flex flex-col items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="w-16 h-20 bg-white border border-border rounded-md shadow-sm p-2 flex flex-col gap-2">
-                             <div className="w-8 h-1 bg-gray-200 rounded"></div>
-                             <div className="w-full h-px bg-border"></div>
-                             <div className="w-full h-1 bg-gray-100 rounded"></div>
-                             <div className="w-full h-1 bg-gray-100 rounded"></div>
-                             <div className="w-3/4 h-1 bg-gray-100 rounded"></div>
-                        </div>
-                        <span className="text-[9px] font-mono text-subtle font-semibold uppercase tracking-wide">Ledger</span>
-                     </div>
-
-                     {/* Sync Animation */}
-                     <div className="relative flex items-center justify-center">
-                         <div className="w-12 h-12 rounded-full bg-canvas flex items-center justify-center relative z-10">
-                              <CheckmarkOutline className="w-6 h-6 text-emerald-500" />
-                         </div>
-                         <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping opacity-20"></div>
-                         <div className="absolute w-24 h-[1px] bg-border -z-0"></div>
-                     </div>
-
-                     {/* Blockchain Side */}
-                     <div className="flex flex-col items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="w-16 h-20 bg-obsidian rounded-md shadow-sm p-2 flex flex-col gap-2 border border-gray-700">
-                             <div className="w-8 h-1 bg-gray-600 rounded"></div>
-                             <div className="w-full h-px bg-gray-700"></div>
-                             <div className="w-full h-1 bg-gray-800 rounded"></div>
-                             <div className="w-full h-1 bg-gray-800 rounded"></div>
-                             <div className="w-3/4 h-1 bg-gray-800 rounded"></div>
-                        </div>
-                         <span className="text-[9px] font-mono text-subtle font-semibold uppercase tracking-wide">On-Chain</span>
-                     </div>
                 </div>
              </div>
           </div>
