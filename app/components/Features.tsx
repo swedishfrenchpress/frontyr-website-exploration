@@ -24,11 +24,11 @@ function DashboardDelayCard() {
       timer = setTimeout(() => {
         setStep('processing');
         
-        // Processing done
+        // Processing done -> Success (Button turns green)
         timer = setTimeout(() => {
           setStep('success');
           
-          // Show the "Catch"
+          // Show Delay + Update Activity (Toast appears)
           timer = setTimeout(() => {
             setStep('delayed');
             
@@ -36,7 +36,7 @@ function DashboardDelayCard() {
             timer = setTimeout(() => {
               runAnimation();
             }, 6500);
-          }, 800);
+          }, 600); // Reduced delay to 600ms so it feels more connected
         }, 1500);
       }, 1500);
     };
@@ -46,7 +46,7 @@ function DashboardDelayCard() {
   }, []);
 
   return (
-    <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm h-full flex flex-col relative group">
+    <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm h-full flex flex-col relative group min-h-[320px]">
       {/* Toast Notification - Top Right */}
       <div className={`
         absolute top-16 right-6 z-20 w-64 bg-white border-l-4 border-l-amber-500 shadow-lg rounded-r-md p-3 flex gap-3
@@ -104,15 +104,16 @@ function DashboardDelayCard() {
 
                  <div className="mt-auto border-t border-border pt-4">
                     <div className="text-[10px] text-subtle font-semibold mb-2">RECENT ACTIVITY</div>
-                    <div className="space-y-2">
+                    {/* Fixed height container to prevent layout jump */}
+                    <div className="space-y-2 h-[88px]">
                        {/* Dynamic Pending Transaction */}
                        <div className={`
                           flex justify-between items-center text-[10px] overflow-hidden transition-all duration-500
-                          ${step === 'success' || step === 'delayed' ? 'max-h-8 opacity-100 mb-2' : 'max-h-0 opacity-0'}
+                          ${step === 'delayed' ? 'max-h-8 opacity-100 mb-2' : 'max-h-0 opacity-0'}
                        `}>
                           <div className="flex items-center gap-1.5">
                              <Time className="w-3 h-3 text-amber-500" />
-                             <span className="text-obsidian font-medium">Sarah Chen</span>
+                             <span className="text-obsidian font-medium truncate max-w-[80px]">Sinclar Trans...</span>
                              <span className="bg-amber-100 text-amber-700 px-1.5 py-[1px] rounded text-[8px] font-bold uppercase tracking-wide">Pending</span>
                           </div>
                           <span className="text-obsidian font-mono">-$3,000.00</span>
@@ -131,7 +132,7 @@ function DashboardDelayCard() {
               </div>
 
               {/* Right Column: Transfer Action */}
-              <div className="bg-white border border-border rounded-lg p-4 flex flex-col justify-center h-fit self-center relative">
+              <div className="bg-white border border-border rounded-lg p-4 flex flex-col justify-center h-fit self-center relative w-full">
                  <h5 className="text-xs font-semibold text-obsidian mb-3">Quick Transfer</h5>
                  
                  <div className="space-y-3 mb-4">
@@ -140,7 +141,7 @@ function DashboardDelayCard() {
                           <User className="w-3 h-3 text-subtle" />
                        </div>
                        <div className="flex-1 min-w-0">
-                          <div className="text-[10px] font-medium text-obsidian truncate">Sarah Chen</div>
+                          <div className="text-[10px] font-medium text-obsidian truncate">Sinclar Transportation LLC</div>
                           <div className="text-[8px] text-subtle truncate">Chase •••• 8832</div>
                        </div>
                     </div>
@@ -156,26 +157,17 @@ function DashboardDelayCard() {
 
                  <button 
                    className={`
-                     w-full h-8 rounded text-[10px] font-medium text-white transition-all duration-300 flex items-center justify-center gap-1.5
+                     w-fit px-6 h-8 rounded text-[10px] font-medium text-white transition-all duration-300 flex items-center justify-center gap-1.5
                      ${step === 'processing' ? 'bg-subtle cursor-wait' : 
                        step === 'success' || step === 'delayed' ? 'bg-emerald-600' : 'bg-obsidian hover:bg-obsidian/90'}
                    `}
                  >
                    {step === 'processing' ? (
-                     <>
-                       <Renew className="w-3 h-3 animate-spin" />
-                       <span>Processing</span>
-                     </>
+                     <span>Processing</span>
                    ) : step === 'success' || step === 'delayed' ? (
-                     <>
-                       <CheckmarkOutline className="w-3 h-3" />
-                       <span>Sent</span>
-                     </>
+                     <span>Sent</span>
                    ) : (
-                     <>
-                       <span>Send Funds</span>
-                       <Send className="w-3 h-3" />
-                     </>
+                     <span>Send Funds</span>
                    )}
                  </button>
               </div>
