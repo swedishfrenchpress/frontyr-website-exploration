@@ -1,36 +1,47 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export function ReconciliationAnimation() {
-  const [phase, setPhase] = useState(0);
+  const [step, setStep] = useState(0);
+  const [pathLength, setPathLength] = useState(600);
+  const pathRef = useRef<SVGPathElement>(null);
+
+  // Measure path length on mount for perfect sync
+  useEffect(() => {
+    if (pathRef.current) {
+      const length = pathRef.current.getTotalLength();
+      setPathLength(length);
+    }
+  }, []);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
     const runSequence = () => {
-      // Phase 0: Start (Initial State)
-      setPhase(0);
+      // Step 0: Initial State (P1 Visible, Line Hidden at start)
+      setStep(0);
 
-      // Phase 1: Reveal Point 1 and start drawing to Point 2
+      // Start Animation
       timer = setTimeout(() => {
-        setPhase(1);
+        // Step 1: Trigger Line Animation (Draws to end over 2.4s)
+        setStep(1);
 
-        // Phase 2: Reach Point 2, reveal label, start drawing to Point 3
+        // Step 2: Midpoint (1.2s) -> Show P2
         timer = setTimeout(() => {
-          setPhase(2);
+          setStep(2);
 
-          // Phase 3: Reach Point 3, reveal final label
+          // Step 3: End (2.4s) -> Show P3
           timer = setTimeout(() => {
-            setPhase(3);
+            setStep(3);
 
-            // Reset loop
+            // Step 4: Hold then Reset
             timer = setTimeout(() => {
               runSequence();
-            }, 4000); // Hold final state for a bit
-          }, 1500); // Travel time P2 -> P3
-        }, 1500); // Travel time P1 -> P2
-      }, 500); // Initial delay
+            }, 3000); // Hold for 3s
+          }, 1200); // 2nd leg duration (1.2s)
+        }, 1200); // 1st leg duration (1.2s)
+      }, 100); // Short delay before starting
     };
 
     runSequence();
@@ -40,32 +51,18 @@ export function ReconciliationAnimation() {
 
   // Path for 3 points: Start(20,60) -> Middle(300,20) -> End(580,60)
   const pathD = "M20,60 C150,60 180,20 300,20 C420,20 450,60 580,60";
-  const pathLength = 600; // Approximate length for dashoffset calculation
-
-  // Calculate stroke-dashoffset based on phase
-  // Phase 0: Hidden (offset = length)
-  // Phase 1: Point 1 to Point 2 (animating) -> We want to animate to ~50%
-  // Phase 2: Point 2 (at ~50%) to Point 3 -> Animate to 0%
-  // Phase 3: Full (offset = 0)
-
-  // Actually, let's use CSS transitions for smooth drawing.
-  // We'll set the target offset in the style.
-
-  const getDashOffset = () => {
-    if (phase === 0) return pathLength;
-    if (phase === 1) return pathLength * 0.5; // Draw half way (to middle point)
-    if (phase === 2) return 0; // Draw to end
-    if (phase === 3) return 0;
-    return pathLength;
-  };
+  
+  // Animation duration matches the sequence timing (1200ms * 2 = 2400ms)
+  const animDuration = 2400;
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-transparent">
-      <svg className="w-full h-full max-w-[600px] overflow-visible" viewBox="0 0 600 120">
+      <svg className="w-full h-full max-w-[660px] overflow-visible" viewBox="0 0 660 120">
         <defs>
-          <marker id="arrow-head-reconcile" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
-            <path d="M0,0 L4,2 L0,4" fill="#111" />
-          </marker>
+          <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
         </defs>
 
         {/* --- Background Path (Dotted) --- */}
@@ -79,24 +76,31 @@ export function ReconciliationAnimation() {
 
         {/* --- Animated Path (Solid) --- */}
         <path
+          ref={pathRef}
           d={pathD}
           fill="none"
-          stroke="#111"
-          strokeWidth="1.5"
+          stroke="#0A1628" // Dark Navy (Obsidian)
+          strokeWidth="2"
+          strokeLinecap="round"
           strokeDasharray={pathLength}
-          strokeDashoffset={getDashOffset()}
-          className="transition-[stroke-dashoffset] duration-[1500ms] ease-in-out"
-          markerEnd="url(#arrow-head-reconcile)"
+          style={{ 
+            strokeDashoffset: step === 0 ? pathLength : 0,
+            transition: step === 0 ? 'none' : `stroke-dashoffset ${animDuration}ms ease-in-out`
+          }}
         />
 
         {/* --- Points & Labels --- */}
 
-        {/* Point 1: Origin (Left) */}
-        <g className={`transition-all duration-500 ${phase >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-          <circle cx="20" cy="60" r="4" fill="#111" />
+        {/* Point 1: Origin (Left) - Always visible in loop, fades in initially */}
+        <g className="transition-all duration-500 opacity-100 translate-y-0">
+          <circle cx="20" cy="60" r="4" fill="#0A1628" />
           {/* Label Box */}
           <foreignObject x="-20" y="75" width="100" height="60" style={{ overflow: 'visible' }}>
-             <div className="bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-center gap-1 w-max">
+             <div className={`
+               bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-center gap-1 w-max
+               transition-all duration-500
+               ${step >= 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
+             `}>
                 <div className="text-[10px] font-mono font-medium text-rose-600">-100 USD</div>
                 <div className="text-[10px] font-mono font-medium text-emerald-600">+100 USDC</div>
              </div>
@@ -104,22 +108,30 @@ export function ReconciliationAnimation() {
         </g>
 
         {/* Point 2: Middle (Top) */}
-        <g className={`transition-all duration-500 delay-300 ${phase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-          <circle cx="300" cy="20" r="4" fill={phase >= 2 ? "#fff" : "#111"} stroke="#111" strokeWidth="1.5" />
+        <g className={`transition-all duration-500 delay-[50ms] ${step >= 2 ? 'opacity-100' : 'opacity-0'}`}>
+          <circle cx="300" cy="20" r="4" fill="#0A1628" />
           {/* Label Box */}
            <foreignObject x="250" y="35" width="100" height="40" style={{ overflow: 'visible' }}>
-             <div className="bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-center gap-1 w-max mx-auto">
+             <div className={`
+                bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-center gap-1 w-max mx-auto
+                transition-all duration-500
+                ${step >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
+             `}>
                 <div className="text-[10px] font-mono font-medium text-rose-600">-100 USDC</div>
              </div>
           </foreignObject>
         </g>
 
         {/* Point 3: Final (Right) */}
-        <g className={`transition-all duration-500 delay-300 ${phase >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-          <circle cx="580" cy="60" r="4" fill="#111" />
+        <g className={`transition-all duration-500 delay-[50ms] ${step >= 3 ? 'opacity-100' : 'opacity-0'}`}>
+          <circle cx="580" cy="60" r="4" fill="#0A1628" />
            {/* Label Box */}
            <foreignObject x="510" y="75" width="140" height="80" style={{ overflow: 'visible' }}>
-             <div className="bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-start gap-1 w-max">
+             <div className={`
+                bg-white border border-border shadow-sm rounded-md p-2 flex flex-col items-start gap-1 w-max
+                transition-all duration-500
+                ${step >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
+             `}>
                 <div className="flex items-center gap-2 w-full justify-between">
                    <span className="text-[10px] font-mono font-medium text-rose-600">-100 USD</span>
                    <span className="text-[8px] text-subtle uppercase tracking-tighter">Bank</span>
