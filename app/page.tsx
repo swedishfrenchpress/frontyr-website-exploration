@@ -3,8 +3,7 @@ import { Hero } from './components/Hero';
 import { ProductShowcase } from './components/ProductShowcase';
 import { Logos } from './components/Logos';
 import { Features } from './components/Features';
-import { Defensibility } from './components/Defensibility';
-import { Testimonials } from './components/Testimonials';
+
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -17,8 +16,7 @@ export default function Home() {
         <ProductShowcase />
         <Logos />
         <Features />
-        <Defensibility />
-        <Testimonials />
+
         <Contact />
         <Footer />
       </div>
