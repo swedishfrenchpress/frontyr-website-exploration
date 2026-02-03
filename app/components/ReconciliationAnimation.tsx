@@ -57,7 +57,7 @@ export function ReconciliationAnimation() {
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-transparent">
-      <svg className="w-full h-full max-w-[660px] overflow-visible" viewBox="0 0 660 120">
+      <svg className="w-full h-full max-w-[900px] overflow-visible" viewBox="0 0 660 120">
         <defs>
           <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="1" result="blur" />
