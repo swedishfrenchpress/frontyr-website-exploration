@@ -47,6 +47,23 @@ function DashboardDelayCard() {
 
   return (
     <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm h-full flex flex-col relative group">
+      {/* Toast Notification - Top Right */}
+      <div className={`
+        absolute top-16 right-6 z-20 w-64 bg-white border-l-4 border-l-amber-500 shadow-lg rounded-r-md p-3 flex gap-3
+        transition-all duration-500 ease-out transform
+        ${step === 'delayed' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}
+      `}>
+          <div className="mt-0.5 text-amber-500 shrink-0">
+             <WarningAlt className="w-4 h-4" />
+          </div>
+          <div>
+             <h5 className="text-[11px] font-bold text-obsidian leading-tight mb-1">Settlement Delayed</h5>
+             <p className="text-[10px] text-subtle leading-relaxed">
+                Funds will settle Monday due to weekend banking hours.
+             </p>
+          </div>
+      </div>
+
       {/* Dashboard Chrome */}
       <div className="border-b border-border bg-gray-50/50 flex items-center px-4 py-3 gap-3">
          <div className="flex gap-1.5">
@@ -70,80 +87,97 @@ function DashboardDelayCard() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-6 flex flex-col relative">
-           <div className="flex justify-between items-end mb-6">
-              <div>
-                 <h4 className="text-sm font-semibold text-obsidian">Transfer Funds</h4>
-                 <p className="text-[10px] text-subtle">Initiate a domestic wire</p>
-              </div>
-              <div className="text-right">
-                 <div className="text-[10px] text-subtle">Available Balance</div>
-                 <div className="text-sm font-mono font-medium text-obsidian">$12,450.00</div>
-              </div>
-           </div>
-
-           {/* Transfer Form */}
-           <div className="bg-white border border-border rounded-lg p-4 shadow-sm mb-4">
-              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border border-dashed">
-                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center border border-border">
-                    <User className="w-4 h-4 text-subtle" />
-                 </div>
+        <div className="flex-1 p-6 flex flex-col relative overflow-hidden">
+           
+           <div className="grid grid-cols-2 gap-6 h-full">
+              {/* Left Column: Account Info */}
+              <div className="flex flex-col gap-4">
                  <div>
-                    <div className="text-xs font-medium text-obsidian">Sarah Chen</div>
-                    <div className="text-[10px] text-subtle">Chase Bank •••• 8832</div>
+                    <h4 className="text-sm font-semibold text-obsidian mb-1">Business Checking</h4>
+                    <p className="text-[10px] text-subtle font-mono">**** 4492</p>
                  </div>
-              </div>
-              
-              <div className="mb-4">
-                 <label className="text-[10px] text-subtle font-medium mb-1 block">Amount</label>
-                 <div className="flex items-baseline gap-1 text-2xl font-semibold text-obsidian">
-                    <span>$</span>
-                    <span>3,000.00</span>
+                 
+                 <div>
+                    <div className="text-[10px] text-subtle uppercase tracking-wider font-semibold mb-1">Available Balance</div>
+                    <div className="text-2xl font-mono font-medium text-obsidian">$12,450.00</div>
+                 </div>
+
+                 <div className="mt-auto border-t border-border pt-4">
+                    <div className="text-[10px] text-subtle font-semibold mb-2">RECENT ACTIVITY</div>
+                    <div className="space-y-2">
+                       {/* Dynamic Pending Transaction */}
+                       <div className={`
+                          flex justify-between items-center text-[10px] overflow-hidden transition-all duration-500
+                          ${step === 'success' || step === 'delayed' ? 'max-h-8 opacity-100 mb-2' : 'max-h-0 opacity-0'}
+                       `}>
+                          <div className="flex items-center gap-1.5">
+                             <Time className="w-3 h-3 text-amber-500" />
+                             <span className="text-obsidian font-medium">Sarah Chen</span>
+                             <span className="bg-amber-100 text-amber-700 px-1.5 py-[1px] rounded text-[8px] font-bold uppercase tracking-wide">Pending</span>
+                          </div>
+                          <span className="text-obsidian font-mono">-$3,000.00</span>
+                       </div>
+
+                       <div className="flex justify-between items-center text-[10px]">
+                          <span className="text-obsidian">Stripe Payout</span>
+                          <span className="text-green-600 font-mono">+$1,200.00</span>
+                       </div>
+                       <div className="flex justify-between items-center text-[10px]">
+                          <span className="text-obsidian">AWS Web Services</span>
+                          <span className="text-obsidian font-mono">-$450.00</span>
+                       </div>
+                    </div>
                  </div>
               </div>
 
-              <button 
-                className={`
-                  w-full h-9 rounded text-xs font-medium text-white transition-all duration-300 flex items-center justify-center gap-2
-                  ${step === 'processing' ? 'bg-subtle cursor-wait' : 
-                    step === 'success' || step === 'delayed' ? 'bg-green-600' : 'bg-obsidian hover:bg-obsidian/90'}
-                `}
-              >
-                {step === 'processing' ? (
-                  <>
-                    <Renew className="w-3 h-3 animate-spin" />
-                    <span>Processing...</span>
-                  </>
-                ) : step === 'success' || step === 'delayed' ? (
-                  <>
-                    <CheckmarkOutline className="w-3 h-3" />
-                    <span>Sent</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Execute Transfer</span>
-                    <Send className="w-3 h-3" />
-                  </>
-                )}
-              </button>
-           </div>
+              {/* Right Column: Transfer Action */}
+              <div className="bg-white border border-border rounded-lg p-4 flex flex-col justify-center h-fit self-center relative">
+                 <h5 className="text-xs font-semibold text-obsidian mb-3">Quick Transfer</h5>
+                 
+                 <div className="space-y-3 mb-4">
+                    <div className="flex items-center gap-2 p-2 bg-gray-50 rounded border border-border/50">
+                       <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center">
+                          <User className="w-3 h-3 text-subtle" />
+                       </div>
+                       <div className="flex-1 min-w-0">
+                          <div className="text-[10px] font-medium text-obsidian truncate">Sarah Chen</div>
+                          <div className="text-[8px] text-subtle truncate">Chase •••• 8832</div>
+                       </div>
+                    </div>
 
-           {/* Notification / Alert Area */}
-           <div className="relative h-20">
-              <div className={`
-                absolute inset-x-0 top-0 bg-amber-50 border border-amber-200 rounded-md p-3 shadow-sm flex gap-3
-                transition-all duration-500 ease-out origin-top
-                ${step === 'delayed' ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}
-              `}>
-                  <div className="mt-0.5 text-amber-600 shrink-0">
-                     <WarningAlt className="w-4 h-4" />
-                  </div>
-                  <div>
-                     <h5 className="text-xs font-semibold text-amber-900 mb-0.5">Settlement Delayed</h5>
-                     <p className="text-[10px] text-amber-800 leading-relaxed">
-                        Funds will settle Monday (48h) due to weekend banking hours.
-                     </p>
-                  </div>
+                    <div>
+                       <label className="text-[9px] text-subtle font-medium mb-1 block">Amount</label>
+                       <div className="flex items-center border-b border-border pb-1">
+                          <span className="text-sm font-semibold text-obsidian mr-1">$</span>
+                          <span className="text-lg font-semibold text-obsidian">3,000.00</span>
+                       </div>
+                    </div>
+                 </div>
+
+                 <button 
+                   className={`
+                     w-full h-8 rounded text-[10px] font-medium text-white transition-all duration-300 flex items-center justify-center gap-1.5
+                     ${step === 'processing' ? 'bg-subtle cursor-wait' : 
+                       step === 'success' || step === 'delayed' ? 'bg-emerald-600' : 'bg-obsidian hover:bg-obsidian/90'}
+                   `}
+                 >
+                   {step === 'processing' ? (
+                     <>
+                       <Renew className="w-3 h-3 animate-spin" />
+                       <span>Processing</span>
+                     </>
+                   ) : step === 'success' || step === 'delayed' ? (
+                     <>
+                       <CheckmarkOutline className="w-3 h-3" />
+                       <span>Sent</span>
+                     </>
+                   ) : (
+                     <>
+                       <span>Send Funds</span>
+                       <Send className="w-3 h-3" />
+                     </>
+                   )}
+                 </button>
               </div>
            </div>
 
