@@ -429,7 +429,7 @@ export function Features() {
           {/* Row 1: Treasury (Large) + Invoicing (Small) */}
           
           {/* Card 1: Modern Treasury Management (Large) */}
-          <div className="md:col-span-8 relative bg-white border border-border rounded-xl overflow-hidden">
+          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
             <div className="p-10">
               <div className="flex-1 max-w-lg">
                 <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
@@ -441,6 +441,59 @@ export function Features() {
                 <p className="text-sm text-subtle leading-relaxed mb-6">
                   Know your reserves in real time. See exactly where your liquidity sits across all positions. Balance sheets that update as transactions settle.
                 </p>
+              </div>
+
+              <div className="mt-10 h-36 w-full relative flex items-center border-t border-border/40 pt-6 overflow-hidden">
+                <svg className="w-full h-full" viewBox="0 0 600 120" preserveAspectRatio="xMidYMid meet">
+                  <defs>
+                    <marker id="arrow-head-treasury" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+                      <path d="M0,0 L4,2 L0,4" fill="#111" />
+                    </marker>
+                  </defs>
+
+                  <path
+                    d="M20,60 C120,60 140,20 220,20 C300,20 320,100 400,100 C480,100 500,60 580,60"
+                    fill="none"
+                    stroke="#E5E5E5"
+                    strokeWidth="1.5"
+                    strokeDasharray="4 4"
+                  />
+                  <path
+                    d="M20,60 C120,60 140,20 220,20 C300,20 320,100 400,100 C480,100 500,60 580,60"
+                    fill="none"
+                    stroke="#111"
+                    strokeWidth="1.5"
+                    strokeDasharray="600"
+                    strokeDashoffset="600"
+                    className="transition-[stroke-dashoffset] duration-[1600ms] ease-in-out motion-reduce:transition-none group-hover:stroke-dashoffset-0"
+                    markerEnd="url(#arrow-head-treasury)"
+                  />
+
+                  <g className="transition-all duration-500 opacity-100 group-hover:scale-110 origin-center motion-reduce:transition-none">
+                    <circle cx="20" cy="60" r="4" fill="#111" />
+                    <text x="20" y="80" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
+                      DEPOSITS
+                    </text>
+                  </g>
+                  <g className="transition-all duration-500 delay-[350ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center motion-reduce:transition-none">
+                    <circle cx="220" cy="20" r="4" fill="#fff" stroke="#111" strokeWidth="1.5" />
+                    <text x="220" y="40" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
+                      TREASURY
+                    </text>
+                  </g>
+                  <g className="transition-all duration-500 delay-[700ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center motion-reduce:transition-none">
+                    <circle cx="400" cy="100" r="4" fill="#fff" stroke="#111" strokeWidth="1.5" />
+                    <text x="400" y="116" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
+                      ALLOCATE
+                    </text>
+                  </g>
+                  <g className="transition-all duration-500 delay-[1050ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center motion-reduce:transition-none">
+                    <circle cx="580" cy="60" r="4" fill="#111" />
+                    <text x="580" y="80" textAnchor="middle" className="text-[8px] font-mono fill-obsidian font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
+                      RESERVE
+                    </text>
+                  </g>
+                </svg>
               </div>
             </div>
           </div>
@@ -531,7 +584,7 @@ export function Features() {
           </div>
 
           {/* Card 4: Reconciliation (Large) */}
-          <div className="md:col-span-8 relative bg-white border border-border rounded-xl overflow-hidden">
+          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
              <div className="relative z-10 p-10 h-full">
                 <div className="max-w-lg">
                     <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
@@ -543,6 +596,82 @@ export function Features() {
                     <p className="text-sm text-subtle leading-relaxed">
                         Close the books in minutes, not days. Frontyr automatically matches on-chain settlement data with your internal ledger and ERP, eliminating manual errors.
                     </p>
+                </div>
+
+                <div className="mt-10 h-36 w-full relative flex items-center border-t border-border/40 pt-6 overflow-hidden">
+                  <svg className="w-full h-full" viewBox="0 0 640 120" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                      <marker id="arrow-head-recon" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+                        <path d="M0,0 L4,2 L0,4" fill="#111" />
+                      </marker>
+                    </defs>
+
+                    <rect x="28" y="16" width="92" height="88" rx="10" fill="#fff" stroke="#E5E5E5" />
+                    <rect x="520" y="16" width="92" height="88" rx="10" fill="#0A1628" stroke="#111" />
+
+                    <g className="opacity-80">
+                      <rect x="40" y="30" width="52" height="6" rx="3" fill="#E5E7EB" />
+                      <rect x="40" y="42" width="68" height="2" rx="1" fill="#E5E7EB" />
+                      <rect x="40" y="50" width="64" height="4" rx="2" fill="#F3F4F6" />
+                      <rect x="40" y="60" width="64" height="4" rx="2" fill="#F3F4F6" />
+                      <rect x="40" y="70" width="48" height="4" rx="2" fill="#F3F4F6" />
+                    </g>
+
+                    <g className="opacity-80">
+                      <rect x="532" y="30" width="52" height="6" rx="3" fill="#334155" />
+                      <rect x="532" y="42" width="68" height="2" rx="1" fill="#1F2937" />
+                      <rect x="532" y="50" width="64" height="4" rx="2" fill="#111827" />
+                      <rect x="532" y="60" width="64" height="4" rx="2" fill="#111827" />
+                      <rect x="532" y="70" width="48" height="4" rx="2" fill="#111827" />
+                    </g>
+
+                    <text x="74" y="112" textAnchor="middle" className="text-[8px] font-mono fill-subtle font-semibold uppercase tracking-wide">
+                      Ledger
+                    </text>
+                    <text x="566" y="112" textAnchor="middle" className="text-[8px] font-mono fill-subtle font-semibold uppercase tracking-wide">
+                      On-Chain
+                    </text>
+
+                    <path d="M140,32 L500,32" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4" />
+                    <path d="M140,60 L500,60" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4" />
+                    <path d="M140,88 L500,88" fill="none" stroke="#E5E5E5" strokeWidth="1.5" strokeDasharray="4 4" />
+
+                    <path
+                      d="M140,32 L500,32"
+                      fill="none"
+                      stroke="#111"
+                      strokeWidth="1.5"
+                      strokeDasharray="400"
+                      strokeDashoffset="400"
+                      className="transition-[stroke-dashoffset] duration-[1200ms] ease-in-out motion-reduce:transition-none group-hover:stroke-dashoffset-0"
+                      markerEnd="url(#arrow-head-recon)"
+                    />
+                    <path
+                      d="M140,60 L500,60"
+                      fill="none"
+                      stroke="#111"
+                      strokeWidth="1.5"
+                      strokeDasharray="400"
+                      strokeDashoffset="400"
+                      className="transition-[stroke-dashoffset] duration-[1200ms] delay-[250ms] ease-in-out motion-reduce:transition-none group-hover:stroke-dashoffset-0"
+                      markerEnd="url(#arrow-head-recon)"
+                    />
+                    <path
+                      d="M140,88 L500,88"
+                      fill="none"
+                      stroke="#111"
+                      strokeWidth="1.5"
+                      strokeDasharray="400"
+                      strokeDashoffset="400"
+                      className="transition-[stroke-dashoffset] duration-[1200ms] delay-[500ms] ease-in-out motion-reduce:transition-none group-hover:stroke-dashoffset-0"
+                      markerEnd="url(#arrow-head-recon)"
+                    />
+
+                    <g className="transition-all duration-500 opacity-60 group-hover:opacity-100 group-hover:scale-110 origin-center motion-reduce:transition-none">
+                      <circle cx="320" cy="60" r="7" fill="#F9FAFB" stroke="#111" strokeWidth="1.2" />
+                      <path d="M316,60 L319,63 L325,56" fill="none" stroke="#111" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </g>
+                  </svg>
                 </div>
              </div>
           </div>
