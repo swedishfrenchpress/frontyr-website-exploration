@@ -613,9 +613,9 @@ export function Features() {
                     </p>
                 </div>
 
-                <div className="mt-10 h-36 w-full relative flex items-center overflow-hidden">
+                {/* <div className="mt-10 h-36 w-full relative flex items-center overflow-hidden">
                   <ReconciliationAnimation />
-                </div>
+                </div> */}
              </div>
           </div>
         </div>

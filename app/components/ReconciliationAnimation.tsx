@@ -30,6 +30,9 @@ export function ReconciliationAnimation() {
   const lineStartX = leftX + rectWidth + 5; 
   const lineEndX = rightX - 5; 
   const lineLength = lineEndX - lineStartX; 
+  
+  // Center of lines/boxes
+  const centerY = rectHeight / 2;
 
   // Colors
   const obsidian = '#0A1628';
@@ -69,8 +72,8 @@ export function ReconciliationAnimation() {
             <g key={i}>
               
               {/* Left Box (On-Chain) */}
-              <g className="transition-all duration-300 origin-center box-group">
-                  {/* Background Rect - Animate scale and fill on hover via CSS classes on parent group */}
+              <g className="box-group">
+                  {/* Background Rect */}
                   <rect 
                     x={leftX} y={y} width={rectWidth} height={rectHeight} rx="4" 
                     fill="white" 
@@ -81,7 +84,6 @@ export function ReconciliationAnimation() {
                         transformBox: 'fill-box',
                         transformOrigin: 'center',
                     }}
-                    // Using CSS class for hover scale instead of style to allow smooth transition
                   />
                    {/* This separate rect handles the success border animation independent of hover scaling */}
                    <rect 
@@ -119,7 +121,7 @@ export function ReconciliationAnimation() {
               </g>
 
               {/* Right Box (Internal) */}
-              <g className="transition-all duration-300 origin-center box-group">
+              <g className="box-group">
                   <rect 
                     x={rightX} y={y} width={rectWidth} height={rectHeight} rx="4" 
                     fill="white" 
@@ -166,7 +168,7 @@ export function ReconciliationAnimation() {
 
               {/* Connecting Line (Background Dashed) */}
               <path 
-                d={`M ${lineStartX} ${y + rectHeight/2} L ${lineEndX} ${y + rectHeight/2}`} 
+                d={`M ${lineStartX} ${y + centerY} L ${lineEndX} ${y + centerY}`} 
                 fill="none" 
                 stroke="#E5E7EB" 
                 strokeWidth="1" 
@@ -175,13 +177,13 @@ export function ReconciliationAnimation() {
 
               {/* Dot / Pulse */}
               <circle 
-                cx="-20" cy="-20" // Start off-screen
+                cx="0" cy="0" // Start at 0 to align with path
                 r="3" 
                 fill={obsidian}
                 filter="url(#glow-obsidian-dot)"
                 opacity="0"
                 style={{
-                    offsetPath: `path('M ${lineStartX} ${y + rectHeight/2} L ${lineEndX} ${y + rectHeight/2}')`,
+                    offsetPath: `path('M ${lineStartX} ${y + centerY} L ${lineEndX} ${y + centerY}')`,
                     animation: `travelDot ${duration}ms linear forwards`,
                     animationDelay: `${delay}ms`
                 }}
@@ -189,7 +191,7 @@ export function ReconciliationAnimation() {
 
               {/* Trailing Line */}
               <path 
-                d={`M ${lineStartX} ${y + rectHeight/2} L ${lineEndX} ${y + rectHeight/2}`} 
+                d={`M ${lineStartX} ${y + centerY} L ${lineEndX} ${y + centerY}`} 
                 fill="none" 
                 stroke={obsidian} 
                 strokeWidth="1.5" 
@@ -203,7 +205,7 @@ export function ReconciliationAnimation() {
 
               {/* Checkmark */}
               <g 
-                transform={`translate(${rightX + rectWidth + 20}, ${y + rectHeight/2})`} 
+                transform={`translate(${rightX + rectWidth + 20}, ${y + centerY})`} 
                 className="opacity-0"
                 style={{
                     animation: `popIn 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards`,
@@ -219,9 +221,11 @@ export function ReconciliationAnimation() {
         })}
 
         <style jsx>{`
+          /* Smoothly animate height and width on hover */
           .group:hover .box-group rect:first-of-type {
-            transform: scale(1.25, 1.4);
+            transform: scale(1.25, 1.5); /* Increased scale slightly for better height */
           }
+          
           @keyframes travelDot {
             0% { offset-distance: 0%; opacity: 1; }
             90% { opacity: 1; }
