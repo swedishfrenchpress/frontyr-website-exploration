@@ -4,6 +4,7 @@ import { ProductShowcase } from './components/ProductShowcase';
 import { Logos } from './components/Logos';
 import { Features } from './components/Features';
 
+import { FAQs } from './components/FAQs';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -16,8 +17,8 @@ export default function Home() {
         <ProductShowcase />
         <Logos />
         <Features />
-
         <Contact />
+        <FAQs />
         <Footer />
       </div>
     </main>
