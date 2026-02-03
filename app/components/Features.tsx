@@ -528,7 +528,7 @@ export function Features() {
                       </div>
                   </div>
                    {/* Invoice Item 2 */}
-                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-60">
+                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-80">
                       <div className="flex items-center gap-2">
                           <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-subtle">#2</div>
                           <div className="flex flex-col">
