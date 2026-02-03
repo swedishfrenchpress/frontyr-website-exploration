@@ -512,7 +512,7 @@ export function Features() {
                 Automated billing that settles instantly. Create, send, and track smart invoices that reconcile themselves upon payment.
               </p>
 
-              <div className="mt-auto relative w-full h-32 bg-canvas/50 border border-border/50 rounded-lg p-4 flex flex-col gap-3 group-hover:bg-canvas transition-colors duration-300">
+              <div className="mt-auto relative w-full bg-canvas/50 border border-border/50 rounded-lg p-4 flex flex-col gap-3 group-hover:bg-canvas transition-colors duration-300">
                   {/* Invoice Item */}
                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm">
                       <div className="flex items-center gap-2">
@@ -539,6 +539,20 @@ export function Features() {
                       <div className="flex items-center gap-1.5">
                           <span className="text-[10px] font-mono text-obsidian">$1,200</span>
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                      </div>
+                  </div>
+                   {/* Invoice Item 3 */}
+                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-40">
+                      <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-subtle">#3</div>
+                          <div className="flex flex-col">
+                              <span className="text-[10px] font-semibold text-obsidian">Invoice #4094</span>
+                              <span className="text-[8px] text-subtle">Stark Industries</span>
+                          </div>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-obsidian">$8,900</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                       </div>
                   </div>
               </div>

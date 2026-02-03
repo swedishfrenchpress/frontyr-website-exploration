@@ -9,17 +9,16 @@ export function ReconciliationAnimation() {
     // Loop reset
     const timer = setTimeout(() => {
       setKey(prev => prev + 1);
-    }, 4500); // Wait for animations (3 * 0.4s start delay + 1s duration + 2s hold) -> ~4.5s total loop
+    }, 4500); 
 
     return () => clearTimeout(timer);
   }, [key]);
 
   // Layout Constants
   const viewBoxWidth = 600;
-  const viewBoxHeight = 180; // 50% taller than 120
-  const rowCount = 3;
-  const rowHeight = 45; // Taller gaps
-  const startY = 50; 
+  const viewBoxHeight = 180;
+  const rowHeight = 60;
+  const startY = 45;
   
   // Element positions
   const leftX = 50;
@@ -28,19 +27,29 @@ export function ReconciliationAnimation() {
   const rectHeight = 24;
   
   // Line positions
-  const lineStartX = leftX + rectWidth + 5; // 155
-  const lineEndX = rightX - 5; // 445
-  const lineLength = lineEndX - lineStartX; // 290
+  const lineStartX = leftX + rectWidth + 5; 
+  const lineEndX = rightX - 5; 
+  const lineLength = lineEndX - lineStartX; 
+
+  // Colors
+  const obsidian = '#0A1628';
+  const checkmarkBg = '#F3F4F6';
+
+  // Data for rows
+  const rowData = [
+    { usdc: "5,000.00", usd: "5,000.00" },
+    { usdc: "12,350.00", usd: "12,350.00" }
+  ];
 
   return (
-    <div className="w-full h-full flex items-center justify-center select-none">
+    <div className="w-full h-full flex items-center justify-center select-none group">
       <svg 
         key={key} 
         className="w-full max-w-2xl h-full" 
         viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
       >
         <defs>
-          <filter id="glow-green-dot" x="-50%" y="-50%" width="200%" height="200%">
+          <filter id="glow-obsidian-dot" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="1.5" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
@@ -51,7 +60,7 @@ export function ReconciliationAnimation() {
         <text x={rightX + rectWidth/2} y="25" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-semibold uppercase tracking-wide">Internal Ledger</text>
 
         {/* Rows */}
-        {[0, 1, 2].map((i) => {
+        {rowData.map((data, i) => {
           const y = startY + (i * rowHeight);
           const delay = i * 400; // 400ms stagger
           const duration = 1000; // 1s travel time
@@ -60,34 +69,100 @@ export function ReconciliationAnimation() {
             <g key={i}>
               
               {/* Left Box (On-Chain) */}
-              <rect 
-                x={leftX} y={y} width={rectWidth} height={rectHeight} rx="4" 
-                fill="white" 
-                stroke="#E5E7EB" 
-                strokeWidth="1"
-                className="transition-colors"
-                style={{
-                    animation: `highlightBox ${duration}ms forwards`,
-                    animationDelay: `${delay + duration}ms` // Highlight when dot arrives (simulated match)
-                }}
-              />
-              <rect x={leftX + 10} y={y + 8} width={rectWidth * 0.5} height="2" rx="1" fill="#E5E7EB" />
-              <rect x={leftX + 10} y={y + 14} width={rectWidth * 0.25} height="2" rx="1" fill="#E5E7EB" />
+              <g className="transition-all duration-300 origin-center box-group">
+                  {/* Background Rect - Animate scale and fill on hover via CSS classes on parent group */}
+                  <rect 
+                    x={leftX} y={y} width={rectWidth} height={rectHeight} rx="4" 
+                    fill="white" 
+                    stroke="#E5E7EB" 
+                    strokeWidth="1"
+                    className="transition-all duration-300 group-hover:fill-canvas group-hover:stroke-border/60"
+                    style={{
+                        transformBox: 'fill-box',
+                        transformOrigin: 'center',
+                    }}
+                    // Using CSS class for hover scale instead of style to allow smooth transition
+                  />
+                   {/* This separate rect handles the success border animation independent of hover scaling */}
+                   <rect 
+                    x={leftX} y={y} width={rectWidth} height={rectHeight} rx="4" 
+                    fill="none" 
+                    stroke="transparent"
+                    strokeWidth="1.5"
+                    style={{
+                        animation: `highlightBox ${duration}ms forwards`,
+                        animationDelay: `${delay + duration}ms`,
+                        pointerEvents: 'none'
+                    }}
+                  />
+
+                  {/* Placeholder Content */}
+                  <g className="transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
+                    <rect x={leftX + 10} y={y + 8} width={rectWidth * 0.5} height="2" rx="1" fill="#E5E7EB" />
+                    <rect x={leftX + 10} y={y + 14} width={rectWidth * 0.25} height="2" rx="1" fill="#E5E7EB" />
+                  </g>
+
+                  {/* Hover Content */}
+                  <g className="opacity-0 transition-all duration-300 group-hover:opacity-100">
+                     {/* USDC Icon */}
+                     <circle cx={leftX + 16} cy={y + 12} r="6" fill="#2775CA" />
+                     <text x={leftX + 16} y={y + 15} textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">$</text>
+                     
+                     {/* Text */}
+                     <text 
+                        x={leftX + 28} y={y + 15} 
+                        className="text-[9px] font-mono fill-obsidian font-medium"
+                     >
+                        {data.usdc} <tspan className="fill-subtle font-normal">USDC</tspan>
+                     </text>
+                  </g>
+              </g>
 
               {/* Right Box (Internal) */}
-              <rect 
-                x={rightX} y={y} width={rectWidth} height={rectHeight} rx="4" 
-                fill="white" 
-                stroke="#E5E7EB" 
-                strokeWidth="1"
-                className="transition-colors"
-                style={{
-                    animation: `highlightBox ${duration}ms forwards`,
-                    animationDelay: `${delay + duration}ms`
-                }}
-              />
-              <rect x={rightX + 10} y={y + 8} width={rectWidth * 0.5} height="2" rx="1" fill="#E5E7EB" />
-              <rect x={rightX + 10} y={y + 14} width={rectWidth * 0.25} height="2" rx="1" fill="#E5E7EB" />
+              <g className="transition-all duration-300 origin-center box-group">
+                  <rect 
+                    x={rightX} y={y} width={rectWidth} height={rectHeight} rx="4" 
+                    fill="white" 
+                    stroke="#E5E7EB" 
+                    strokeWidth="1"
+                    className="transition-all duration-300 group-hover:fill-canvas group-hover:stroke-border/60"
+                    style={{
+                        transformBox: 'fill-box',
+                        transformOrigin: 'center',
+                    }}
+                  />
+                   <rect 
+                    x={rightX} y={y} width={rectWidth} height={rectHeight} rx="4" 
+                    fill="none" 
+                    stroke="transparent"
+                    strokeWidth="1.5"
+                    style={{
+                        animation: `highlightBox ${duration}ms forwards`,
+                        animationDelay: `${delay + duration}ms`,
+                         pointerEvents: 'none'
+                    }}
+                  />
+
+                   {/* Placeholder Content */}
+                   <g className="transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
+                        <rect x={rightX + 10} y={y + 8} width={rectWidth * 0.5} height="2" rx="1" fill="#E5E7EB" />
+                        <rect x={rightX + 10} y={y + 14} width={rectWidth * 0.25} height="2" rx="1" fill="#E5E7EB" />
+                   </g>
+
+                   {/* Hover Content */}
+                   <g className="opacity-0 transition-all duration-300 group-hover:opacity-100">
+                        {/* USD Icon */}
+                        <circle cx={rightX + 16} cy={y + 12} r="6" fill="#10B981" />
+                        <text x={rightX + 16} y={y + 15} textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">$</text>
+
+                        <text 
+                            x={rightX + 28} y={y + 15} 
+                            className="text-[9px] font-mono fill-obsidian font-medium"
+                        >
+                            <tspan className="fill-subtle font-normal">$</tspan>{data.usd}
+                        </text>
+                    </g>
+              </g>
 
               {/* Connecting Line (Background Dashed) */}
               <path 
@@ -100,10 +175,10 @@ export function ReconciliationAnimation() {
 
               {/* Dot / Pulse */}
               <circle 
-                cx="-20" cy="-20" // Start off-screen to prevent artifacts
+                cx="-20" cy="-20" // Start off-screen
                 r="3" 
-                fill="#10B981"
-                filter="url(#glow-green-dot)"
+                fill={obsidian}
+                filter="url(#glow-obsidian-dot)"
                 opacity="0"
                 style={{
                     offsetPath: `path('M ${lineStartX} ${y + rectHeight/2} L ${lineEndX} ${y + rectHeight/2}')`,
@@ -112,15 +187,11 @@ export function ReconciliationAnimation() {
                 }}
               />
 
-              {/* Trailing Line (Optional, matches dot path) */}
-              {/* Note: Standard SVG stroke-dashoffset animation is easier than trailing a dot perfectly without complex sync. 
-                  Let's stick to the user request: "dot/pulse travels". 
-                  We can also animate the line color turning solid green BEHIND the dot if desired, but dot is key.
-              */}
+              {/* Trailing Line */}
               <path 
                 d={`M ${lineStartX} ${y + rectHeight/2} L ${lineEndX} ${y + rectHeight/2}`} 
                 fill="none" 
-                stroke="#10B981" 
+                stroke={obsidian} 
                 strokeWidth="1.5" 
                 strokeDasharray={lineLength}
                 strokeDashoffset={lineLength}
@@ -139,8 +210,8 @@ export function ReconciliationAnimation() {
                     animationDelay: `${delay + duration}ms`
                 }}
               >
-                 <circle cx="0" cy="0" r="8" fill="#ECFDF5" />
-                 <path d="M-2.5 0.5 L-0.5 2.5 L3 -2" fill="none" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                 <circle cx="0" cy="0" r="8" fill={checkmarkBg} />
+                 <path d="M-2.5 0.5 L-0.5 2.5 L3 -2" fill="none" stroke={obsidian} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </g>
 
             </g>
@@ -148,6 +219,9 @@ export function ReconciliationAnimation() {
         })}
 
         <style jsx>{`
+          .group:hover .box-group rect:first-of-type {
+            transform: scale(1.25, 1.4);
+          }
           @keyframes travelDot {
             0% { offset-distance: 0%; opacity: 1; }
             90% { opacity: 1; }
@@ -157,17 +231,12 @@ export function ReconciliationAnimation() {
             from { stroke-dashoffset: ${lineLength}; }
             to { stroke-dashoffset: 0; }
           }
-          @keyframes popIn {
-            from { opacity: 0; transform: translate(${rightX + rectWidth + 20}px, ${startY}px) scale(0.5); } /* Note: transform logic in CSS keyframes within SVG can be tricky with translate, using local transform in group is safer */
-            to { opacity: 1; transform: translate(${rightX + rectWidth + 20}px, ${startY}px) scale(1); } /* Wait, we need dynamic Y in keyframes or apply animation to opacity/scale only */
-          }
-          /* Re-defining popIn to be transform-agnostic (applied to G which is already translated) */
            @keyframes popIn {
             from { opacity: 0; transform: scale(0.5); }
             to { opacity: 1; transform: scale(1); }
           }
           @keyframes highlightBox {
-            to { stroke: #10B981; stroke-width: 1.5px; }
+            to { stroke: ${obsidian}; }
           }
         `}</style>
       </svg>
