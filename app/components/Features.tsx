@@ -410,10 +410,10 @@ export function Features() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-xl">
             <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
-              Stablecoins: traditional banking meets always-on finance
+              Stablecoins: your bridge to 24/7 banking.
             </h2>
             <p className="text-subtle text-lg leading-relaxed">
-              The trust of regulated dollars. The speed of crypto rails. Frontyr routes every transaction through the fastest, cheapest path - so your customers get their money when they need it, not when the bank opens.
+              Stablecoins aren't something to fear—they're the natural evolution of the dollar. The trust and regulation of traditional banking, with the speed of modern rails. Frontyr makes them work for your institution, not against it.
             </p>
           </div>
         </div>

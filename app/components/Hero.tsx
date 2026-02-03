@@ -71,7 +71,7 @@ export function Hero() {
 
         {/* Right Column: Technical Illustration */}
         <motion.div 
-            className="relative w-full aspect-square flex items-center justify-center lg:justify-end"
+            className="relative w-full aspect-square flex items-center justify-center lg:justify-end lg:order-2 order-first"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}

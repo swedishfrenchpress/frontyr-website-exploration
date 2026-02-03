@@ -160,7 +160,7 @@ export function ThreeBackground() {
     const adjustLayout = () => {
         const w = window.innerWidth;
         if(w < 1024) {
-            objectGroup.position.set(4, 5, -8);
+            objectGroup.position.set(0, 6, -5);
             objectGroup.scale.set(0.65, 0.65, 0.65);
         } else {
             objectGroup.position.set(0, 2.5, 0);
@@ -179,7 +179,7 @@ export function ThreeBackground() {
         const scrollY = window.scrollY;
         objectGroup.rotation.z = scrollY * 0.0005;
         const w = window.innerWidth;
-        const baseY = w < 1024 ? 5 : 2.5;
+        const baseY = w < 1024 ? 6 : 2.5;
         objectGroup.position.y = baseY + scrollY * 0.005;
     };
 
