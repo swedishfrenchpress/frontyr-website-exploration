@@ -1,249 +1,178 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+
+const DocumentIcon = ({ className, contentRows = 1 }: { className?: string, contentRows?: number }) => (
+  <svg viewBox="0 0 24 32" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    {/* Main Rect */}
+    <rect 
+      x="0.5" y="0.5" width="23" height="31" rx="1" 
+      fill="white" 
+      stroke="#E5E7EB" 
+      strokeWidth="1"
+      vectorEffect="non-scaling-stroke"
+    />
+    
+    {/* Header Bar */}
+    <rect x="3" y="4" width="18" height="3" rx="0.5" fill="#E5E7EB" />
+    
+    {/* Content Lines */}
+    <g fill="#E5E7EB">
+       <rect x="3" y="10" width="14" height="1.5" rx="0.5" />
+       {contentRows >= 1 && <rect x="3" y="14" width="18" height="1" rx="0.5" />}
+       {contentRows >= 2 && <rect x="3" y="17" width="12" height="1" rx="0.5" />}
+       {contentRows >= 2 && <rect x="3" y="20" width="16" height="1" rx="0.5" />}
+       {contentRows >= 3 && <rect x="3" y="23" width="10" height="1" rx="0.5" />}
+       {contentRows >= 3 && <rect x="3" y="26" width="14" height="1" rx="0.5" />}
+    </g>
+  </svg>
+);
 
 export function ReconciliationAnimation() {
-  const [key, setKey] = useState(0);
-
+  const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const progress = useMotionValue(0);
+  
+  // Animation Controls
   useEffect(() => {
-    // Loop reset
-    const timer = setTimeout(() => {
-      setKey(prev => prev + 1);
-    }, 4500); 
+    // The main loop
+    const runAnimation = async () => {
+      if (isHovered) return; // Pause if user is scrubbing (future feature) or just hovering
+      
+      // Reset
+      progress.set(0);
+      
+      // Animate 0 -> 1
+      await animate(progress, 1, {
+        duration: 5,
+        ease: "easeInOut",
+        onComplete: () => {
+           // Hold for 2 seconds then restart loop is handled by the recursion/useEffect
+        }
+      });
+      
+      // Hold state
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // If still mounted/running, loop
+      runAnimation();
+    };
 
-    return () => clearTimeout(timer);
-  }, [key]);
+    runAnimation();
 
-  // Layout Constants
-  const viewBoxWidth = 600;
-  const viewBoxHeight = 180;
-  const rowHeight = 60;
-  const startY = 45;
+    return () => {
+      progress.stop();
+    };
+  }, [isHovered, progress]);
+
+  // Derived transforms
   
-  // Element positions
-  const leftX = 50;
-  const rightX = 450;
-  const rectWidth = 100;
-  const rectHeight = 24;
+  // Opacity: Left/Right papers fade out around 0.5
+  const papersOpacity = useTransform(progress, [0, 0.45, 0.5], [1, 1, 0]);
   
-  // Line positions
-  const lineStartX = leftX + rectWidth + 5; 
-  const lineEndX = rightX - 5; 
-  const lineLength = lineEndX - lineStartX; 
-  
-  // Center of lines/boxes
-  const centerY = rectHeight / 2;
+  // Scale: Merged paper pops in around 0.5
+  const mergedScale = useTransform(progress, [0.45, 0.5, 0.6], [0.8, 1.1, 1]);
+  const mergedOpacity = useTransform(progress, [0.45, 0.5], [0, 1]);
 
-  // Colors
-  const obsidian = '#0A1628';
-  const checkmarkBg = '#F3F4F6';
+  // Positions for Papers
+  const leftX = useTransform(progress, [0, 0.5], ["20%", "50%"]); 
+  const rightX = useTransform(progress, [0, 0.5], ["80%", "50%"]); 
 
-  // Data for rows
-  const rowData = [
-    { usdc: "5,000.00", usd: "5,000.00" },
-    { usdc: "12,350.00", usd: "12,350.00" }
-  ];
+  // Path is a "Bridge" arch: M 10 50 Q 50 10 90 50
+  // Container is ~200px high. 
+  // We reduce the negative Y offset to keep it tighter and further from text
+  const arcY = useTransform(progress, [0, 0.25, 0.5], [0, -30, 0]); 
 
   return (
-    <div className="w-full h-full flex items-center justify-center select-none group">
-      <svg 
-        key={key} 
-        className="w-full max-w-2xl h-full" 
-        viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
-      >
-        <defs>
-          <filter id="glow-obsidian-dot" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
+    <div 
+      className="w-full h-full flex flex-col select-none"
+      ref={containerRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Top Section: Animation Area */}
+      <div className="flex-1 relative w-full flex items-center justify-center min-h-[180px]">
+        
+        {/* Curved Dotted Line (SVG) */}
+         <svg 
+            className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+            viewBox="0 0 100 100" 
+            preserveAspectRatio="none"
+         >
+            <path 
+              d="M 20 50 Q 50 20 80 50" 
+              fill="none" 
+              stroke="currentColor" 
+              className="text-obsidian"
+              strokeWidth="0.5" 
+              strokeDasharray="2 2" 
+              vectorEffect="non-scaling-stroke"
+            />
+         </svg>
 
-        {/* Labels */}
-        <text x={leftX + rectWidth/2} y="25" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-semibold uppercase tracking-wide">On-Chain</text>
-        <text x={rightX + rectWidth/2} y="25" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-semibold uppercase tracking-wide">Internal Ledger</text>
 
-        {/* Rows */}
-        {rowData.map((data, i) => {
-          const y = startY + (i * rowHeight);
-          const delay = i * 400; // 400ms stagger
-          const duration = 1000; // 1s travel time
+        {/* Left Paper: On-Chain */}
+        <motion.div
+          className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-2"
+          style={{ 
+            left: leftX, 
+            y: arcY,
+            opacity: papersOpacity 
+          }}
+        >
+          <div className="relative">
+             <DocumentIcon className="w-16 h-20" contentRows={1} />
+          </div>
+        </motion.div>
+
+
+        {/* Right Paper: Ledger */}
+        <motion.div
+          className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-2"
+          style={{ 
+            left: rightX, 
+            y: arcY,
+            opacity: papersOpacity 
+          }}
+        >
+          <div className="relative">
+             <DocumentIcon className="w-16 h-20" contentRows={2} />
+          </div>
+        </motion.div>
+
+
+        {/* Merged Paper: Reconciled */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-2"
+          style={{ 
+            scale: mergedScale, 
+            opacity: mergedOpacity 
+          }}
+        >
+           {/* Success Badge */}
+           <motion.div 
+             className="absolute -top-4 -right-4 z-30 bg-obsidian rounded-full shadow-sm border border-white p-1.5"
+             initial={{ scale: 0 }}
+             animate={{ scale: 1 }}
+             transition={{ delay: 3 }} // Hardcoded delay relative to animation loop
+             style={{ 
+                 scale: useTransform(progress, [0.5, 0.6], [0, 1]) 
+             }}
+           >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+           </motion.div>
+
+          <div className="relative">
+             <DocumentIcon className="w-20 h-24" contentRows={3} />
+          </div>
           
-          return (
-            <g key={i}>
-              
-              {/* Left Box (On-Chain) */}
-              <g className="box-group">
-                  {/* Background Rect */}
-                  <rect 
-                    x={leftX} y={y} width={rectWidth} height={rectHeight} rx="4" 
-                    fill="white" 
-                    stroke="#E5E7EB" 
-                    strokeWidth="1"
-                    className="transition-all duration-300 group-hover:fill-canvas group-hover:stroke-border/60"
-                    style={{
-                        transformBox: 'fill-box',
-                        transformOrigin: 'center',
-                    }}
-                  />
-                   {/* This separate rect handles the success border animation independent of hover scaling */}
-                   <rect 
-                    x={leftX} y={y} width={rectWidth} height={rectHeight} rx="4" 
-                    fill="none" 
-                    stroke="transparent"
-                    strokeWidth="1.5"
-                    style={{
-                        animation: `highlightBox ${duration}ms forwards`,
-                        animationDelay: `${delay + duration}ms`,
-                        pointerEvents: 'none'
-                    }}
-                  />
+          <span className="text-[10px] uppercase font-bold text-obsidian tracking-wider font-mono mt-2">Reconciled</span>
+        </motion.div>
 
-                  {/* Placeholder Content */}
-                  <g className="transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
-                    <rect x={leftX + 10} y={y + 8} width={rectWidth * 0.5} height="2" rx="1" fill="#E5E7EB" />
-                    <rect x={leftX + 10} y={y + 14} width={rectWidth * 0.25} height="2" rx="1" fill="#E5E7EB" />
-                  </g>
-
-                  {/* Hover Content */}
-                  <g className="opacity-0 transition-all duration-300 group-hover:opacity-100">
-                     {/* USDC Icon */}
-                     <circle cx={leftX + 16} cy={y + 12} r="6" fill="#2775CA" />
-                     <text x={leftX + 16} y={y + 15} textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">$</text>
-                     
-                     {/* Text */}
-                     <text 
-                        x={leftX + 28} y={y + 15} 
-                        className="text-[9px] font-mono fill-obsidian font-medium"
-                     >
-                        {data.usdc} <tspan className="fill-subtle font-normal">USDC</tspan>
-                     </text>
-                  </g>
-              </g>
-
-              {/* Right Box (Internal) */}
-              <g className="box-group">
-                  <rect 
-                    x={rightX} y={y} width={rectWidth} height={rectHeight} rx="4" 
-                    fill="white" 
-                    stroke="#E5E7EB" 
-                    strokeWidth="1"
-                    className="transition-all duration-300 group-hover:fill-canvas group-hover:stroke-border/60"
-                    style={{
-                        transformBox: 'fill-box',
-                        transformOrigin: 'center',
-                    }}
-                  />
-                   <rect 
-                    x={rightX} y={y} width={rectWidth} height={rectHeight} rx="4" 
-                    fill="none" 
-                    stroke="transparent"
-                    strokeWidth="1.5"
-                    style={{
-                        animation: `highlightBox ${duration}ms forwards`,
-                        animationDelay: `${delay + duration}ms`,
-                         pointerEvents: 'none'
-                    }}
-                  />
-
-                   {/* Placeholder Content */}
-                   <g className="transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
-                        <rect x={rightX + 10} y={y + 8} width={rectWidth * 0.5} height="2" rx="1" fill="#E5E7EB" />
-                        <rect x={rightX + 10} y={y + 14} width={rectWidth * 0.25} height="2" rx="1" fill="#E5E7EB" />
-                   </g>
-
-                   {/* Hover Content */}
-                   <g className="opacity-0 transition-all duration-300 group-hover:opacity-100">
-                        {/* USD Icon */}
-                        <circle cx={rightX + 16} cy={y + 12} r="6" fill="#10B981" />
-                        <text x={rightX + 16} y={y + 15} textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">$</text>
-
-                        <text 
-                            x={rightX + 28} y={y + 15} 
-                            className="text-[9px] font-mono fill-obsidian font-medium"
-                        >
-                            <tspan className="fill-subtle font-normal">$</tspan>{data.usd}
-                        </text>
-                    </g>
-              </g>
-
-              {/* Connecting Line (Background Dashed) */}
-              <path 
-                d={`M ${lineStartX} ${y + centerY} L ${lineEndX} ${y + centerY}`} 
-                fill="none" 
-                stroke="#E5E7EB" 
-                strokeWidth="1" 
-                strokeDasharray="4 4"
-              />
-
-              {/* Dot / Pulse */}
-              <circle 
-                cx="0" cy="0" // Start at 0 to align with path
-                r="3" 
-                fill={obsidian}
-                filter="url(#glow-obsidian-dot)"
-                opacity="0"
-                style={{
-                    offsetPath: `path('M ${lineStartX} ${y + centerY} L ${lineEndX} ${y + centerY}')`,
-                    animation: `travelDot ${duration}ms linear forwards`,
-                    animationDelay: `${delay}ms`
-                }}
-              />
-
-              {/* Trailing Line */}
-              <path 
-                d={`M ${lineStartX} ${y + centerY} L ${lineEndX} ${y + centerY}`} 
-                fill="none" 
-                stroke={obsidian} 
-                strokeWidth="1.5" 
-                strokeDasharray={lineLength}
-                strokeDashoffset={lineLength}
-                style={{
-                    animation: `fillLine ${duration}ms linear forwards`,
-                    animationDelay: `${delay}ms`
-                }}
-              />
-
-              {/* Checkmark */}
-              <g 
-                transform={`translate(${rightX + rectWidth + 20}, ${y + centerY})`} 
-                className="opacity-0"
-                style={{
-                    animation: `popIn 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards`,
-                    animationDelay: `${delay + duration}ms`
-                }}
-              >
-                 <circle cx="0" cy="0" r="8" fill={checkmarkBg} />
-                 <path d="M-2.5 0.5 L-0.5 2.5 L3 -2" fill="none" stroke={obsidian} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </g>
-
-            </g>
-          );
-        })}
-
-        <style jsx>{`
-          /* Smoothly animate height and width on hover */
-          .group:hover .box-group rect:first-of-type {
-            transform: scale(1.25, 1.5); /* Increased scale slightly for better height */
-          }
-          
-          @keyframes travelDot {
-            0% { offset-distance: 0%; opacity: 1; }
-            90% { opacity: 1; }
-            100% { offset-distance: 100%; opacity: 0; }
-          }
-          @keyframes fillLine {
-            from { stroke-dashoffset: ${lineLength}; }
-            to { stroke-dashoffset: 0; }
-          }
-           @keyframes popIn {
-            from { opacity: 0; transform: scale(0.5); }
-            to { opacity: 1; transform: scale(1); }
-          }
-          @keyframes highlightBox {
-            to { stroke: ${obsidian}; }
-          }
-        `}</style>
-      </svg>
+      </div>
     </div>
   );
 }
