@@ -1,189 +1,10 @@
 'use client';
 
-import { Branch, Time, Layers, WarningAlt, CheckmarkOutline, Send, Renew, Calendar, User, Wallet } from '@carbon/icons-react';
-import { useEffect, useState, useRef } from 'react';
+import { Layers, WarningAlt, Send, Renew, User, Time, Wallet } from '@carbon/icons-react';
+import { useEffect, useState } from 'react';
 import { TreasuryAnimation } from './TreasuryAnimation';
 import { ReconciliationAnimation } from './ReconciliationAnimation';
-
-
-// Routing Animation Component
-function RoutingAnimation() {
-  const [phase, setPhase] = useState<'idle' | 'input' | 'processing' | 'swift' | 'ach' | 'usdc'>('idle');
-  
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    
-    const loop = () => {
-      setPhase('input'); // Start: Origin -> Frontyr
-      
-      timer = setTimeout(() => {
-        setPhase('processing'); // Frontyr Node Active
-        
-        timer = setTimeout(() => {
-          setPhase('swift'); // Check Swift
-          
-          timer = setTimeout(() => {
-            setPhase('ach'); // Check ACH
-            
-            timer = setTimeout(() => {
-              setPhase('usdc'); // Check/Select USDC
-              
-              timer = setTimeout(() => {
-                setPhase('idle'); // Reset
-                timer = setTimeout(loop, 500);
-              }, 3000);
-            }, 1000);
-          }, 1000);
-        }, 800);
-      }, 1000);
-    };
-    
-    loop();
-    return () => clearTimeout(timer);
-  }, []);
-
-  const getRailColor = (rail: 'swift' | 'ach' | 'usdc') => {
-    if (phase === rail) return '#10B981'; // Active Green
-    if (rail === 'usdc' && phase === 'usdc') return '#10B981'; // Keep USDC active if needed (logic handled by phases)
-    return '#E5E7EB'; // Inactive Gray
-  };
-
-  const getRailOpacity = (rail: 'swift' | 'ach' | 'usdc') => {
-    if (phase === rail) return 1;
-    return 0.3;
-  };
-
-  return (
-    <div className="w-full h-56 relative flex items-center justify-center overflow-visible">
-       <svg className="w-full h-full max-w-5xl overflow-visible" viewBox="0 0 900 160">
-          <defs>
-            <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-
-          {/* --- PATHS --- */}
-          
-          {/* Input Path (Left -> Center) */}
-          <path 
-            d="M 90 80 L 410 80" 
-            fill="none" 
-            stroke={phase !== 'idle' ? '#10B981' : '#E5E7EB'} 
-            strokeWidth="2" 
-            strokeDasharray="6 6"
-            className="transition-colors duration-700"
-          />
-
-          {/* Option 1: Wire (Top) */}
-          <g className="transition-all duration-500" style={{ opacity: phase === 'swift' ? 1 : 0.4 }}>
-             <path 
-                d="M 490 80 C 550 80, 600 30, 810 30" 
-                fill="none" 
-                stroke={phase === 'swift' ? '#10B981' : '#E5E7EB'} 
-                strokeWidth="2" 
-                strokeDasharray="4 4" 
-             />
-             <text x="650" y="45" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-medium">SWIFT • 2 DAYS</text>
-          </g>
-
-          {/* Option 2: ACH (Middle) */}
-          <g className="transition-all duration-500" style={{ opacity: phase === 'ach' ? 1 : 0.4 }}>
-             <path 
-                d="M 490 80 C 550 80, 600 80, 810 80" 
-                fill="none" 
-                stroke={phase === 'ach' ? '#10B981' : '#E5E7EB'} 
-                strokeWidth="2" 
-                strokeDasharray="4 4" 
-             />
-             <text x="650" y="70" textAnchor="middle" className="text-[10px] font-mono fill-subtle font-medium">ACH • 1 DAY</text>
-          </g>
-
-          {/* Option 3: Stablecoin (Bottom) */}
-          <g className="transition-all duration-500" style={{ opacity: phase === 'usdc' ? 1 : 0.4 }}>
-             {/* Base Path */}
-             <path 
-                d="M 490 80 C 550 80, 600 130, 810 130" 
-                fill="none" 
-                stroke={phase === 'usdc' ? '#10B981' : '#E5E7EB'} 
-                strokeWidth={phase === 'usdc' ? '3' : '2'} 
-                className="transition-colors duration-500"
-             />
-             {/* Glow Effect */}
-             {phase === 'usdc' && (
-                <path 
-                    d="M 490 80 C 550 80, 600 130, 810 130" 
-                    fill="none" 
-                    stroke="#10B981" 
-                    strokeWidth="6" 
-                    strokeOpacity="0.3"
-                    filter="url(#glow-green)"
-                />
-             )}
-             <rect x="610" y="115" width="80" height="20" rx="4" fill={phase === 'usdc' ? '#ECFDF5' : 'transparent'} className="transition-colors duration-500" />
-             <text 
-                x="650" y="129" 
-                textAnchor="middle" 
-                className={`text-[10px] font-mono font-bold transition-colors duration-500 ${phase === 'usdc' ? 'fill-emerald-600' : 'fill-subtle'}`}
-             >
-                USDC • INSTANT
-             </text>
-          </g>
-
-
-          {/* --- NODES --- */}
-          
-          {/* Node 1: Sender (Left) */}
-          <g transform="translate(10, 40)">
-             {/* Card Bg */}
-             <rect x="0" y="0" width="80" height="80" rx="8" fill="white" stroke={phase !== 'idle' ? '#10B981' : '#E5E7EB'} strokeWidth={phase !== 'idle' ? '2' : '1'} className="transition-colors duration-700" />
-             {/* Icon Circle */}
-             <circle cx="40" cy="30" r="16" fill="#F9FAFB" stroke="#E5E7EB" />
-             <text x="40" y="34" textAnchor="middle" className="text-[12px] font-serif font-bold fill-obsidian">$</text>
-             {/* Text */}
-             <text x="40" y="60" textAnchor="middle" className="text-[10px] font-semibold fill-obsidian">Origin</text>
-             <text x="40" y="72" textAnchor="middle" className="text-[9px] font-mono fill-subtle">USD</text>
-          </g>
-
-          {/* Node 2: Frontyr (Center) */}
-          <g transform="translate(410, 40)">
-             {/* Card Bg */}
-             <rect 
-                x="0" y="0" width="80" height="80" rx="8" 
-                fill="#0A1628" 
-                stroke={phase === 'processing' || phase === 'swift' || phase === 'ach' || phase === 'usdc' ? '#10B981' : '#0A1628'} 
-                strokeWidth={phase !== 'idle' && phase !== 'input' ? '2' : '0'}
-                className="transition-colors duration-300"
-             />
-             
-             {/* Icon */}
-             <g transform="translate(40, 30) scale(0.14) translate(-50, -50)">
-                 <path d="M50 20 L60 40 L80 50 L60 60 L50 80 L40 60 L20 50 L40 40 Z" fill="white" />
-             </g>
-             
-             {/* Text */}
-             <text x="40" y="60" textAnchor="middle" className="text-[10px] font-bold fill-white tracking-widest">FRONTYR</text>
-             <text x="40" y="72" textAnchor="middle" className={`text-[8px] font-mono transition-colors duration-300 ${phase === 'processing' ? 'fill-emerald-400' : 'fill-gray-400'}`}>
-                {phase === 'processing' ? 'OPTIMIZING' : 'OPTIMIZER'}
-             </text>
-          </g>
-
-          {/* Node 3: Receiver (Right) */}
-          <g transform="translate(810, 40)"> 
-             {/* Card Bg */}
-             <rect x="0" y="0" width="80" height="80" rx="8" fill="white" stroke={phase === 'usdc' ? '#10B981' : '#E5E7EB'} strokeWidth={phase === 'usdc' ? '2' : '1'} className="transition-colors duration-500" />
-             {/* Icon Circle */}
-             <circle cx="40" cy="30" r="16" fill="#0A1628" />
-             <text x="40" y="34" textAnchor="middle" className="text-[12px] font-serif font-bold fill-white">$</text>
-             {/* Text */}
-             <text x="40" y="60" textAnchor="middle" className="text-[10px] font-semibold fill-obsidian">Receiver</text>
-             <text x="40" y="72" textAnchor="middle" className="text-[9px] font-mono fill-subtle">USD</text>
-          </g>
-
-       </svg>
-    </div>
-  );
-}
+import { SubaccountingAnimation } from './SubaccountingAnimation';
 
 function DashboardDelayCard() {
   const [step, setStep] = useState<'idle' | 'processing' | 'success' | 'delayed'>('idle');
@@ -356,32 +177,7 @@ function DashboardDelayCard() {
   );
 }
 
-// Unified Ledger Card Component - Animation moved to Defensibility
-function UnifiedLedgerCard() {
-  return (
-    <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
-      <div className="p-10 flex flex-col md:flex-row items-start gap-12">
-        {/* Left side - Copy */}
-        <div className="flex-1 max-w-lg">
-          <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-            <Layers className="w-5 h-5" />
-          </div>
-          <h3 className="text-xl font-semibold text-obsidian mb-2">
-            Treasury Management
-          </h3>
-          <p className="text-subtle leading-relaxed mb-6">
-            Know your reserves in real time. See exactly where your liquidity sits across all positions. Balance sheets that update as transactions settle.
-          </p>
-        </div>
 
-        {/* Right side - Animation */}
-        <div className="flex-1 w-full h-full min-h-[300px] flex items-center justify-center">
-             <TreasuryAnimation />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 
 export function Features() {
@@ -576,25 +372,8 @@ export function Features() {
                 Infinite sub-accounts for every customer, department, or product line. Granular access controls and permissions built-in.
               </p>
 
-              <div className="mt-auto relative w-full flex flex-col gap-2">
-                 {/* User Row 1 */}
-                 <div className="flex items-center gap-3 p-2 rounded-md bg-canvas/30 group-hover:bg-canvas transition-colors duration-300">
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-[10px]">JD</div>
-                    <div className="flex-1">
-                        <div className="text-[10px] font-semibold text-obsidian">John Doe</div>
-                        <div className="text-[9px] text-subtle">Admin • Treasury</div>
-                    </div>
-                    <div className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[8px] font-bold uppercase">Active</div>
-                 </div>
-                 {/* User Row 2 */}
-                 <div className="flex items-center gap-3 p-2 rounded-md bg-white border border-border/50 shadow-sm">
-                    <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-[10px]">AS</div>
-                    <div className="flex-1">
-                        <div className="text-[10px] font-semibold text-obsidian">Alice Smith</div>
-                        <div className="text-[9px] text-subtle">Viewer • Audit</div>
-                    </div>
-                     <div className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[8px] font-bold uppercase">Active</div>
-                 </div>
+              <div className="mt-auto relative w-full flex items-center justify-center -mb-6">
+                 <SubaccountingAnimation />
               </div>
             </div>
           </div>
