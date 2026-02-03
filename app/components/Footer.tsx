@@ -20,7 +20,7 @@ export function Footer() {
             </div>
             
             <p className="text-sm text-white/60 leading-relaxed max-w-sm">
-              Frontyr is part of <span className="text-white font-medium">Hoseki</span>, the global leader in cryptographic proof of reserves. We build the stablecoin core banking infrastructure that powers the next generation of finance.
+              Frontyr is part of <span className="text-white font-medium">Hoseki</span>, the global leader in cryptographic proof of reserves. We're your north star in navigating 24/7 banking for the next generation of clients.
             </p>
 
             <div className="text-sm text-white/40">

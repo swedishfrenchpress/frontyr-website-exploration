@@ -4,14 +4,14 @@ import { ArrowRight } from 'lucide-react';
 
 const solutions = [
   {
-    title: 'Stablecoin Issuance & Redemption',
-    desc: 'Frontyr provides the core ledger and compliance rails for minting, burning, and managing stablecoin supply with full reserve transparency.',
+    title: 'Issue and redeem stablecoins without the headache',
+    desc: 'Mint, burn, and manage supply with built-in compliance. Full reserve transparency for auditors. No spreadsheets required.',
     image: '/bank-dither1.png',
     placeholder: '/solution-1-placeholder.svg',
   },
   {
-    title: 'Treasury & Liquidity Management',
-    desc: 'Track reserves, manage liquidity positions, and maintain balance-sheet clarity across all stablecoin operations in real time.',
+    title: 'Know your reserves in real time, not next quarter',
+    desc: 'See exactly where your liquidity sits across all positions. Balance sheets that update as transactions settle, not when accountants catch up.',
     image: '/bank-dither2.png',
     placeholder: '/solution-2-placeholder.svg',
   },
@@ -24,10 +24,10 @@ export function Defensibility() {
         {/* Section Header */}
         <div className="mb-20">
           <h2 className="font-sans text-3xl md:text-4xl font-semibold text-obsidian tracking-tight mb-4">
-            Our Solutions
+            Built for banks going 24/7
           </h2>
           <p className="text-subtle text-base max-w-2xl">
-            Purpose-built infrastructure for institutions operating natively on stablecoin rails.
+            Legacy cores weren't designed for stablecoins. Frontyr was. Here's what that unlocks.
           </p>
         </div>
 

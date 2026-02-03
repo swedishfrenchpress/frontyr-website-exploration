@@ -100,10 +100,10 @@ function UnifiedLedgerCard() {
             <Layers className="w-5 h-5" />
           </div>
           <h3 className="text-xl font-semibold text-obsidian mb-2">
-            A Single, Pristine Ledger
+            One ledger. Zero reconciliation headaches.
           </h3>
           <p className="text-subtle leading-relaxed mb-6">
-            Frontyr unifies on-chain settlement with off-chain compliance, giving you a single source of truth across all asset types.
+            Fiat and stablecoins in one place. On-chain settlement with off-chain compliance. No more piecing together balance sheets from five different systems.
           </p>
           
           {/* Feature bullets */}
@@ -215,15 +215,55 @@ export function Features() {
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[260px] bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.08),transparent_70%)]"></div>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div className="bg-canvas -mx-6 md:-mx-12 lg:-mx-20 px-6 md:px-12 lg:px-20 py-16 mb-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div className="max-w-xl">
-                <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
-                  Accelerate payments with stablecoin settlement
-                </h2>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border/60 shadow-sm mb-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span className="font-sans text-[12px] font-semibold text-subtle tracking-tight uppercase">The Problem</span>
+                </div>
+                <h3 className="font-sans text-3xl md:text-4xl font-semibold text-obsidian tracking-tight mb-4 leading-[1.15]">
+                  Your core closes at 5pm. Your customers don't.
+                </h3>
                 <p className="text-subtle text-lg leading-relaxed">
-                  Replace slow, expensive legacy payment rails with stablecoin-powered settlement. Frontyr orchestrates the fastest, lowest-cost path for every transaction - globally and in real time.
+                  Legacy banking infrastructure wasn't built for a generation that expects instant everything. Bolt-ons won't fix it. You need rails designed for 24/7 from day one.
                 </p>
               </div>
+
+              <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
+                  <div className="p-6">
+                    <div className="text-lg font-semibold text-obsidian mb-1">T+2</div>
+                    <div className="text-sm text-subtle">Settlement Time</div>
+                  </div>
+                  <div className="p-6">
+                    <div className="text-lg font-semibold text-obsidian mb-1">0%</div>
+                    <div className="text-sm text-subtle">Programmability</div>
+                  </div>
+                  <div className="p-6 border-t border-border sm:border-t-0">
+                    <div className="text-lg font-semibold text-obsidian mb-1">High</div>
+                    <div className="text-sm text-subtle">Reconciliation Friction</div>
+                  </div>
+                  <div className="p-6 border-t border-border sm:border-t-0 sm:border-l border-border">
+                    <div className="text-lg font-semibold text-obsidian mb-1">Batch</div>
+                    <div className="text-sm text-subtle">Processing</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="max-w-xl">
+            <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
+              Stablecoins: traditional banking meets always-on finance
+            </h2>
+            <p className="text-subtle text-lg leading-relaxed">
+              The trust of regulated dollars. The speed of crypto rails. Frontyr routes every transaction through the fastest, cheapest path - so your customers get their money when they need it, not when the bank opens.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -238,10 +278,10 @@ export function Features() {
                   <GitBranch className="w-5 h-5" />
                 </div>
                 <h3 className="text-2xl font-semibold text-obsidian mb-3">
-                  Dynamic Settlement Routing
+                  Every transaction. Fastest route. 24/7.
                 </h3>
                 <p className="text-subtle leading-relaxed">
-                  Frontyr dynamically routes each transaction across the optimal combination of rails, partners and networks to deliver the fastest, lowest-cost settlement for every payment.
+                  Frontyr picks the optimal rails for each payment automatically. Your customers settle in seconds instead of days - whether it's 2pm or 2am.
                 </p>
               </div>
               <div className="hidden lg:block">
@@ -334,11 +374,10 @@ export function Features() {
                 <History className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-semibold text-obsidian mb-3">
-                Regulatory Audit
+                Auditors love us
               </h3>
               <p className="text-sm text-subtle leading-relaxed mb-8">
-                Audit-ready state history with immutable versioning and
-                programmable compliance controls.
+                Every state change logged. Every transaction traceable. Pull compliance reports in minutes, not weeks.
               </p>
 
               <div className="mt-auto relative w-full h-40 flex flex-col justify-end items-center pb-4">

@@ -27,10 +27,10 @@ export function Hero() {
                 </span>
               </div>
               <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] text-obsidian leading-[0.95]">
-                The core banking platform <span className="text-subtle">for the future of finance.</span>
+                The core banking platform <span className="text-subtle">that never closes.</span>
               </h1>
               <p className="max-w-xl font-sans text-lg text-subtle leading-relaxed">
-                Frontyr provides the programmable, compliant, and real-time rails needed to build next-generation financial products on stablecoin settlement layers.
+                Legacy cores close at 5pm. Your customers don't. Stablecoins marry traditional banking with always-on settlement. Frontyr is how you get there.
               </p>
             </motion.div>
 
@@ -41,10 +41,10 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-300 hover:bg-obsidian/90 hover:scale-[1.02] hover:shadow-lg flex items-center gap-2 cursor-pointer">
-                <span className="relative z-10">Book a Demo</span>
+                <span className="relative z-10">See Frontyr in Action</span>
               </button>
               <button className="px-8 py-3.5 bg-white text-obsidian border border-border text-sm font-medium rounded-xl shadow-sm transition-all duration-300 hover:bg-gray-50 hover:border-obsidian/40 hover:text-black hover:shadow-md cursor-pointer">
-                View Documentation
+                Read the Docs
               </button>
             </motion.div>
 
@@ -56,15 +56,15 @@ export function Hero() {
             >
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
-                Real-time settlement
+                Settle in seconds, not days
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
-                Programmable compliance
+                Compliance built in, not bolted on
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
-                API-first core ledger
+                One ledger for fiat and stablecoins
               </div>
             </motion.div>
         </div>
