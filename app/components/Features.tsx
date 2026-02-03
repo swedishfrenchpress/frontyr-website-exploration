@@ -599,7 +599,7 @@ export function Features() {
                     </p>
                 </div>
 
-                <div className="mt-10 h-36 w-full relative flex items-center border-t border-border/40 pt-6 overflow-hidden">
+                <div className="mt-10 h-36 w-full relative flex items-center overflow-hidden">
                   <ReconciliationAnimation />
                 </div>
              </div>

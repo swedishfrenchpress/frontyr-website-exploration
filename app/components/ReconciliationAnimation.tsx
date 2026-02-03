@@ -100,6 +100,7 @@ export function ReconciliationAnimation() {
 
               {/* Dot / Pulse */}
               <circle 
+                cx="-20" cy="-20" // Start off-screen to prevent artifacts
                 r="3" 
                 fill="#10B981"
                 filter="url(#glow-green-dot)"
