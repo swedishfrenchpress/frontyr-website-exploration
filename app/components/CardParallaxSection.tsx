@@ -69,7 +69,7 @@ function FloatingLedgerItem({
                     <span className="text-[13px] font-semibold text-obsidian truncate leading-tight">
                         {title}
                     </span>
-                    <span className="text-[11px] text-subtle font-mono truncate mt-0.5">
+                    <span className="text-[11px] text-subtle font-mono mt-0.5 whitespace-nowrap">
                         {subtitle}
                     </span>
                 </div>
@@ -91,7 +91,7 @@ function FloatingLedgerItem({
                     ) : (
                         <div className="flex items-center gap-1.5">
                             <CheckmarkFilled className="w-3 h-3 text-emerald-500" />
-                            <span className="text-[10px] font-medium text-subtle">Cleared</span>
+                            <span className="text-[10px] font-medium text-subtle">Cleared • USDC</span>
                         </div>
                     )}
                 </div>
@@ -157,10 +157,10 @@ export function CardParallaxSection() {
         
         {/* Left Side */}
         <FloatingLedgerItem 
-            initialX={-420} 
+            initialX={-450} 
             initialY={-120} 
             speed={1.8} 
-            width={320} 
+            width={380} 
             height={80} 
             scrollYProgress={scrollYProgress}
             delay={0.1}
@@ -170,10 +170,10 @@ export function CardParallaxSection() {
             subtitle="Sat Mar 07 • 04:23 AM"
         />
          <FloatingLedgerItem 
-            initialX={-560} 
+            initialX={-590} 
             initialY={150} 
             speed={0.7} 
-            width={310} 
+            width={370} 
             height={80} 
             scrollYProgress={scrollYProgress}
             delay={0.2}
@@ -184,10 +184,10 @@ export function CardParallaxSection() {
             subtitle="Sun Mar 08 • 09:30 AM"
         />
         <FloatingLedgerItem 
-            initialX={-380} 
+            initialX={-410} 
             initialY={380} 
             speed={2.5} 
-            width={300} 
+            width={360} 
             height={80} 
             scrollYProgress={scrollYProgress}
             delay={0.3}
@@ -199,10 +199,10 @@ export function CardParallaxSection() {
 
         {/* Right Side */}
          <FloatingLedgerItem 
-            initialX={440} 
+            initialX={470} 
             initialY={-100} 
             speed={1.5} 
-            width={340} 
+            width={400} 
             height={80} 
             scrollYProgress={scrollYProgress}
             delay={0.15}
@@ -212,10 +212,10 @@ export function CardParallaxSection() {
             subtitle="Sun Mar 08 • 03:45 AM"
         />
          <FloatingLedgerItem 
-            initialX={520} 
+            initialX={550} 
             initialY={220} 
             speed={0.9} 
-            width={290} 
+            width={350} 
             height={80} 
             scrollYProgress={scrollYProgress}
             delay={0.25}
@@ -225,10 +225,10 @@ export function CardParallaxSection() {
             subtitle="Sat Mar 07 • 08:30 PM"
         />
         <FloatingLedgerItem 
-            initialX={360} 
+            initialX={390} 
             initialY={440} 
             speed={2.2} 
-            width={330} 
+            width={390} 
             height={80} 
             scrollYProgress={scrollYProgress}
             delay={0.35}
