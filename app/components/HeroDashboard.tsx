@@ -114,7 +114,7 @@ export function HeroDashboard() {
           <div className="h-6 w-px bg-border mx-2"></div>
           <div className="flex items-center gap-2 text-obsidian font-semibold text-sm">
             <Security className="w-4 h-4 text-emerald-600" />
-            <span>Frontyr Treasury</span>
+            <span>ACME Bank</span>
           </div>
         </div>
 
