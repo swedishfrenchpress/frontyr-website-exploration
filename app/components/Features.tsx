@@ -386,7 +386,7 @@ export function Features() {
                       </div>
                   </div>
                    {/* Invoice Item 3 */}
-                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-40">
+                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-60">
                       <div className="flex items-center gap-2">
                           <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-subtle">#3</div>
                           <div className="flex flex-col">
@@ -397,6 +397,48 @@ export function Features() {
                       <div className="flex items-center gap-1.5">
                           <span className="text-[10px] font-mono text-obsidian">$8,900</span>
                           <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                      </div>
+                  </div>
+                   {/* Invoice Item 4 */}
+                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-40">
+                      <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-subtle">#4</div>
+                          <div className="flex flex-col">
+                              <span className="text-[10px] font-semibold text-obsidian">Invoice #4095</span>
+                              <span className="text-[8px] text-subtle">Wayne Ent.</span>
+                          </div>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-obsidian">$15,200</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                      </div>
+                  </div>
+                   {/* Invoice Item 5 */}
+                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-25">
+                      <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-subtle">#5</div>
+                          <div className="flex flex-col">
+                              <span className="text-[10px] font-semibold text-obsidian">Invoice #4096</span>
+                              <span className="text-[8px] text-subtle">Cyberdyne</span>
+                          </div>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-obsidian">$3,850</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                      </div>
+                  </div>
+                   {/* Invoice Item 6 */}
+                   <div className="flex items-center justify-between bg-white p-2.5 rounded border border-border/50 shadow-sm opacity-10">
+                      <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-subtle">#6</div>
+                          <div className="flex flex-col">
+                              <span className="text-[10px] font-semibold text-obsidian">Invoice #4097</span>
+                              <span className="text-[8px] text-subtle">Massive Dynamic</span>
+                          </div>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] font-mono text-obsidian">$9,100</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
                       </div>
                   </div>
               </div>
