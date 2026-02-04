@@ -109,8 +109,11 @@ export function CardParallaxSection() {
   });
 
   return (
-    <div ref={containerRef} className="relative w-full py-32 md:py-48 overflow-hidden flex flex-col items-center justify-center min-h-[600px] md:min-h-[900px] bg-white/50">
+    <div ref={containerRef} className="relative w-full pt-48 pb-32 md:pt-64 md:pb-48 overflow-hidden flex flex-col items-center justify-center min-h-[800px] md:min-h-[1100px] bg-white/50">
       
+      {/* Top Gradient for gentle fade off */}
+      <div className="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
+
       {/* Background decoration: Dot Grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.4]">
         <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -157,8 +160,8 @@ export function CardParallaxSection() {
         
         {/* Left Side */}
         <FloatingLedgerItem 
-            initialX={-450} 
-            initialY={-120} 
+            initialX={-320} 
+            initialY={-260} 
             speed={1.8} 
             width={380} 
             height={80} 
@@ -170,8 +173,8 @@ export function CardParallaxSection() {
             subtitle="Sat Mar 07 • 04:23 AM"
         />
          <FloatingLedgerItem 
-            initialX={-590} 
-            initialY={150} 
+            initialX={-440} 
+            initialY={240} 
             speed={0.7} 
             width={370} 
             height={80} 
@@ -184,8 +187,8 @@ export function CardParallaxSection() {
             subtitle="Sun Mar 08 • 09:30 AM"
         />
         <FloatingLedgerItem 
-            initialX={-410} 
-            initialY={380} 
+            initialX={-280} 
+            initialY={480} 
             speed={2.5} 
             width={360} 
             height={80} 
@@ -199,8 +202,8 @@ export function CardParallaxSection() {
 
         {/* Right Side */}
          <FloatingLedgerItem 
-            initialX={470} 
-            initialY={-100} 
+            initialX={340} 
+            initialY={-240} 
             speed={1.5} 
             width={400} 
             height={80} 
@@ -212,8 +215,8 @@ export function CardParallaxSection() {
             subtitle="Sun Mar 08 • 03:45 AM"
         />
          <FloatingLedgerItem 
-            initialX={550} 
-            initialY={220} 
+            initialX={430} 
+            initialY={280} 
             speed={0.9} 
             width={350} 
             height={80} 
@@ -225,8 +228,8 @@ export function CardParallaxSection() {
             subtitle="Sat Mar 07 • 08:30 PM"
         />
         <FloatingLedgerItem 
-            initialX={390} 
-            initialY={440} 
+            initialX={290} 
+            initialY={520} 
             speed={2.2} 
             width={390} 
             height={80} 
