@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Building, Enterprise, Datastore } from '@carbon/icons-react';
 
 // Large Geometric Star (Frontyr Logo)
 const FrontyrStar = ({ className }: { className?: string }) => (
@@ -14,7 +13,7 @@ const FrontyrStar = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// USDC Logo (White on Blue/Transparent)
+// USDC Logo (White on Blue)
 const USDCLogo = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 2000 2000" fill="none">
     <circle cx="1000" cy="1000" r="1000" fill="#2775ca" />
@@ -25,31 +24,31 @@ const USDCLogo = ({ className }: { className?: string }) => (
 
 // Green USD Icon
 const GreenUSDIcon = ({ className }: { className?: string }) => (
-    <div className={`rounded-full bg-emerald-500 border border-emerald-600 flex items-center justify-center shadow-sm ${className}`}>
-        <span className="font-mono text-[10px] font-bold text-white">$</span>
+    <div className={`rounded-full bg-emerald-500 border border-emerald-400 flex items-center justify-center shadow-md ${className}`}>
+        <span className="font-mono text-sm font-bold text-white">$</span>
     </div>
 );
 
-type AnimationState = 'idle' | 'moving' | 'settled';
+type AnimationState = 'idle' | 'running' | 'settled';
 
 export function InternationalPaymentsAnimation() {
   const [cycle, setCycle] = useState(0);
   const [step, setStep] = useState<AnimationState>('idle');
 
-  // Total Duration: 5s
-  // 0s-2s: Move to Center (Slow)
-  // 2s-3.5s: Transform/Glide through center
-  // 3.5s-4.5s: Exit to destination
-  const ANIMATION_DURATION = 4.5; 
-  const PAUSE_DURATION = 1.5;
+  // Animation Timings (Seconds)
+  const VERTICAL_MOVE_TIME = 0.8;
+  const HORIZONTAL_MOVE_TIME = 0.8;
+  const HOLD_TIME = 1.5;
+  const TOTAL_DURATION = (VERTICAL_MOVE_TIME + HORIZONTAL_MOVE_TIME) * 2 + HOLD_TIME;
+  const PAUSE_DURATION = 1;
 
   useEffect(() => {
     const sequence = async () => {
       setStep('idle');
       await new Promise(r => setTimeout(r, 500));
       
-      setStep('moving');
-      await new Promise(r => setTimeout(r, ANIMATION_DURATION * 1000));
+      setStep('running');
+      await new Promise(r => setTimeout(r, TOTAL_DURATION * 1000));
       
       setStep('settled');
       await new Promise(r => setTimeout(r, PAUSE_DURATION * 1000));
@@ -62,18 +61,19 @@ export function InternationalPaymentsAnimation() {
   return (
     <div className="w-full h-full relative p-4 flex flex-col justify-between overflow-visible min-h-[300px]">
       
-      {/* --- BACKGROUND RAILS (The "X") --- */}
+      {/* --- BACKGROUND RAILS (Manhattan/Circuit Grid) --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Top-Left to Bottom-Right */}
-          <svg className="absolute inset-0 w-full h-full opacity-20">
-             <line x1="10%" y1="15%" x2="90%" y2="85%" stroke="#0A1628" strokeWidth="1" strokeDasharray="4 4" />
-             <line x1="10%" y1="85%" x2="90%" y2="15%" stroke="#0A1628" strokeWidth="1" strokeDasharray="4 4" />
-          </svg>
+          {/* Vertical Rails (Left & Right) */}
+          <div className="absolute top-8 bottom-8 left-[18%] w-px border-l border-dashed border-obsidian/20"></div>
+          <div className="absolute top-8 bottom-8 right-[18%] w-px border-r border-dashed border-obsidian/20"></div>
           
+          {/* Horizontal Rail (Center) */}
+          <div className="absolute top-1/2 left-[18%] right-[18%] h-px border-t border-dashed border-obsidian/20"></div>
+
           {/* Center Hub */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="w-24 h-24 rounded-full bg-white border border-border flex items-center justify-center shadow-lg">
-                  <FrontyrStar className="w-16 h-16 text-obsidian/10" />
+              <div className="w-32 h-32 rounded-full bg-white border border-border flex items-center justify-center shadow-lg">
+                  <FrontyrStar className="w-20 h-20 text-obsidian/10" />
               </div>
           </div>
       </div>
@@ -81,45 +81,64 @@ export function InternationalPaymentsAnimation() {
 
       {/* --- TOP ROW --- */}
       <div className="flex justify-between items-start relative z-10 w-full">
-         {/* Top Left: Sinclar */}
          <AccountCard 
             name="Sinclar Transport" 
-            icon={<User className="w-3 h-3 text-subtle" />}
             balance={1250000} 
-            change={step === 'moving' ? -5000 : 0}
+            change={step === 'running' ? -5000 : 0}
             align="left"
          />
-         {/* Top Right: Nexus */}
          <AccountCard 
             name="Nexus Enterprises" 
-            icon={<Building className="w-3 h-3 text-subtle" />}
             balance={840000} 
-            change={step === 'settled' ? 8000 : 0} // Receiving from Bottom-Left
+            change={step === 'settled' ? 8000 : 0} 
             align="right"
             isActive={step === 'settled'}
          />
       </div>
 
 
-      {/* --- ANIMATION LAYER (Diagonal Crossing) --- */}
-      <div className="absolute inset-0 pointer-events-none z-30 overflow-visible">
+      {/* --- ANIMATION LAYER --- */}
+      <div className="absolute inset-0 pointer-events-none z-50 overflow-visible">
           
-          {/* PATH 1: Top-Left (Outside) -> Bottom-Right */}
-          <TravelingCoin 
-            start={{ left: '-10%', top: '15%' }} 
-            end={{ left: '90%', top: '85%' }}
-            delay={0}
-            active={step === 'moving'}
-            duration={ANIMATION_DURATION}
+          {/* FLOW 1: Top-Left -> Bottom-Right (Down -> Right -> Hold -> Right -> Down) */}
+          <ManhattanCoin 
+            path={{
+                start: { left: '18%', top: '15%' },
+                midIn: { left: '18%', top: '50%' },
+                center: { left: '50%', top: '50%' },
+                midOut: { left: '82%', top: '50%' },
+                end: { left: '82%', top: '85%' }
+            }}
+            active={step === 'running'}
+            timings={{ v: VERTICAL_MOVE_TIME, h: HORIZONTAL_MOVE_TIME, hold: HOLD_TIME }}
           />
 
-          {/* PATH 2: Bottom-Left (Outside) -> Top-Right */}
-          <TravelingCoin 
-            start={{ left: '-10%', top: '85%' }} 
-            end={{ left: '90%', top: '15%' }}
-            delay={0.4} // Stagger slightly
-            active={step === 'moving'}
-            duration={ANIMATION_DURATION}
+          {/* FLOW 2: Bottom-Right -> Top-Left (Up -> Left -> Hold -> Left -> Up) */}
+          <ManhattanCoin 
+            path={{
+                start: { left: '82%', top: '85%' },
+                midIn: { left: '82%', top: '50%' },
+                center: { left: '50%', top: '50%' },
+                midOut: { left: '18%', top: '50%' },
+                end: { left: '18%', top: '15%' }
+            }}
+            active={step === 'running'}
+            timings={{ v: VERTICAL_MOVE_TIME, h: HORIZONTAL_MOVE_TIME, hold: HOLD_TIME }}
+            delay={0.2}
+          />
+
+           {/* FLOW 3: Bottom-Left -> Top-Right (Up -> Right -> Hold -> Right -> Up) */}
+           <ManhattanCoin 
+            path={{
+                start: { left: '18%', top: '85%' },
+                midIn: { left: '18%', top: '50%' },
+                center: { left: '50%', top: '50%' },
+                midOut: { left: '82%', top: '50%' },
+                end: { left: '82%', top: '15%' }
+            }}
+            active={step === 'running'}
+            timings={{ v: VERTICAL_MOVE_TIME, h: HORIZONTAL_MOVE_TIME, hold: HOLD_TIME }}
+            delay={0.4}
           />
 
       </div>
@@ -127,20 +146,16 @@ export function InternationalPaymentsAnimation() {
 
       {/* --- BOTTOM ROW --- */}
       <div className="flex justify-between items-end relative z-10 w-full mt-auto">
-         {/* Bottom Left: Globex */}
          <AccountCard 
             name="Globex Corp" 
-            icon={<Enterprise className="w-3 h-3 text-subtle" />}
             balance={3420000} 
-            change={step === 'moving' ? -8000 : 0}
+            change={step === 'running' ? -8000 : 0}
             align="left"
          />
-         {/* Bottom Right: Acme */}
          <AccountCard 
             name="Acme Systems" 
-            icon={<Datastore className="w-3 h-3 text-subtle" />}
             balance={156000} 
-            change={step === 'settled' ? 5000 : 0} // Receiving from Top-Left
+            change={step === 'settled' ? 5000 : 0}
             align="right"
             isActive={step === 'settled'}
          />
@@ -153,62 +168,80 @@ export function InternationalPaymentsAnimation() {
 
 /* --- SUBCOMPONENTS --- */
 
-function TravelingCoin({ start, end, duration, active, delay }: { 
-    start: { left: string, top: string }, 
-    end: { left: string, top: string }, 
-    duration: number,
+function ManhattanCoin({ path, active, timings, delay = 0 }: { 
+    path: { 
+        start: { left: string, top: string }, 
+        midIn: { left: string, top: string }, 
+        center: { left: string, top: string },
+        midOut: { left: string, top: string },
+        end: { left: string, top: string }
+    }, 
     active: boolean,
-    delay: number
+    timings: { v: number, h: number, hold: number },
+    delay?: number
 }) {
+    const totalDuration = (timings.v + timings.h) * 2 + timings.hold;
+    
+    // Keyframe percentages
+    const t1 = timings.v / totalDuration; // Vertical move done
+    const t2 = (timings.v + timings.h) / totalDuration; // Horizontal move (at center) done
+    const t3 = (timings.v + timings.h + timings.hold) / totalDuration; // Hold done
+    const t4 = (timings.v + timings.h + timings.hold + timings.h) / totalDuration; // Outward Horizontal done
+    
     return (
         <AnimatePresence>
             {active && (
                 <motion.div
-                    className="absolute w-8 h-8 flex items-center justify-center"
-                    initial={{ ...start, opacity: 0, scale: 0.8 }}
+                    className="absolute w-12 h-12 flex items-center justify-center z-50"
+                    initial={{ ...path.start, scale: 0.5, opacity: 0 }}
                     animate={{ 
-                        left: end.left, 
-                        top: end.top, 
-                        opacity: [0, 1, 1, 0], // Fade in from outside, fade out at target
-                        scale: 1
+                        left: [path.start.left, path.midIn.left, path.center.left, path.center.left, path.midOut.left, path.end.left],
+                        top: [path.start.top, path.midIn.top, path.center.top, path.center.top, path.midOut.top, path.end.top],
+                        scale: [0.8, 0.8, 1.5, 1.5, 0.8, 0.8], 
+                        opacity: [0, 1, 1, 1, 1, 0]
                     }}
                     transition={{ 
-                        duration: duration, 
+                        duration: totalDuration,
+                        times: [0, t1, t2, t3, t4, 1],
                         delay: delay,
-                        ease: "easeInOut",
-                        opacity: { times: [0, 0.1, 0.9, 1] }
+                        ease: "linear" // Linear is best for "circuit" feel, easing handled at turns if needed
                     }}
                 >
-                    {/* The Morphing Content */}
-                    <motion.div
-                        className="relative w-full h-full"
-                        animate={{
-                            rotateY: [0, 180, 360], // Flip effect at center? Or just simple morph
-                            scale: [1, 1.8, 1]      // Scale up at center
-                        }}
-                        transition={{
-                            duration: duration,
-                            times: [0, 0.5, 1],
-                            ease: "easeInOut"
-                        }}
-                    >
-                         {/* We swap opacity to "morph" at the 50% mark */}
+                    <div className="relative w-full h-full">
+                         
+                         {/* USD ICON */}
                          <motion.div 
                             className="absolute inset-0"
-                            animate={{ opacity: [1, 0, 1] }}
-                            transition={{ duration: duration, times: [0.4, 0.5, 0.6] }}
+                            animate={{ 
+                                opacity: [1, 1, 0, 0, 1, 1],
+                                rotate: [0, 0, 180, 180, 360, 360] 
+                            }}
+                            transition={{ 
+                                duration: totalDuration,
+                                times: [0, t1, t2, t3, t4, 1],
+                                delay: delay 
+                            }}
                          >
-                            <GreenUSDIcon className="w-8 h-8" />
+                            <GreenUSDIcon className="w-full h-full shadow-lg" />
                          </motion.div>
 
+                         {/* USDC LOGO (Visible only during Hold) */}
                          <motion.div 
                             className="absolute inset-0"
-                            animate={{ opacity: [0, 1, 0] }}
-                            transition={{ duration: duration, times: [0.4, 0.5, 0.6] }}
+                            animate={{ 
+                                opacity: [0, 0, 1, 1, 0, 0],
+                                rotate: [-180, -180, 0, 0, 180, 180]
+                            }}
+                            transition={{ 
+                                duration: totalDuration,
+                                times: [0, t1, t2, t3, t4, 1],
+                                delay: delay 
+                            }}
                          >
-                            <USDCLogo className="w-8 h-8 drop-shadow-lg" />
+                            <USDCLogo className="w-full h-full drop-shadow-2xl" />
                          </motion.div>
-                    </motion.div>
+
+                    </div>
                 </motion.div>
             )}
         </AnimatePresence>
@@ -218,14 +251,12 @@ function TravelingCoin({ start, end, duration, active, delay }: {
 function AccountCard({ 
     name, 
     balance, 
-    icon,
     change, 
     align = 'left',
     isActive = false
 }: { 
     name: string; 
     balance: number; 
-    icon: React.ReactNode;
     change: number; 
     align?: 'left' | 'right';
     isActive?: boolean;
@@ -235,13 +266,10 @@ function AccountCard({
   return (
     <div className={`
         bg-white border border-border/80 rounded-lg p-3 shadow-sm min-w-[150px] flex flex-col gap-2 
-        transition-all duration-500
+        transition-all duration-500 relative z-20
         ${isActive ? 'shadow-md border-obsidian/30 scale-105' : ''}
     `}>
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded bg-gray-50 border border-border flex items-center justify-center shrink-0">
-            {icon}
-        </div>
         <div className="flex flex-col overflow-hidden">
             <span className="text-[10px] font-semibold text-obsidian truncate w-full">{name}</span>
             <span className="text-[8px] font-mono text-subtle uppercase tracking-wider">USD ACCT</span>
