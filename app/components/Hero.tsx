@@ -1,10 +1,45 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+
+function SpotlightButton({ children, className }: { children: React.ReactNode; className?: string }) {
+  const divRef = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!divRef.current) return;
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleMouseEnter = () => setOpacity(1);
+  const handleMouseLeave = () => setOpacity(0);
+
+  return (
+    <button
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden cursor-pointer ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.15), transparent 40%)`,
+        }}
+      />
+      {children}
+    </button>
+  );
+}
 
 export function Hero() {
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 lg:px-20 pt-32 pb-20 overflow-hidden">
+    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 lg:px-20 pt-32 pb-20 md:pb-12 lg:pb-20 overflow-hidden bg-noise">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 technical-grid opacity-35"></div>
         <div className="absolute -top-48 -left-48 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.14),transparent_65%)]"></div>
@@ -40,16 +75,17 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-300 hover:bg-obsidian/90 hover:scale-[1.02] hover:shadow-lg flex items-center gap-2 cursor-pointer">
+              <SpotlightButton className="group isolate bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_16px_-4px_rgba(10,22,40,0.25)] ring-1 ring-white/10 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.4)] flex items-center gap-2">
                 <span className="relative z-10">See Frontyr in Action</span>
-              </button>
-              <button className="px-8 py-3.5 bg-white text-obsidian border border-border text-sm font-medium rounded-xl shadow-sm transition-all duration-300 hover:bg-gray-50 hover:border-obsidian/40 hover:text-black hover:shadow-md cursor-pointer">
+                <div className="absolute inset-0 bg-gradient-to-t from-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </SpotlightButton>
+              <button className="px-8 py-3.5 bg-white text-obsidian border border-border/80 text-sm font-medium rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all duration-300 ease-out hover:bg-gray-50 hover:border-obsidian/20 hover:shadow-[0_4px_12px_-2px_rgba(10,22,40,0.08)] cursor-pointer">
                 Read the Docs
               </button>
             </motion.div>
 
             <motion.div
-              className="flex flex-nowrap items-center gap-6 text-xs text-subtle"
+              className="flex flex-col md:flex-row flex-nowrap md:items-center gap-3 md:gap-6 text-xs text-subtle py-6 md:py-0"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -71,12 +107,12 @@ export function Hero() {
 
         {/* Right Column: Technical Illustration */}
         <motion.div 
-            className="relative w-full aspect-square flex items-center justify-center lg:justify-end lg:order-2 order-first"
+            className="relative w-full aspect-square max-[1023px]:aspect-auto max-[1023px]:min-h-[280px] max-[420px]:aspect-square flex items-center justify-center lg:justify-end lg:order-2 order-first"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-            <div className="relative w-full max-w-lg aspect-square rounded-lg p-8 overflow-visible">
+            <div className="relative w-full max-w-lg aspect-square max-[1023px]:aspect-auto max-[1023px]:h-[280px] max-[420px]:aspect-square max-[420px]:h-auto rounded-lg p-8 overflow-visible">
                 {/* Background Grid Pattern - subtle */}
                 <div className="absolute inset-0 opacity-20" style={{ 
                     backgroundImage: 'radial-gradient(#0A1628 0.5px, transparent 0.5px)', 
