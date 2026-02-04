@@ -1,14 +1,14 @@
-import { ArrowRight, Landmark, Shield, Wallet, RefreshCw } from 'lucide-react';
+import { ArrowRight, Building, Security, Wallet, Renew } from '@carbon/icons-react';
 
 const features = [
   {
-    icon: Landmark,
+    icon: Building,
     title: 'Programmable Ledger',
     desc: 'Frontyr models stablecoin flows and balance-sheet state with full lineage across issuance, settlement, and redemption.',
     color: 'bg-obsidian/5', // very light navy tint
   },
   {
-    icon: Shield,
+    icon: Security,
     title: 'Built-In Compliance',
     desc: 'KYC/AML, travel rule, and programmable policy controls are enforced at the core—not bolted on after the fact.',
     color: 'bg-obsidian/[0.08]', // slightly darker navy tint
@@ -20,7 +20,7 @@ const features = [
     color: 'bg-obsidian/[0.08]', // slightly darker navy tint
   },
   {
-    icon: RefreshCw,
+    icon: Renew,
     title: 'Real-Time Settlement',
     desc: 'Move money 24/7 with instant finality. No batch windows, no delays—just continuous, programmable settlement.',
     color: 'bg-obsidian/5', // very light navy tint

@@ -26,11 +26,11 @@ export function Hero() {
                   SOC 2 Compliant
                 </span>
               </div>
-              <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] text-obsidian leading-[0.95]">
-                Stablecoin <span className="text-subtle">Infrastructure for Banks</span>
+              <h1 className="font-sans text-5xl md:text-7xl lg:text-7xl font-bold tracking-[-0.03em] leading-[0.95]">
+                <span className="text-subtle">Legacy cores weren't built for the </span>next frontier of banking.
               </h1>
               <p className="max-w-xl font-sans text-lg text-subtle leading-relaxed">
-                A modern bank core built for stablecoins, tokenized dollars, and real-time settlement. Frontyr is your northstar in digital dollar infrastructure.
+                Your customers expect instant. Your infrastructure should too. Frontyr bridges traditional banking with stablecoin rails—so you never close.
               </p>
             </motion.div>
 
@@ -41,37 +41,37 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <button className="group relative isolate overflow-hidden bg-obsidian text-white text-sm font-semibold px-8 py-3.5 rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.08)] ring-1 ring-white/10 transition-all duration-300 hover:bg-obsidian/90 hover:scale-[1.02] hover:shadow-lg flex items-center gap-2 cursor-pointer">
-                <span className="relative z-10">Book a Demo</span>
+                <span className="relative z-10">See Frontyr in Action</span>
               </button>
               <button className="px-8 py-3.5 bg-white text-obsidian border border-border text-sm font-medium rounded-xl shadow-sm transition-all duration-300 hover:bg-gray-50 hover:border-obsidian/40 hover:text-black hover:shadow-md cursor-pointer">
-                View Documentation
+                Read the Docs
               </button>
             </motion.div>
 
             <motion.div
-              className="flex flex-wrap items-center gap-6 text-xs text-subtle"
+              className="flex flex-nowrap items-center gap-6 text-xs text-subtle"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
-                Real-time settlement
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Settle in seconds, not days
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
-                Programmable compliance
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Compliance built in, not bolted on
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-obsidian/60"></span>
-                API-first core ledger
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                One ledger for fiat and stablecoins
               </div>
             </motion.div>
         </div>
 
         {/* Right Column: Technical Illustration */}
         <motion.div 
-            className="relative w-full aspect-square flex items-center justify-center lg:justify-end"
+            className="relative w-full aspect-square flex items-center justify-center lg:justify-end lg:order-2 order-first"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}

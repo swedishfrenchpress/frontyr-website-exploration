@@ -1,4 +1,4 @@
-import { Linkedin } from 'lucide-react';
+import { LogoLinkedin, LogoTwitter } from '@carbon/icons-react';
 
 export function Footer() {
   return (
@@ -20,7 +20,7 @@ export function Footer() {
             </div>
             
             <p className="text-sm text-white/60 leading-relaxed max-w-sm">
-              Frontyr is part of <span className="text-white font-medium">Hoseki</span>, the global leader in cryptographic proof of reserves. We build the stablecoin core banking infrastructure that powers the next generation of finance.
+              Frontyr is part of <span className="text-white font-medium">Hoseki</span>, the global leader in cryptographic proof of reserves. We're your north star in navigating 24/7 banking for the next generation of clients.
             </p>
 
             <div className="text-sm text-white/40">
@@ -94,12 +94,10 @@ export function Footer() {
 
           <div className="flex items-center gap-4">
             <a href="#" className="text-white/60 hover:text-white transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
+              <LogoTwitter className="w-4 h-4" />
             </a>
             <a href="#" className="text-white/60 hover:text-white transition-colors">
-              <Linkedin className="w-4 h-4" />
+              <LogoLinkedin className="w-4 h-4" />
             </a>
           </div>
         </div>

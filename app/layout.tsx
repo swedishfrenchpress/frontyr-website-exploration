@@ -21,8 +21,8 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Frontyr | Stablecoin-Native Core Banking",
-  description: "Frontyr builds a modern, programmable banking core for stablecoins, tokenized dollars, and real-time settlement.",
+  title: "Frontyr | 24/7 Banking Infrastructure",
+  description: "Legacy cores close at 5pm. Your customers don't. Frontyr is stablecoin-native banking infrastructure that settles in seconds, not days.",
 };
 
 export default function RootLayout({
