@@ -2,6 +2,7 @@
 
 import { Layers, WarningAlt, Send, Renew, User, Time, Wallet } from '@carbon/icons-react';
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TreasuryAnimation } from './TreasuryAnimation';
 import { ReconciliationAnimation } from './ReconciliationAnimation';
 import { SubaccountingAnimation } from './SubaccountingAnimation';
@@ -13,26 +14,26 @@ function DashboardDelayCard() {
     let timer: NodeJS.Timeout;
 
     const runAnimation = () => {
-      // Start loop
+      // Start loop: Idle (1.5s)
       setStep('idle');
       
-      // Click Send
+      // 1. Click Send -> Processing
       timer = setTimeout(() => {
         setStep('processing');
         
-        // Processing done -> Success (Button turns green)
+        // 2. Processing done -> Success (1.5s later)
         timer = setTimeout(() => {
           setStep('success');
           
-          // Show Delay + Update Activity (Toast appears)
+          // 3. Show Delay + Update Activity (Toast appears 0.6s later)
           timer = setTimeout(() => {
             setStep('delayed');
             
-            // Reset
+            // 4. Hold then Reset (6.5s later)
             timer = setTimeout(() => {
               runAnimation();
             }, 6500);
-          }, 600); // Reduced delay to 600ms so it feels more connected
+          }, 600);
         }, 1500);
       }, 1500);
     };
@@ -44,21 +45,27 @@ function DashboardDelayCard() {
   return (
     <div className="bg-white border border-border/80 rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full flex flex-col relative group min-h-[320px] transition-shadow duration-500 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)]">
       {/* Toast Notification - Top Right */}
-      <div className={`
-        absolute top-16 right-6 z-20 w-64 bg-white border-l-4 border-l-amber-500 shadow-lg rounded-r-md p-3 flex gap-3
-        transition-all duration-500 ease-out transform
-        ${step === 'delayed' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}
-      `}>
-          <div className="mt-0.5 text-amber-500 shrink-0">
-             <WarningAlt className="w-4 h-4" />
-          </div>
-          <div>
-             <h5 className="text-[11px] font-bold text-obsidian leading-tight mb-1">Settlement Delayed</h5>
-             <p className="text-[10px] text-subtle leading-relaxed">
-                Funds will settle Monday due to weekend banking hours.
-             </p>
-          </div>
-      </div>
+      <AnimatePresence>
+        {step === 'delayed' && (
+          <motion.div 
+            initial={{ opacity: 0, x: 20, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="absolute top-16 right-6 z-20 w-64 bg-white border-l-4 border-l-amber-500 shadow-xl rounded-r-md p-3 flex gap-3"
+          >
+            <div className="mt-0.5 text-amber-500 shrink-0">
+               <WarningAlt className="w-4 h-4" />
+            </div>
+            <div>
+               <h5 className="text-[11px] font-bold text-obsidian leading-tight mb-1">Settlement Delayed</h5>
+               <p className="text-[10px] text-subtle leading-relaxed">
+                  Funds will settle Monday due to weekend banking hours.
+               </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Dashboard Chrome */}
       <div className="border-b border-border bg-gray-50/50 flex items-center px-4 py-3 gap-3">
@@ -103,17 +110,26 @@ function DashboardDelayCard() {
                     {/* Fixed height container to prevent layout jump */}
                     <div className="space-y-2 h-[88px]">
                        {/* Dynamic Pending Transaction */}
-                       <div className={`
-                          flex justify-between items-center text-[10px] overflow-hidden transition-all duration-500
-                          ${step === 'delayed' ? 'max-h-8 opacity-100 mb-2' : 'max-h-0 opacity-0'}
-                       `}>
-                          <div className="flex items-center gap-1.5">
-                             <Time className="w-3 h-3 text-amber-500 shrink-0" />
-                             <span className="text-obsidian font-medium">Sinclar Transportation LLC</span>
-                             <span className="bg-amber-100 text-amber-700 px-1.5 py-[1px] rounded text-[8px] font-bold uppercase tracking-wide shrink-0">Pending</span>
-                          </div>
-                          <span className="text-obsidian font-mono">-$3,000.00</span>
-                       </div>
+                       <AnimatePresence>
+                         {step === 'delayed' && (
+                           <motion.div
+                              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                              animate={{ opacity: 1, height: 'auto', marginBottom: 8 }}
+                              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                              className="overflow-hidden"
+                           >
+                              <div className="flex justify-between items-center text-[10px]">
+                                <div className="flex items-center gap-1.5">
+                                   <Time className="w-3 h-3 text-amber-500 shrink-0" />
+                                   <span className="text-obsidian font-medium">Sinclar Transportation LLC</span>
+                                   <span className="bg-amber-100 text-amber-700 px-1.5 py-[1px] rounded text-[8px] font-bold uppercase tracking-wide shrink-0">Pending</span>
+                                </div>
+                                <span className="text-obsidian font-mono">-$3,000.00</span>
+                              </div>
+                           </motion.div>
+                         )}
+                       </AnimatePresence>
 
                        <div className="flex justify-between items-center text-[10px]">
                           <span className="text-obsidian">Stripe Payout</span>
@@ -128,7 +144,7 @@ function DashboardDelayCard() {
               </div>
 
               {/* Right Column: Transfer Action */}
-              <div className="bg-white border border-border rounded-lg p-4 flex flex-col justify-center h-fit self-center relative w-full">
+              <div className="bg-white border border-border rounded-lg p-4 flex flex-col justify-center h-fit self-center relative w-full shadow-sm">
                  <h5 className="text-xs font-semibold text-obsidian mb-3">Quick Transfer</h5>
                  
                  <div className="space-y-3 mb-4">
@@ -152,21 +168,52 @@ function DashboardDelayCard() {
                  </div>
 
                  <div className="flex justify-end">
-                   <button 
+                   <motion.button 
+                     layout
+                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                      className={`
-                       w-fit px-6 h-8 rounded text-[10px] font-medium text-white transition-all duration-300 flex items-center justify-center gap-1.5
+                       h-8 px-6 rounded text-[10px] font-medium text-white flex items-center justify-center gap-1.5 relative overflow-hidden
                        ${step === 'processing' ? 'bg-subtle cursor-wait' : 
                          step === 'success' || step === 'delayed' ? 'bg-emerald-600' : 'bg-obsidian hover:bg-obsidian/90'}
                      `}
                    >
-                     {step === 'processing' ? (
-                       <span>Processing</span>
-                     ) : step === 'success' || step === 'delayed' ? (
-                       <span>Sent</span>
-                     ) : (
-                       <span>Send Funds</span>
-                     )}
-                   </button>
+                     <AnimatePresence mode="popLayout" initial={false}>
+                        {step === 'processing' ? (
+                           <motion.span 
+                             key="processing"
+                             initial={{ y: 20, opacity: 0 }}
+                             animate={{ y: 0, opacity: 1 }}
+                             exit={{ y: -20, opacity: 0 }}
+                             className="flex items-center gap-1.5"
+                           >
+                             <motion.div 
+                               animate={{ rotate: 360 }}
+                               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                               className="w-2.5 h-2.5 border-2 border-white/30 border-t-white rounded-full" 
+                             />
+                             Processing
+                           </motion.span>
+                        ) : step === 'success' || step === 'delayed' ? (
+                           <motion.span 
+                             key="sent"
+                             initial={{ y: 20, opacity: 0 }}
+                             animate={{ y: 0, opacity: 1 }}
+                             exit={{ y: -20, opacity: 0 }}
+                           >
+                             Sent
+                           </motion.span>
+                        ) : (
+                           <motion.span 
+                             key="send"
+                             initial={{ y: 20, opacity: 0 }}
+                             animate={{ y: 0, opacity: 1 }}
+                             exit={{ y: -20, opacity: 0 }}
+                           >
+                             Send Funds
+                           </motion.span>
+                        )}
+                     </AnimatePresence>
+                   </motion.button>
                  </div>
               </div>
            </div>
@@ -182,7 +229,7 @@ function DashboardDelayCard() {
 
 export function Features() {
   return (
-    <section id="features" className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-white border-y border-border/60 overflow-hidden">
+    <section id="features" className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-white bg-noise border-y border-border/60 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[260px] bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.08),transparent_70%)]"></div>
       </div>
@@ -195,7 +242,7 @@ export function Features() {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                   <span className="font-sans text-[12px] font-semibold text-subtle tracking-tight uppercase">The Problem</span>
                 </div>
-                <h3 className="font-sans text-3xl md:text-4xl font-semibold text-obsidian tracking-tight mb-4 leading-[1.15]">
+                <h3 className="font-sans text-3xl md:text-4xl font-semibold text-obsidian tracking-[-0.03em] mb-4 leading-[1.15]">
                   24/7 banking isn't optional anymore.
                 </h3>
                 <p className="text-subtle text-lg leading-relaxed">
@@ -214,7 +261,7 @@ export function Features() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span className="font-sans text-[12px] font-semibold text-subtle tracking-tight uppercase">The Solution</span>
             </div>
-            <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-tight mb-6 leading-[1.1]">
+            <h2 className="font-sans text-4xl md:text-5xl font-semibold text-obsidian tracking-[-0.03em] mb-6 leading-[1.1]">
               Stablecoins: your bridge to 24/7 banking.
             </h2>
             <p className="text-subtle text-lg leading-relaxed">
