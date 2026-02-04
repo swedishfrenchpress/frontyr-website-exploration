@@ -1,6 +1,6 @@
 'use client';
 
-import { Layers, WarningAlt, Send, Renew, User, Time, Wallet } from '@carbon/icons-react';
+import { Layers, WarningAlt, Send, Renew, User, Time, Wallet, Asleep } from '@carbon/icons-react';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TreasuryAnimation } from './TreasuryAnimation';
@@ -277,6 +277,13 @@ export function Features() {
           
           {/* Card 1: Modern Treasury Management (Large) */}
           <div className="md:col-span-8 group relative bg-white border border-border/80 rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:border-obsidian/20 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)] hover:-translate-y-0.5">
+             {/* Night Mode Badge - Top Right of Card */}
+             <div className="absolute top-6 right-6 z-20 flex items-center gap-2 px-3 py-1.5 bg-obsidian rounded-full shadow-lg border border-white/10">
+                <Asleep className="w-3 h-3 text-indigo-300" />
+                <span className="text-[10px] font-medium text-white tracking-wide">
+                   Sat, Mar 12 • 10:00 PM
+                </span>
+             </div>
             <div className="p-10">
               <div className="flex-1 max-w-none">
                 <div className="w-10 h-10 bg-canvas border border-border/60 rounded-lg flex items-center justify-center mb-6 text-obsidian shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-obsidian/20">
@@ -290,7 +297,7 @@ export function Features() {
                 </p>
               </div>
 
-              <div className="mt-10 h-[400px] w-full relative flex items-center justify-center border-t border-border/40 pt-6 overflow-hidden">
+              <div className="mt-10 h-[400px] w-full relative flex items-center justify-center pt-6 overflow-hidden">
                 <InternationalPaymentsAnimation />
               </div>
             </div>

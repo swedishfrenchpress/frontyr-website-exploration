@@ -22,10 +22,10 @@ const USDCLogo = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// Green USD Icon
+// Green USD Icon (Outline Style)
 const GreenUSDIcon = ({ className }: { className?: string }) => (
-    <div className={`rounded-full bg-emerald-500 border border-emerald-400 flex items-center justify-center shadow-md ${className}`}>
-        <span className="font-mono text-sm font-bold text-white">$</span>
+    <div className={`rounded-full bg-white border border-emerald-500 flex items-center justify-center shadow-sm ${className}`}>
+        <span className="font-mono text-xs font-bold text-emerald-600">$</span>
     </div>
 );
 
@@ -38,7 +38,7 @@ export function InternationalPaymentsAnimation() {
   // Animation Timings (Seconds)
   const VERTICAL_MOVE_TIME = 0.8;
   const HORIZONTAL_MOVE_TIME = 0.8;
-  const HOLD_TIME = 1.5;
+  const HOLD_TIME = 1.6; // Slightly longer for the flip
   const TOTAL_DURATION = (VERTICAL_MOVE_TIME + HORIZONTAL_MOVE_TIME) * 2 + HOLD_TIME;
   const PAUSE_DURATION = 1;
 
@@ -63,17 +63,18 @@ export function InternationalPaymentsAnimation() {
       
       {/* --- BACKGROUND RAILS (Manhattan/Circuit Grid) --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Vertical Rails (Left & Right) */}
-          <div className="absolute top-8 bottom-8 left-[18%] w-px border-l border-dashed border-obsidian/20"></div>
-          <div className="absolute top-8 bottom-8 right-[18%] w-px border-r border-dashed border-obsidian/20"></div>
+          {/* Vertical Rails (Left & Right) - Adjusted to 12% to align with card center */}
+          <div className="absolute top-8 bottom-8 left-[12%] w-px border-l border-dashed border-obsidian/20"></div>
+          <div className="absolute top-8 bottom-8 right-[12%] w-px border-r border-dashed border-obsidian/20"></div>
           
           {/* Horizontal Rail (Center) */}
-          <div className="absolute top-1/2 left-[18%] right-[18%] h-px border-t border-dashed border-obsidian/20"></div>
+          <div className="absolute top-1/2 left-[12%] right-[12%] h-px border-t border-dashed border-obsidian/20"></div>
 
           {/* Center Hub */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="w-32 h-32 rounded-full bg-white border border-border flex items-center justify-center shadow-lg">
-                  <FrontyrStar className="w-20 h-20 text-obsidian/10" />
+              <div className="w-24 h-24 rounded-full bg-white border border-border flex items-center justify-center shadow-lg relative overflow-visible">
+                  {/* Star overlaps the container slightly */}
+                  <FrontyrStar className="w-32 h-32 text-[#0A1628] absolute" />
               </div>
           </div>
       </div>
@@ -100,41 +101,41 @@ export function InternationalPaymentsAnimation() {
       {/* --- ANIMATION LAYER --- */}
       <div className="absolute inset-0 pointer-events-none z-50 overflow-visible">
           
-          {/* FLOW 1: Top-Left -> Bottom-Right (Down -> Right -> Hold -> Right -> Down) */}
+          {/* FLOW 1: Top-Left -> Bottom-Right */}
           <ManhattanCoin 
             path={{
-                start: { left: '18%', top: '15%' },
-                midIn: { left: '18%', top: '50%' },
+                start: { left: '12%', top: '15%' },
+                midIn: { left: '12%', top: '50%' },
                 center: { left: '50%', top: '50%' },
-                midOut: { left: '82%', top: '50%' },
-                end: { left: '82%', top: '85%' }
+                midOut: { left: '88%', top: '50%' },
+                end: { left: '88%', top: '85%' }
             }}
             active={step === 'running'}
             timings={{ v: VERTICAL_MOVE_TIME, h: HORIZONTAL_MOVE_TIME, hold: HOLD_TIME }}
           />
 
-          {/* FLOW 2: Bottom-Right -> Top-Left (Up -> Left -> Hold -> Left -> Up) */}
+          {/* FLOW 2: Bottom-Right -> Top-Left */}
           <ManhattanCoin 
             path={{
-                start: { left: '82%', top: '85%' },
-                midIn: { left: '82%', top: '50%' },
+                start: { left: '88%', top: '85%' },
+                midIn: { left: '88%', top: '50%' },
                 center: { left: '50%', top: '50%' },
-                midOut: { left: '18%', top: '50%' },
-                end: { left: '18%', top: '15%' }
+                midOut: { left: '12%', top: '50%' },
+                end: { left: '12%', top: '15%' }
             }}
             active={step === 'running'}
             timings={{ v: VERTICAL_MOVE_TIME, h: HORIZONTAL_MOVE_TIME, hold: HOLD_TIME }}
             delay={0.2}
           />
 
-           {/* FLOW 3: Bottom-Left -> Top-Right (Up -> Right -> Hold -> Right -> Up) */}
+           {/* FLOW 3: Bottom-Left -> Top-Right */}
            <ManhattanCoin 
             path={{
-                start: { left: '18%', top: '85%' },
-                midIn: { left: '18%', top: '50%' },
+                start: { left: '12%', top: '85%' },
+                midIn: { left: '12%', top: '50%' },
                 center: { left: '50%', top: '50%' },
-                midOut: { left: '82%', top: '50%' },
-                end: { left: '82%', top: '15%' }
+                midOut: { left: '88%', top: '50%' },
+                end: { left: '88%', top: '15%' }
             }}
             active={step === 'running'}
             timings={{ v: VERTICAL_MOVE_TIME, h: HORIZONTAL_MOVE_TIME, hold: HOLD_TIME }}
@@ -192,55 +193,57 @@ function ManhattanCoin({ path, active, timings, delay = 0 }: {
         <AnimatePresence>
             {active && (
                 <motion.div
-                    className="absolute w-12 h-12 flex items-center justify-center z-50"
-                    initial={{ ...path.start, scale: 0.5, opacity: 0 }}
+                    className="absolute w-8 h-8 flex items-center justify-center z-50 perspective-1000"
+                    initial={{ ...path.start, scale: 1, opacity: 0 }}
                     animate={{ 
                         left: [path.start.left, path.midIn.left, path.center.left, path.center.left, path.midOut.left, path.end.left],
                         top: [path.start.top, path.midIn.top, path.center.top, path.center.top, path.midOut.top, path.end.top],
-                        scale: [0.8, 0.8, 1.5, 1.5, 0.8, 0.8], 
                         opacity: [0, 1, 1, 1, 1, 0]
                     }}
                     transition={{ 
                         duration: totalDuration,
                         times: [0, t1, t2, t3, t4, 1],
                         delay: delay,
-                        ease: "linear" // Linear is best for "circuit" feel, easing handled at turns if needed
+                        ease: "linear"
                     }}
                 >
-                    <div className="relative w-full h-full">
-                         
-                         {/* USD ICON */}
-                         <motion.div 
-                            className="absolute inset-0"
+                    <div className="relative w-full h-full" style={{ perspective: 1000 }}>
+                        {/* 
+                           3D FLIP CONTAINER 
+                           Rotates 0 -> 180 (USD to USDC) -> 360 (USDC to USD)
+                           The swap happens exactly when it's at 90/270 degrees (invisible)
+                        */}
+                        <motion.div
+                            className="w-full h-full relative"
                             animate={{ 
-                                opacity: [1, 1, 0, 0, 1, 1],
-                                rotate: [0, 0, 180, 180, 360, 360] 
+                                rotateY: [0, 0, 180, 180, 360, 360] 
                             }}
                             transition={{ 
                                 duration: totalDuration,
-                                times: [0, t1, t2, t3, t4, 1],
-                                delay: delay 
+                                times: [0, t2, t2 + 0.4, t3 - 0.4, t3, 1], // Spin during the Hold phase
+                                delay: delay,
+                                ease: "easeInOut"
                             }}
-                         >
-                            <GreenUSDIcon className="w-full h-full shadow-lg" />
-                         </motion.div>
+                        >
+                             {/* USD SIDE (Visible 0-90, 270-360) */}
+                             <motion.div 
+                                className="absolute inset-0 backface-hidden"
+                                style={{ backfaceVisibility: 'hidden' }}
+                             >
+                                <GreenUSDIcon className="w-full h-full shadow-lg" />
+                             </motion.div>
 
-                         {/* USDC LOGO (Visible only during Hold) */}
-                         <motion.div 
-                            className="absolute inset-0"
-                            animate={{ 
-                                opacity: [0, 0, 1, 1, 0, 0],
-                                rotate: [-180, -180, 0, 0, 180, 180]
-                            }}
-                            transition={{ 
-                                duration: totalDuration,
-                                times: [0, t1, t2, t3, t4, 1],
-                                delay: delay 
-                            }}
-                         >
-                            <USDCLogo className="w-full h-full drop-shadow-2xl" />
-                         </motion.div>
-
+                             {/* USDC SIDE (Visible 90-270) - Rotated 180 initially so it's upright when flipped */}
+                             <motion.div 
+                                className="absolute inset-0 backface-hidden"
+                                style={{ 
+                                    backfaceVisibility: 'hidden', 
+                                    transform: 'rotateY(180deg)' 
+                                }}
+                             >
+                                <USDCLogo className="w-full h-full drop-shadow-2xl" />
+                             </motion.div>
+                        </motion.div>
                     </div>
                 </motion.div>
             )}
