@@ -5,7 +5,7 @@ export function Logos() {
     { name: 'Stillmark', src: '/stillmark.svg', className: 'h-8' },
     { name: 'Castle Island', src: '/castle-island.svg', className: 'h-7' },
     { name: 'F-Prime', src: '/fprime.svg', className: 'h-5' },
-    { name: 'Ten31', src: '/ten31.svg', className: 'h-7' },
+    { name: 'Ten31', src: '/ten31.svg', className: 'h-9' },
   ];
   // Duplicate logos for infinite scroll effect
   const scrollingLogos = [...logos, ...logos, ...logos, ...logos];
