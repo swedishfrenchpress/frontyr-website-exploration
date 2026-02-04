@@ -107,10 +107,10 @@ export function CardParallaxSection() {
   });
 
   return (
-    <div ref={containerRef} className="relative w-full py-32 md:py-48 overflow-hidden flex flex-col items-center justify-center min-h-[600px] md:min-h-[900px]">
+    <div ref={containerRef} className="relative w-full py-32 md:py-48 overflow-hidden flex flex-col items-center justify-center min-h-[600px] md:min-h-[900px] bg-white">
       
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-canvas/50 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-white pointer-events-none"></div>
       
       {/* Central Copy */}
       <div className="relative z-20 text-center max-w-3xl px-6">
@@ -145,7 +145,7 @@ export function CardParallaxSection() {
         {/* Left Side */}
         <FloatingLedgerItem 
             initialX={-380} 
-            initialY={-200} 
+            initialY={-100} 
             speed={1.8} 
             width={240} 
             height={60} 
@@ -158,7 +158,7 @@ export function CardParallaxSection() {
         />
          <FloatingLedgerItem 
             initialX={-520} 
-            initialY={40} 
+            initialY={150} 
             speed={0.7} 
             width={260} 
             height={60} 
@@ -172,7 +172,7 @@ export function CardParallaxSection() {
         />
         <FloatingLedgerItem 
             initialX={-340} 
-            initialY={240} 
+            initialY={350} 
             speed={2.5} 
             width={250} 
             height={60} 
@@ -187,7 +187,7 @@ export function CardParallaxSection() {
         {/* Right Side */}
          <FloatingLedgerItem 
             initialX={400} 
-            initialY={-180} 
+            initialY={-80} 
             speed={1.5} 
             width={260} 
             height={60} 
@@ -200,7 +200,7 @@ export function CardParallaxSection() {
         />
          <FloatingLedgerItem 
             initialX={480} 
-            initialY={100} 
+            initialY={200} 
             speed={0.9} 
             width={220} 
             height={60} 
@@ -213,7 +213,7 @@ export function CardParallaxSection() {
         />
         <FloatingLedgerItem 
             initialX={320} 
-            initialY={280} 
+            initialY={400} 
             speed={2.2} 
             width={270} 
             height={60} 
