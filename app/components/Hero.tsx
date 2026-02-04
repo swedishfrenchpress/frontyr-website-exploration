@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export function Hero() {
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 lg:px-20 pt-32 pb-20 overflow-hidden">
+    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 lg:px-20 pt-32 pb-20 md:pb-12 lg:pb-20 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 technical-grid opacity-35"></div>
         <div className="absolute -top-48 -left-48 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.14),transparent_65%)]"></div>
@@ -72,12 +72,12 @@ export function Hero() {
 
         {/* Right Column: Technical Illustration */}
         <motion.div 
-            className="relative w-full aspect-square flex items-center justify-center lg:justify-end lg:order-2 order-first"
+            className="relative w-full aspect-square max-[1023px]:aspect-auto max-[1023px]:min-h-[280px] max-[420px]:aspect-square flex items-center justify-center lg:justify-end lg:order-2 order-first"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-            <div className="relative w-full max-w-lg aspect-square rounded-lg p-8 overflow-visible">
+            <div className="relative w-full max-w-lg aspect-square max-[1023px]:aspect-auto max-[1023px]:h-[280px] max-[420px]:aspect-square max-[420px]:h-auto rounded-lg p-8 overflow-visible">
                 {/* Background Grid Pattern - subtle */}
                 <div className="absolute inset-0 opacity-20" style={{ 
                     backgroundImage: 'radial-gradient(#0A1628 0.5px, transparent 0.5px)', 
