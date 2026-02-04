@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TreasuryAnimation } from './TreasuryAnimation';
 import { ReconciliationAnimation } from './ReconciliationAnimation';
 import { SubaccountingAnimation } from './SubaccountingAnimation';
+import { CardParallaxSection } from './CardParallaxSection';
 
 function DashboardDelayCard() {
   const [step, setStep] = useState<'idle' | 'processing' | 'success' | 'delayed'>('idle');
@@ -446,6 +447,8 @@ export function Features() {
              </div>
           </div>
         </div>
+
+        <CardParallaxSection />
       </div>
     </section>
   );
