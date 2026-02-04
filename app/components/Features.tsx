@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TreasuryAnimation } from './TreasuryAnimation';
 import { ReconciliationAnimation } from './ReconciliationAnimation';
 import { SubaccountingAnimation } from './SubaccountingAnimation';
+import { InternationalPaymentsAnimation } from './InternationalPaymentsAnimation';
 import { CardParallaxSection } from './CardParallaxSection';
 
 function DashboardDelayCard() {
@@ -282,64 +283,15 @@ export function Features() {
                   <Layers className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl font-semibold text-obsidian mb-2">
-                  Modern Treasury Management
+                  24/7 International Payments
                 </h3>
                 <p className="text-sm text-subtle leading-relaxed mb-6">
-                  Know your reserves in real time. See exactly where your liquidity sits across all positions. Balance sheets that update as transactions settle.
+                  Move money across borders any time of day. Instant global settlement without banking hours or delays. Cross-border payments that never sleep.
                 </p>
               </div>
 
-              <div className="mt-10 h-36 w-full relative flex items-center border-t border-border/40 pt-6 overflow-hidden">
-                <svg className="w-full h-full" viewBox="0 0 600 120" preserveAspectRatio="xMidYMid meet">
-                  <defs>
-                    <marker id="arrow-head-treasury" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
-                      <path d="M0,0 L4,2 L0,4" fill="#111" />
-                    </marker>
-                  </defs>
-
-                  <path
-                    d="M20,60 C120,60 140,20 220,20 C300,20 320,100 400,100 C480,100 500,60 580,60"
-                    fill="none"
-                    stroke="#E5E5E5"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                  />
-                  <path
-                    d="M20,60 C120,60 140,20 220,20 C300,20 320,100 400,100 C480,100 500,60 580,60"
-                    fill="none"
-                    stroke="#111"
-                    strokeWidth="1.5"
-                    strokeDasharray="600"
-                    strokeDashoffset="600"
-                    className="transition-[stroke-dashoffset] duration-[1600ms] ease-in-out motion-reduce:transition-none group-hover:stroke-dashoffset-0"
-                    markerEnd="url(#arrow-head-treasury)"
-                  />
-
-                  <g className="transition-all duration-500 opacity-100 group-hover:scale-110 origin-center motion-reduce:transition-none">
-                    <circle cx="20" cy="60" r="4" fill="#111" />
-                    <text x="20" y="80" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
-                      DEPOSITS
-                    </text>
-                  </g>
-                  <g className="transition-all duration-500 delay-[350ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center motion-reduce:transition-none">
-                    <circle cx="220" cy="20" r="4" fill="#fff" stroke="#111" strokeWidth="1.5" />
-                    <text x="220" y="40" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
-                      TREASURY
-                    </text>
-                  </g>
-                  <g className="transition-all duration-500 delay-[700ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center motion-reduce:transition-none">
-                    <circle cx="400" cy="100" r="4" fill="#fff" stroke="#111" strokeWidth="1.5" />
-                    <text x="400" y="116" textAnchor="middle" className="text-[8px] font-mono fill-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
-                      ALLOCATE
-                    </text>
-                  </g>
-                  <g className="transition-all duration-500 delay-[1050ms] opacity-50 scale-75 group-hover:opacity-100 group-hover:scale-100 origin-center motion-reduce:transition-none">
-                    <circle cx="580" cy="60" r="4" fill="#111" />
-                    <text x="580" y="80" textAnchor="middle" className="text-[8px] font-mono fill-obsidian font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none">
-                      RESERVE
-                    </text>
-                  </g>
-                </svg>
+              <div className="mt-10 h-36 w-full relative flex items-center justify-center border-t border-border/40 pt-6 overflow-hidden">
+                <InternationalPaymentsAnimation />
               </div>
             </div>
           </div>
