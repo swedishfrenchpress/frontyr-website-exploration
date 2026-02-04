@@ -50,7 +50,7 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              className="flex flex-nowrap items-center gap-6 text-xs text-subtle"
+              className="flex flex-col md:flex-row flex-nowrap md:items-center gap-3 md:gap-6 text-xs text-subtle py-6 md:py-0"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
