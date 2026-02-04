@@ -42,7 +42,7 @@ function DashboardDelayCard() {
   }, []);
 
   return (
-    <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm h-full flex flex-col relative group min-h-[320px]">
+    <div className="bg-white border border-border/80 rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] h-full flex flex-col relative group min-h-[320px] transition-shadow duration-500 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)]">
       {/* Toast Notification - Top Right */}
       <div className={`
         absolute top-16 right-6 z-20 w-64 bg-white border-l-4 border-l-amber-500 shadow-lg rounded-r-md p-3 flex gap-3
@@ -227,10 +227,10 @@ export function Features() {
           {/* Row 1: Treasury (Large) + Invoicing (Small) */}
           
           {/* Card 1: Modern Treasury Management (Large) */}
-          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
+          <div className="md:col-span-8 group relative bg-white border border-border/80 rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:border-obsidian/20 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)] hover:-translate-y-0.5">
             <div className="p-10">
               <div className="flex-1 max-w-none">
-                <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
+                <div className="w-10 h-10 bg-canvas border border-border/60 rounded-lg flex items-center justify-center mb-6 text-obsidian shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-obsidian/20">
                   <Layers className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl font-semibold text-obsidian mb-2">
@@ -297,11 +297,11 @@ export function Features() {
           </div>
 
           {/* Card 2: Invoicing (Small) */}
-          <div className="md:col-span-4 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500 flex flex-col">
+          <div className="md:col-span-4 group relative bg-white border border-border/80 rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:border-obsidian/20 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)] hover:-translate-y-0.5 flex flex-col">
             <div className="p-10 relative z-10 flex flex-col h-full">
-              <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-                <Send className="w-5 h-5" />
-              </div>
+              <div className="w-10 h-10 bg-canvas border border-border/60 rounded-lg flex items-center justify-center mb-6 text-obsidian shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-obsidian/20">
+                 <Send className="w-5 h-5" />
+               </div>
               <h3 className="text-xl font-semibold text-obsidian mb-3">
                 Invoicing
               </h3>
@@ -360,11 +360,11 @@ export function Features() {
           {/* Row 2: Subaccounting (Small) + Reconciliation (Large) */}
 
           {/* Card 3: Subaccounting (Small) */}
-          <div className="md:col-span-4 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500 flex flex-col">
+          <div className="md:col-span-4 group relative bg-white border border-border/80 rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:border-obsidian/20 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)] hover:-translate-y-0.5 flex flex-col">
             <div className="p-10 relative z-10 flex flex-col h-full">
-              <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
-                <User className="w-5 h-5" />
-              </div>
+              <div className="w-10 h-10 bg-canvas border border-border/60 rounded-lg flex items-center justify-center mb-6 text-obsidian shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-obsidian/20">
+                 <User className="w-5 h-5" />
+               </div>
               <h3 className="text-xl font-semibold text-obsidian mb-3">
                 Subaccounting
               </h3>
@@ -379,10 +379,10 @@ export function Features() {
           </div>
 
           {/* Card 4: Reconciliation (Large) */}
-          <div className="md:col-span-8 group relative bg-white border border-border rounded-xl overflow-hidden hover:border-obsidian/30 transition-all duration-500">
+          <div className="md:col-span-8 group relative bg-white border border-border/80 rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:border-obsidian/20 hover:shadow-[0_4px_20px_-4px_rgba(10,22,40,0.1)] hover:-translate-y-0.5">
              <div className="relative z-10 p-10 h-full flex flex-col justify-between">
                 <div className="max-w-none">
-                    <div className="w-10 h-10 bg-canvas border border-border rounded flex items-center justify-center mb-6 text-obsidian shadow-sm">
+                    <div className="w-10 h-10 bg-canvas border border-border/60 rounded-lg flex items-center justify-center mb-6 text-obsidian shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-obsidian/20">
                         <Renew className="w-5 h-5" />
                     </div>
                     <h3 className="text-xl font-semibold text-obsidian mb-3">

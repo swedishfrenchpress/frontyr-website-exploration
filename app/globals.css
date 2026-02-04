@@ -12,7 +12,7 @@
 
   --animate-dash: dash 30s linear infinite;
   --animate-signal: signal-flow 6s linear infinite;
-  --animate-scroll-x: scroll-x 30s linear infinite;
+  --animate-scroll-x: scroll-x 40s linear infinite;
   --text-xs: 0.85rem;
   --text-sm: 0.98rem;
   --text-base: 1.125rem;
@@ -25,6 +25,10 @@
   --text-6xl: 3.8rem;
   --text-7xl: 4.6rem;
   --text-8xl: 5.4rem;
+  
+  /* Custom easing curves */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 
   @keyframes dash {
     to { stroke-dashoffset: -100; }
@@ -87,21 +91,39 @@
 
 html {
   font-size: 18px;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+/* Refined focus states */
 :focus-visible {
-  outline: 2px solid rgba(10, 22, 40, 0.35);
+  outline: 2px solid rgba(10, 22, 40, 0.25);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Custom focus for buttons */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(10, 22, 40, 0.3);
   outline-offset: 2px;
 }
 
 ::selection {
-  background: rgba(10, 22, 40, 0.12);
+  background: rgba(10, 22, 40, 0.1);
+}
+
+/* Smooth image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -200,4 +222,61 @@ body {
 
 .animate-pulse-subtle {
   animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Smooth hover transitions for interactive elements */
+a, button {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Improved scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(10, 22, 40, 0.15);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 22, 40, 0.25);
+  background-clip: content-box;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(10, 22, 40, 0.15) transparent;
+}
+
+/* Utility class for smooth element reveals */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover lift effect */
+.card-hover-lift {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px -8px rgba(10, 22, 40, 0.12);
 }

@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from '@carbon/icons-react';
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 
 type FAQItem = {
   question: string;
@@ -38,13 +36,18 @@ export function FAQ() {
   };
 
   return (
-    <section className="py-24 bg-canvas text-obsidian relative">
-      <div className="max-w-2xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">
+    <section className="py-28 bg-canvas text-obsidian relative">
+      {/* Subtle background accent */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(10,22,40,0.02),transparent_70%)]" />
+      </div>
+      
+      <div className="max-w-2xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-obsidian/60">
+          <p className="text-subtle">
             Everything you need to know about Frontyr and our services.
           </p>
         </div>
@@ -53,20 +56,20 @@ export function FAQ() {
           {faqs.map((faq, index) => (
             <div 
               key={index} 
-              className="border-b border-obsidian/10 last:border-0"
+              className={`border-b border-border/60 last:border-0 transition-colors duration-300 ${openIndex === index ? 'border-obsidian/15' : ''}`}
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="flex flex-1 items-center justify-between py-4 w-full font-medium transition-all hover:text-obsidian text-left text-obsidian/90"
+                className="group flex flex-1 items-center justify-between py-5 w-full font-medium transition-all text-left text-obsidian/85 hover:text-obsidian"
                 aria-expanded={openIndex === index}
               >
-                {faq.question}
+                <span className="pr-4">{faq.question}</span>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-obsidian/50"
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className={`shrink-0 transition-colors duration-200 ${openIndex === index ? 'text-obsidian' : 'text-subtle group-hover:text-obsidian/60'}`}
                 >
-                  <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                  <ChevronDown className="h-4 w-4" />
                 </motion.div>
               </button>
               
@@ -77,13 +80,13 @@ export function FAQ() {
                     animate="open"
                     exit="collapsed"
                     variants={{
-                      open: { opacity: 1, height: "auto", marginBottom: 16 },
+                      open: { opacity: 1, height: "auto", marginBottom: 20 },
                       collapsed: { opacity: 0, height: 0, marginBottom: 0 }
                     }}
-                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
-                    <div className="text-sm text-obsidian/70 leading-relaxed">
+                    <div className="text-sm text-subtle leading-relaxed pr-8">
                       {faq.answer}
                     </div>
                   </motion.div>
